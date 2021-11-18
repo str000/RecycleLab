@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "617227123660",
+    "firebase_url": "https://testflutter-b8262-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "testflutter-b8262",
+    "storage_bucket": "testflutter-b8262.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:617227123660:android:a1fcff4e82427947807b69",
+        "android_client_info": {
+          "package_name": "com.example.auth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "617227123660-05vl41hust2ouj5fukatq8emsfej6gtf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCferSvk7wFFDZfPlm-z5yZ8xYmZkgN3dY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "617227123660-05vl41hust2ouj5fukatq8emsfej6gtf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
