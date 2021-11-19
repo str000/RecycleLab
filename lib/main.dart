@@ -1,38 +1,23 @@
+//Plugins
 import 'package:flutter/material.dart';
-
-import 'screens/login_page.dart';
+//Pages
+import 'pages/login_page.dart';
+//Theme
+import 'package:auth/theme/light_theme.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Authentication',
+      title: 'Nazwa Apki',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primarySwatch: Colors.blue,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            textStyle: TextStyle(
-              fontSize: 24.0,
-            ),
-            padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-          ),
-        ),
-        textTheme: TextTheme(
-          headline1: TextStyle(
-            fontSize: 46.0,
-            color: Colors.blue.shade700,
-            fontWeight: FontWeight.w500,
-          ),
-          bodyText1: TextStyle(fontSize: 18.0),
-        ),
-      ),
-      home: LoginPage(),
+      theme: ModeTheme.lightTheme,
+      home: const LoginPage(),
     );
   }
 }

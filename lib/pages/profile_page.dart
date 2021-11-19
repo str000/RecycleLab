@@ -1,7 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
+//Plugins
 import 'package:flutter/material.dart';
-import 'package:auth/screens/login_page.dart';
+//Firebase Package
+import 'package:firebase_auth/firebase_auth.dart';
+//Pages
+import 'package:auth/pages/login_page.dart';
+//Utils
 import 'package:auth/utils/fire_auth.dart';
+//Theme
+
+//Widgets
 
 class ProfilePage extends StatefulWidget {
   final User user;
@@ -110,7 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       );
                     },
-                    child: Text('Sign out'),
+                    child: const Text('Sign out'),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.red,
                       shape: RoundedRectangleBorder(

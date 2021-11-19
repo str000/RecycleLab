@@ -1,9 +1,15 @@
+//Plugins
 import 'package:flutter/material.dart';
-
+//Firebase Package
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:auth/screens/profile_page.dart';
+//Pages
+import 'package:auth/pages/profile_page.dart';
+//Utils
 import 'package:auth/utils/fire_auth.dart';
 import 'package:auth/utils/validator.dart';
+//Theme
+
+//Widgets
 
 class RegisterPage extends StatefulWidget {
   @override
