@@ -207,22 +207,121 @@ class _LoginPageState extends State<LoginPage> {
                                   ],
                                 ),
                               ),
-                              const Text(
-                                'Zaloguj',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 70.0,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                              const SizedBox(height: 30.0),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                    child: Container(
+                                      width: 130,
+                                      height: 4,
+                                      color: quarterBlackcolor,
+                                    ),
+                                  ),
+                                  const Text(
+                                    'lub',
+                                    style: TextStyle(
+                                      color: halfBlackColor,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                    child: Container(
+                                      width: 130,
+                                      height: 4,
+                                      color: quarterBlackcolor,
+                                    ),
+                                  )
+                                ],
                               ),
-                              const Text(
-                                'Zaloguj',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 70.0,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                              const SizedBox(height: 30.0),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        print("Google");
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        padding: const EdgeInsets.only(
+                                          top: 12.0,
+                                          bottom: 12.0,
+                                          left: 20.0,
+                                          right: 50.0,
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: const [
+                                          Image(
+                                              width: 26.0,
+                                              height: 26.0,
+                                              image: AssetImage(
+                                                  'assets/google_logo.png')),
+                                          Text(
+                                            'Zaloguj przez Google',
+                                            style: TextStyle(
+                                              color: halfBlackColor,
+                                              fontSize: 20.0,
+                                              fontFamily: "Roboto",
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
+                              const SizedBox(height: 13.0),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        print("Facebook");
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        primary: const Color.fromRGBO(
+                                            24, 119, 242, 1),
+                                        padding: const EdgeInsets.only(
+                                          top: 12.0,
+                                          bottom: 12.0,
+                                          left: 20.0,
+                                          right: 30.0,
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: const [
+                                          Image(
+                                              width: 26.0,
+                                              height: 26.0,
+                                              image: AssetImage(
+                                                  'assets/facebook_logo.png')),
+                                          Text(
+                                            'Zaloguj przez Facebook',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20.0,
+                                              fontFamily: "Roboto",
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 50.0),
                             ],
                           ),
                           Column(
