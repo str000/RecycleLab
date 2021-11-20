@@ -11,6 +11,18 @@ class Validator {
     return null;
   }
 
+  static String? validateDate({required String? date}) {
+    if (date == null) {
+      return null;
+    }
+
+    if (date.isEmpty) {
+      return 'Name can\'t be empty';
+    }
+
+    return null;
+  }
+
   static String? validateEmail({required String? email}) {
     if (email == null) {
       return null;
@@ -36,6 +48,20 @@ class Validator {
     if (password.isEmpty) {
       return null; //Hasło nie może być puste
     } else if (password.length < 6) {
+      return null; //Enter a password with length at least 6
+    }
+
+    return null;
+  }
+
+  static String? validateRePassword({required String? repassword}) {
+    if (repassword == null) {
+      return null;
+    }
+
+    if (repassword.isEmpty) {
+      return null; //Hasło nie może być puste
+    } else if (repassword.length < 6) {
       return null; //Enter a password with length at least 6
     }
 

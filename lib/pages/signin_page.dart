@@ -84,6 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                 : SingleChildScrollView(
                     controller: controller,
                     child: Container(
+                      height: MediaQuery.of(context).size.height,
                       padding: const EdgeInsets.only(
                         left: 20.0,
                         right: 20.0,
@@ -321,9 +322,9 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 50.0),
                             ],
                           ),
+                          //TODO Po zmniejszaniu okna Overflow
                           Column(
                             children: [
                               Row(
@@ -341,7 +342,8 @@ class _LoginPageState extends State<LoginPage> {
                                     onTap: () {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
-                                          builder: (context) => RegisterPage(),
+                                          builder: (context) =>
+                                              const RegisterPage(),
                                         ),
                                       );
                                     },

@@ -1,5 +1,7 @@
 //Plugins
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/cupertino.dart';
 //Firebase Package
 import 'package:firebase_auth/firebase_auth.dart';
 //Pages
@@ -25,12 +27,16 @@ class _RegisterPageState extends State<RegisterPage> {
   final _registerFormKey = GlobalKey<FormState>();
 
   final _nameTextController = TextEditingController();
+  final _dateTextController = TextEditingController();
   final _emailTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
+  final _repasswordTextController = TextEditingController();
 
   final _focusName = FocusNode();
+  final _focusDate = FocusNode();
   final _focusEmail = FocusNode();
   final _focusPassword = FocusNode();
+  final _focusRePassword = FocusNode();
 
   bool _isProcessing = false;
 
@@ -43,87 +49,169 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
+  DateTime? _chosenDate;
+  bool _dateChosen = false;
+
+  void _showDatePicker(ctx) {
+    showCupertinoModalPopup(
+        context: ctx,
+        builder: (_) => Container(
+              height: 300,
+              color: Colors.white,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 245,
+                    child: CupertinoDatePicker(
+                        mode: CupertinoDatePickerMode.date,
+                        initialDateTime:
+                            _dateChosen ? _chosenDate : DateTime.now(),
+                        maximumDate: DateTime.now(),
+                        onDateTimeChanged: (val) {
+                          setState(() {
+                            _chosenDate = val;
+                            _dateChosen = true;
+                          });
+                          _dateTextController.text =
+                              DateFormat('dd/MM/yyyy').format(val).toString();
+                        }),
+                  ),
+                  CupertinoButton(
+                    child: const Text(
+                      'Potwierdź',
+                      style: signTextFormField,
+                    ),
+                    onPressed: () => Navigator.of(ctx).pop(),
+                  )
+                ],
+              ),
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        _focusName.unfocus();
-        _focusEmail.unfocus();
-        _focusPassword.unfocus();
-      },
-      child: Scaffold(
-        body: SingleChildScrollView(
-          controller: controller,
-          child: Container(
-            padding: const EdgeInsets.only(
-              left: 20.0,
-              right: 20.0,
-              top: 50.0,
-              bottom: 20.0,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Nazwa Apki',
-                  style: appNameSign,
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 30.0),
-                  alignment: Alignment.centerLeft,
-                  child: const Text(
-                    'Rejestracja',
-                    style: pageNameSign,
+    return _isProcessing
+        ? const CircularProgressIndicator()
+        : GestureDetector(
+            onTap: () {
+              _focusName.unfocus();
+              _focusDate.unfocus();
+              _focusEmail.unfocus();
+              _focusPassword.unfocus();
+              _focusRePassword.unfocus();
+            },
+            child: Scaffold(
+              body: SingleChildScrollView(
+                controller: controller,
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  padding: const EdgeInsets.only(
+                    left: 20.0,
+                    right: 20.0,
+                    top: 50.0,
+                    bottom: 20.0,
                   ),
-                ),
-                const SizedBox(height: 20.0),
-                Form(
-                  key: _registerFormKey,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
-                        children: <Widget>[
-                          TextFormField(
-                            controller: _nameTextController,
-                            focusNode: _focusName,
-                            validator: (value) => Validator.validateName(
-                              name: value,
-                            ),
-                            style: signTextFormField,
-                            decoration: CommonStyle.textFieldStyle(
-                              labelTextStr: "Nazwa",
+                        children: [
+                          const Text(
+                            'Nazwa Apki',
+                            style: appNameSign,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 30.0),
+                            alignment: Alignment.centerLeft,
+                            child: const Text(
+                              'Rejestracja',
+                              style: pageNameSign,
                             ),
                           ),
-                          const SizedBox(height: 13.0),
-                          TextFormField(
-                            controller: _emailTextController,
-                            focusNode: _focusEmail,
-                            validator: (value) => Validator.validateEmail(
-                              email: value,
-                            ),
-                            style: signTextFormField,
-                            decoration: CommonStyle.textFieldStyle(
-                              labelTextStr: "Adres Email",
-                              hintTextStr: "example@mail.com",
-                            ),
-                          ),
-                          const SizedBox(height: 13.0),
-                          TextFormField(
-                            controller: _passwordTextController,
-                            focusNode: _focusPassword,
-                            obscureText: true,
-                            validator: (value) => Validator.validatePassword(
-                              password: value,
-                            ),
-                            style: signTextFormField,
-                            decoration: CommonStyle.textFieldStyle(
-                              labelTextStr: "Hasło",
-                            ),
-                          ),
-                          const SizedBox(height: 13.0),
-                          _isProcessing
-                              ? const CircularProgressIndicator()
-                              : Row(
+                          const SizedBox(height: 20.0),
+                          Form(
+                            key: _registerFormKey,
+                            child: Column(
+                              children: <Widget>[
+                                TextFormField(
+                                  controller: _nameTextController,
+                                  focusNode: _focusName,
+                                  validator: (value) => Validator.validateName(
+                                    name: value,
+                                  ),
+                                  style: signTextFormField,
+                                  decoration: CommonStyle.textFieldStyle(
+                                    labelTextStr: "Nazwa",
+                                  ),
+                                ),
+                                const SizedBox(height: 13.0),
+                                Stack(
+                                    alignment: Alignment.centerRight,
+                                    children: [
+                                      TextFormField(
+                                        controller: _dateTextController,
+                                        focusNode: _focusDate,
+                                        validator: (value) =>
+                                            Validator.validateDate(
+                                          date: value,
+                                        ),
+                                        enabled: false,
+                                        style: signTextFormField,
+                                        decoration: CommonStyle.textFieldStyle(
+                                          labelTextStr: "Data Urodzenia",
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          _showDatePicker(context);
+                                        },
+                                        icon: const Icon(Icons.calendar_today),
+                                        color: halfBlackColor,
+                                      ),
+                                    ]),
+                                const SizedBox(height: 13.0),
+                                TextFormField(
+                                  controller: _emailTextController,
+                                  focusNode: _focusEmail,
+                                  validator: (value) => Validator.validateEmail(
+                                    email: value,
+                                  ),
+                                  style: signTextFormField,
+                                  decoration: CommonStyle.textFieldStyle(
+                                    labelTextStr: "Adres Email",
+                                    hintTextStr: "example@mail.com",
+                                  ),
+                                ),
+                                const SizedBox(height: 13.0),
+                                TextFormField(
+                                  controller: _passwordTextController,
+                                  focusNode: _focusPassword,
+                                  obscureText: true,
+                                  validator: (value) =>
+                                      Validator.validatePassword(
+                                    password: value,
+                                  ),
+                                  style: signTextFormField,
+                                  decoration: CommonStyle.textFieldStyle(
+                                    labelTextStr: "Hasło",
+                                  ),
+                                ),
+                                const SizedBox(height: 13.0),
+                                TextFormField(
+                                  controller: _repasswordTextController,
+                                  focusNode: _focusRePassword,
+                                  obscureText: true,
+                                  validator: (value) =>
+                                      Validator.validateRePassword(
+                                    repassword: value,
+                                  ),
+                                  style: signTextFormField,
+                                  decoration: CommonStyle.textFieldStyle(
+                                    labelTextStr: "Powtórz Hasło",
+                                  ),
+                                ),
+                                const SizedBox(height: 13.0),
+                                Row(
                                   children: [
                                     Expanded(
                                       child: ElevatedButton(
@@ -176,9 +264,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                     ),
                                   ],
                                 )
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                      const SizedBox(height: 50.0),
+                      //TODO Po zmniejszaniu okna Overflow
                       Column(
                         children: [
                           Row(
@@ -215,12 +306,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ],
                   ),
-                )
-              ],
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+          );
   }
 }
