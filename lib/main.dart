@@ -1,7 +1,7 @@
 //Plugins
 import 'package:flutter/material.dart';
 //Pages
-import 'pages/login_page.dart';
+import 'pages/signin_page.dart';
 //Theme
 import 'package:auth/theme/light_theme.dart';
 
