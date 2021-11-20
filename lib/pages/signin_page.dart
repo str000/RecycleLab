@@ -83,287 +83,291 @@ class _LoginPageState extends State<LoginPage> {
                 ? const CircularProgressIndicator()
                 : SingleChildScrollView(
                     controller: controller,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height,
-                      padding: const EdgeInsets.only(
-                        left: 20.0,
-                        right: 20.0,
-                        top: 50.0,
-                        bottom: 20.0,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: MediaQuery.of(context).size.height,
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            children: [
-                              const Text(
-                                'Nazwa Apki',
-                                style: appNameSign,
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(top: 30.0),
-                                alignment: Alignment.centerLeft,
-                                child: const Text(
-                                  'Logowanie',
-                                  style: pageNameSign,
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          left: 20.0,
+                          right: 20.0,
+                          top: 50.0,
+                          bottom: 20.0,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                const Text(
+                                  'Nazwa Apki',
+                                  style: appNameSign,
                                 ),
-                              ),
-                              const SizedBox(height: 20.0),
-                              Form(
-                                key: _formKey,
-                                child: Column(
-                                  children: <Widget>[
-                                    TextFormField(
-                                      controller: _emailTextController,
-                                      focusNode: _focusEmail,
-                                      validator: (value) =>
-                                          Validator.validateEmail(
-                                        email: value,
-                                      ),
-                                      style: signTextFormField,
-                                      decoration: CommonStyle.textFieldStyle(
-                                        labelTextStr: "Adres Email",
-                                        hintTextStr: "example@mail.com",
-                                      ),
-                                    ),
-                                    const SizedBox(height: 13.0),
-                                    TextFormField(
-                                      controller: _passwordTextController,
-                                      focusNode: _focusPassword,
-                                      obscureText: _obscureText,
-                                      validator: (value) =>
-                                          Validator.validatePassword(
-                                        password: value,
-                                      ),
-                                      style: signTextFormField,
-                                      decoration: CommonStyle.textFieldStyle(
-                                        labelTextStr: "Hasło",
-                                        suffIcon: IconButton(
-                                          onPressed: _toggle,
-                                          icon: _obscureText
-                                              ? const Icon(Icons.visibility_off)
-                                              : const Icon(Icons.visibility),
+                                Container(
+                                  margin: const EdgeInsets.only(top: 30.0),
+                                  alignment: Alignment.centerLeft,
+                                  child: const Text(
+                                    'Logowanie',
+                                    style: pageNameSign,
+                                  ),
+                                ),
+                                const SizedBox(height: 20.0),
+                                Form(
+                                  key: _formKey,
+                                  child: Column(
+                                    children: <Widget>[
+                                      TextFormField(
+                                        controller: _emailTextController,
+                                        focusNode: _focusEmail,
+                                        validator: (value) =>
+                                            Validator.validateEmail(
+                                          email: value,
+                                        ),
+                                        style: signTextFormField,
+                                        decoration: CommonStyle.textFieldStyle(
+                                          labelTextStr: "Adres Email",
+                                          hintTextStr: "example@mail.com",
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 13.0),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: ElevatedButton(
-                                            onPressed: () async {
-                                              _focusEmail.unfocus();
-                                              _focusPassword.unfocus();
+                                      const SizedBox(height: 13.0),
+                                      TextFormField(
+                                        controller: _passwordTextController,
+                                        focusNode: _focusPassword,
+                                        obscureText: _obscureText,
+                                        validator: (value) =>
+                                            Validator.validatePassword(
+                                          password: value,
+                                        ),
+                                        style: signTextFormField,
+                                        decoration: CommonStyle.textFieldStyle(
+                                          labelTextStr: "Hasło",
+                                          suffIcon: IconButton(
+                                            onPressed: _toggle,
+                                            icon: _obscureText
+                                                ? const Icon(
+                                                    Icons.visibility_off)
+                                                : const Icon(Icons.visibility),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 13.0),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: ElevatedButton(
+                                              onPressed: () async {
+                                                _focusEmail.unfocus();
+                                                _focusPassword.unfocus();
 
-                                              if (_formKey.currentState!
-                                                  .validate()) {
-                                                setState(() {
-                                                  _isProcessing = true;
-                                                });
+                                                if (_formKey.currentState!
+                                                    .validate()) {
+                                                  setState(() {
+                                                    _isProcessing = true;
+                                                  });
 
-                                                User? user = await FireAuth
-                                                    .signInUsingEmailPassword(
-                                                  email:
-                                                      _emailTextController.text,
-                                                  password:
-                                                      _passwordTextController
-                                                          .text,
-                                                );
-
-                                                setState(() {
-                                                  _isProcessing = false;
-                                                });
-
-                                                if (user != null) {
-                                                  Navigator.of(context)
-                                                      .pushReplacement(
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ProfilePage(
-                                                              user: user),
-                                                    ),
+                                                  User? user = await FireAuth
+                                                      .signInUsingEmailPassword(
+                                                    email: _emailTextController
+                                                        .text,
+                                                    password:
+                                                        _passwordTextController
+                                                            .text,
                                                   );
+
+                                                  setState(() {
+                                                    _isProcessing = false;
+                                                  });
+
+                                                  if (user != null) {
+                                                    Navigator.of(context)
+                                                        .pushReplacement(
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ProfilePage(
+                                                                user: user),
+                                                      ),
+                                                    );
+                                                  }
                                                 }
-                                              }
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              primary: primaryColor,
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                vertical: 12.0,
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                primary: primaryColor,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  vertical: 12.0,
+                                                ),
                                               ),
-                                            ),
-                                            child: const Text(
-                                              'Zaloguj',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.w700,
+                                              child: const Text(
+                                                'Zaloguj',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20.0,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 30.0),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(4.0),
+                                      child: Container(
+                                        width: 130,
+                                        height: 4,
+                                        color: quarterBlackcolor,
+                                      ),
+                                    ),
+                                    const Text(
+                                      'lub',
+                                      style: TextStyle(
+                                        color: halfBlackColor,
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(4.0),
+                                      child: Container(
+                                        width: 130,
+                                        height: 4,
+                                        color: quarterBlackcolor,
+                                      ),
                                     )
                                   ],
                                 ),
-                              ),
-                              const SizedBox(height: 30.0),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(4.0),
-                                    child: Container(
-                                      width: 130,
-                                      height: 4,
-                                      color: quarterBlackcolor,
-                                    ),
-                                  ),
-                                  const Text(
-                                    'lub',
-                                    style: TextStyle(
-                                      color: halfBlackColor,
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(4.0),
-                                    child: Container(
-                                      width: 130,
-                                      height: 4,
-                                      color: quarterBlackcolor,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(height: 30.0),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        print("Google");
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.white,
-                                        padding: const EdgeInsets.only(
-                                          top: 12.0,
-                                          bottom: 12.0,
-                                          left: 20.0,
-                                          right: 50.0,
-                                        ),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: const [
-                                          Image(
-                                              width: 26.0,
-                                              height: 26.0,
-                                              image: AssetImage(
-                                                  'assets/google_logo.png')),
-                                          Text(
-                                            'Zaloguj przez Google',
-                                            style: TextStyle(
-                                              color: halfBlackColor,
-                                              fontSize: 20.0,
-                                              fontFamily: "Roboto",
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                                const SizedBox(height: 30.0),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          print("Google");
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.white,
+                                          padding: const EdgeInsets.only(
+                                            top: 12.0,
+                                            bottom: 12.0,
+                                            left: 20.0,
+                                            right: 50.0,
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 13.0),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        print("Facebook");
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        primary: const Color.fromRGBO(
-                                            24, 119, 242, 1),
-                                        padding: const EdgeInsets.only(
-                                          top: 12.0,
-                                          bottom: 12.0,
-                                          left: 20.0,
-                                          right: 30.0,
                                         ),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: const [
-                                          Image(
-                                              width: 26.0,
-                                              height: 26.0,
-                                              image: AssetImage(
-                                                  'assets/facebook_logo.png')),
-                                          Text(
-                                            'Zaloguj przez Facebook',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20.0,
-                                              fontFamily: "Roboto",
-                                              fontWeight: FontWeight.w600,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: const [
+                                            Image(
+                                                width: 26.0,
+                                                height: 26.0,
+                                                image: AssetImage(
+                                                    'assets/google_logo.png')),
+                                            Text(
+                                              'Zaloguj przez Google',
+                                              style: TextStyle(
+                                                color: halfBlackColor,
+                                                fontSize: 20.0,
+                                                fontFamily: "Roboto",
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          //TODO Po zmniejszaniu okna Overflow
-                          Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    'Nie masz konta? ',
-                                    style: TextStyle(
-                                      color: halfBlackColor,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 19.0,
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const RegisterPage(),
+                                  ],
+                                ),
+                                const SizedBox(height: 13.0),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          print("Facebook");
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          primary: const Color.fromRGBO(
+                                              24, 119, 242, 1),
+                                          padding: const EdgeInsets.only(
+                                            top: 12.0,
+                                            bottom: 12.0,
+                                            left: 20.0,
+                                            right: 30.0,
+                                          ),
                                         ),
-                                      );
-                                    },
-                                    child: const Text(
-                                      'Zarejestruj',
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: const [
+                                            Image(
+                                                width: 26.0,
+                                                height: 26.0,
+                                                image: AssetImage(
+                                                    'assets/facebook_logo.png')),
+                                            Text(
+                                              'Zaloguj przez Facebook',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20.0,
+                                                fontFamily: "Roboto",
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 20.0),
+                            Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      'Nie masz konta? ',
                                       style: TextStyle(
-                                        color: primaryColor,
+                                        color: halfBlackColor,
                                         fontWeight: FontWeight.w700,
                                         fontSize: 19.0,
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const RegisterPage(),
+                                          ),
+                                        );
+                                      },
+                                      child: const Text(
+                                        'Zarejestruj',
+                                        style: TextStyle(
+                                          color: primaryColor,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 19.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
+                    ));
           },
         ),
       ),

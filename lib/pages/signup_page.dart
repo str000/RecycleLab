@@ -103,212 +103,222 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Scaffold(
               body: SingleChildScrollView(
                 controller: controller,
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  padding: const EdgeInsets.only(
-                    left: 20.0,
-                    right: 20.0,
-                    top: 50.0,
-                    bottom: 20.0,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.height,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          const Text(
-                            'Nazwa Apki',
-                            style: appNameSign,
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 30.0),
-                            alignment: Alignment.centerLeft,
-                            child: const Text(
-                              'Rejestracja',
-                              style: pageNameSign,
+                  child: Container(
+                    //height: MediaQuery.of(context).size.height,
+                    padding: const EdgeInsets.only(
+                      left: 20.0,
+                      right: 20.0,
+                      top: 50.0,
+                      bottom: 20.0,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            const Text(
+                              'Nazwa Apki',
+                              style: appNameSign,
                             ),
-                          ),
-                          const SizedBox(height: 20.0),
-                          Form(
-                            key: _registerFormKey,
-                            child: Column(
-                              children: <Widget>[
-                                TextFormField(
-                                  controller: _nameTextController,
-                                  focusNode: _focusName,
-                                  validator: (value) => Validator.validateName(
-                                    name: value,
+                            Container(
+                              margin: const EdgeInsets.only(top: 30.0),
+                              alignment: Alignment.centerLeft,
+                              child: const Text(
+                                'Rejestracja',
+                                style: pageNameSign,
+                              ),
+                            ),
+                            const SizedBox(height: 20.0),
+                            Form(
+                              key: _registerFormKey,
+                              child: Column(
+                                children: <Widget>[
+                                  TextFormField(
+                                    controller: _nameTextController,
+                                    focusNode: _focusName,
+                                    validator: (value) =>
+                                        Validator.validateName(
+                                      name: value,
+                                    ),
+                                    style: signTextFormField,
+                                    decoration: CommonStyle.textFieldStyle(
+                                      labelTextStr: "Nazwa",
+                                    ),
                                   ),
-                                  style: signTextFormField,
-                                  decoration: CommonStyle.textFieldStyle(
-                                    labelTextStr: "Nazwa",
+                                  const SizedBox(height: 13.0),
+                                  Stack(
+                                      alignment: Alignment.centerRight,
+                                      children: [
+                                        TextFormField(
+                                          controller: _dateTextController,
+                                          focusNode: _focusDate,
+                                          validator: (value) =>
+                                              Validator.validateDate(
+                                            date: value,
+                                          ),
+                                          enabled: false,
+                                          style: signTextFormField,
+                                          decoration:
+                                              CommonStyle.textFieldStyle(
+                                            labelTextStr: "Data Urodzenia",
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            _showDatePicker(context);
+                                          },
+                                          icon:
+                                              const Icon(Icons.calendar_today),
+                                          color: halfBlackColor,
+                                        ),
+                                      ]),
+                                  const SizedBox(height: 13.0),
+                                  TextFormField(
+                                    controller: _emailTextController,
+                                    focusNode: _focusEmail,
+                                    validator: (value) =>
+                                        Validator.validateEmail(
+                                      email: value,
+                                    ),
+                                    style: signTextFormField,
+                                    decoration: CommonStyle.textFieldStyle(
+                                      labelTextStr: "Adres Email",
+                                      hintTextStr: "example@mail.com",
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 13.0),
-                                Stack(
-                                    alignment: Alignment.centerRight,
+                                  const SizedBox(height: 13.0),
+                                  TextFormField(
+                                    controller: _passwordTextController,
+                                    focusNode: _focusPassword,
+                                    obscureText: true,
+                                    validator: (value) =>
+                                        Validator.validatePassword(
+                                      password: value,
+                                    ),
+                                    style: signTextFormField,
+                                    decoration: CommonStyle.textFieldStyle(
+                                      labelTextStr: "Hasło",
+                                    ),
+                                  ),
+                                  const SizedBox(height: 13.0),
+                                  TextFormField(
+                                    controller: _repasswordTextController,
+                                    focusNode: _focusRePassword,
+                                    obscureText: true,
+                                    validator: (value) =>
+                                        Validator.validateRePassword(
+                                      repassword: value,
+                                    ),
+                                    style: signTextFormField,
+                                    decoration: CommonStyle.textFieldStyle(
+                                      labelTextStr: "Powtórz Hasło",
+                                    ),
+                                  ),
+                                  const SizedBox(height: 13.0),
+                                  Row(
                                     children: [
-                                      TextFormField(
-                                        controller: _dateTextController,
-                                        focusNode: _focusDate,
-                                        validator: (value) =>
-                                            Validator.validateDate(
-                                          date: value,
-                                        ),
-                                        enabled: false,
-                                        style: signTextFormField,
-                                        decoration: CommonStyle.textFieldStyle(
-                                          labelTextStr: "Data Urodzenia",
-                                        ),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          _showDatePicker(context);
-                                        },
-                                        icon: const Icon(Icons.calendar_today),
-                                        color: halfBlackColor,
-                                      ),
-                                    ]),
-                                const SizedBox(height: 13.0),
-                                TextFormField(
-                                  controller: _emailTextController,
-                                  focusNode: _focusEmail,
-                                  validator: (value) => Validator.validateEmail(
-                                    email: value,
-                                  ),
-                                  style: signTextFormField,
-                                  decoration: CommonStyle.textFieldStyle(
-                                    labelTextStr: "Adres Email",
-                                    hintTextStr: "example@mail.com",
-                                  ),
-                                ),
-                                const SizedBox(height: 13.0),
-                                TextFormField(
-                                  controller: _passwordTextController,
-                                  focusNode: _focusPassword,
-                                  obscureText: true,
-                                  validator: (value) =>
-                                      Validator.validatePassword(
-                                    password: value,
-                                  ),
-                                  style: signTextFormField,
-                                  decoration: CommonStyle.textFieldStyle(
-                                    labelTextStr: "Hasło",
-                                  ),
-                                ),
-                                const SizedBox(height: 13.0),
-                                TextFormField(
-                                  controller: _repasswordTextController,
-                                  focusNode: _focusRePassword,
-                                  obscureText: true,
-                                  validator: (value) =>
-                                      Validator.validateRePassword(
-                                    repassword: value,
-                                  ),
-                                  style: signTextFormField,
-                                  decoration: CommonStyle.textFieldStyle(
-                                    labelTextStr: "Powtórz Hasło",
-                                  ),
-                                ),
-                                const SizedBox(height: 13.0),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: ElevatedButton(
-                                        onPressed: () async {
-                                          setState(() {
-                                            _isProcessing = true;
-                                          });
-
-                                          if (_registerFormKey.currentState!
-                                              .validate()) {
-                                            User? user = await FireAuth
-                                                .registerUsingEmailPassword(
-                                              name: _nameTextController.text,
-                                              email: _emailTextController.text,
-                                              password:
-                                                  _passwordTextController.text,
-                                            );
-
+                                      Expanded(
+                                        child: ElevatedButton(
+                                          onPressed: () async {
                                             setState(() {
-                                              _isProcessing = false;
+                                              _isProcessing = true;
                                             });
 
-                                            if (user != null) {
-                                              Navigator.of(context)
-                                                  .pushAndRemoveUntil(
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ProfilePage(user: user),
-                                                ),
-                                                ModalRoute.withName('/'),
+                                            if (_registerFormKey.currentState!
+                                                .validate()) {
+                                              User? user = await FireAuth
+                                                  .registerUsingEmailPassword(
+                                                name: _nameTextController.text,
+                                                email:
+                                                    _emailTextController.text,
+                                                password:
+                                                    _passwordTextController
+                                                        .text,
                                               );
+
+                                              setState(() {
+                                                _isProcessing = false;
+                                              });
+
+                                              if (user != null) {
+                                                Navigator.of(context)
+                                                    .pushAndRemoveUntil(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ProfilePage(user: user),
+                                                  ),
+                                                  ModalRoute.withName('/'),
+                                                );
+                                              }
                                             }
-                                          }
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          primary: primaryColor,
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 12.0,
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            primary: primaryColor,
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 12.0,
+                                            ),
                                           ),
-                                        ),
-                                        child: const Text(
-                                          'Zarejestruj',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.w700,
+                                          child: const Text(
+                                            'Zarejestruj',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.w700,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      //TODO Po zmniejszaniu okna Overflow
-                      Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                'Masz już konto? ',
-                                style: TextStyle(
-                                  color: halfBlackColor,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 19.0,
-                                ),
+                                    ],
+                                  )
+                                ],
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => const LoginPage(),
-                                    ),
-                                  );
-                                },
-                                child: const Text(
-                                  'Zaloguj',
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20.0),
+                        Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'Masz już konto? ',
                                   style: TextStyle(
-                                    color: primaryColor,
+                                    color: halfBlackColor,
                                     fontWeight: FontWeight.w700,
                                     fontSize: 19.0,
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => const LoginPage(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text(
+                                    'Zaloguj',
+                                    style: TextStyle(
+                                      color: primaryColor,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 19.0,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
+            ));
   }
 }
