@@ -200,6 +200,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 onChanged: validate,
                               ),
                               const SizedBox(height: 13.0),
+                              //TODO Dodać datę urodzenia do bazy używając UID
                               Stack(
                                   alignment: Alignment.centerRight,
                                   children: [

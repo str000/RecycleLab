@@ -254,8 +254,18 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 Expanded(
                                   child: ElevatedButton(
-                                    onPressed: () {
-                                      print("Google");
+                                    onPressed: () async {
+                                      User? user =
+                                          await FireAuth.signInWithGoogle(
+                                              context: context);
+                                      if (user != null) {
+                                        Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProfilePage(user: user),
+                                          ),
+                                        );
+                                      }
                                     },
                                     style: ElevatedButton.styleFrom(
                                       primary: Colors.white,
@@ -295,8 +305,18 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 Expanded(
                                   child: ElevatedButton(
-                                    onPressed: () {
-                                      print("Facebook");
+                                    onPressed: () async {
+                                      /*User? user =
+                                          await FireAuth.signInWithFacebook(
+                                              context: context);
+                                      if (user != null) {
+                                        Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProfilePage(user: user),
+                                          ),
+                                        );
+                                      }*/
                                     },
                                     style: ElevatedButton.styleFrom(
                                       primary:
