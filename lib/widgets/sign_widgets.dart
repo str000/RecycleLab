@@ -31,6 +31,10 @@ class CommonStyle {
           color: Colors.red,
         ),
       ),
+      errorStyle: const TextStyle(
+        height: 0,
+        fontSize: 0.0,
+      ),
       suffixIcon: suffIcon,
     );
   }

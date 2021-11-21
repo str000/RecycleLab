@@ -1,11 +1,11 @@
 class Validator {
-  static String? validateName({required String? name}) {
+  static String? validateName({String? name}) {
     if (name == null) {
-      return null;
+      return '';
     }
 
     if (name.isEmpty) {
-      return 'Name can\'t be empty';
+      return '';
     }
 
     return null;
@@ -13,11 +13,11 @@ class Validator {
 
   static String? validateDate({required String? date}) {
     if (date == null) {
-      return null;
+      return '';
     }
 
     if (date.isEmpty) {
-      return 'Name can\'t be empty';
+      return '';
     }
 
     return null;
@@ -25,16 +25,16 @@ class Validator {
 
   static String? validateEmail({required String? email}) {
     if (email == null) {
-      return null;
+      return '';
     }
 
     RegExp emailRegExp = RegExp(
         r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
 
     if (email.isEmpty) {
-      return null; //Adres Email nie może być pusty
+      return '';
     } else if (!emailRegExp.hasMatch(email)) {
-      return null; //Nie prawidłowy Adres Email
+      return '';
     }
 
     return null;
@@ -42,27 +42,32 @@ class Validator {
 
   static String? validatePassword({required String? password}) {
     if (password == null) {
-      return null;
+      return '';
     }
 
     if (password.isEmpty) {
-      return null; //Hasło nie może być puste
+      return '';
     } else if (password.length < 6) {
-      return null; //Enter a password with length at least 6
+      return '';
     }
 
     return null;
   }
 
-  static String? validateRePassword({required String? repassword}) {
+  static String? validateRePassword(
+      {required String? repassword, String? password}) {
     if (repassword == null) {
-      return null;
+      return '';
     }
 
     if (repassword.isEmpty) {
-      return null; //Hasło nie może być puste
+      return '';
     } else if (repassword.length < 6) {
-      return null; //Enter a password with length at least 6
+      return '';
+    }
+
+    if (repassword != password) {
+      return '';
     }
 
     return null;
