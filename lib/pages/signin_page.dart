@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 //Pages
-import 'package:auth/pages/profile_page.dart';
+import 'package:auth/pages/home_page.dart';
 import 'package:auth/pages/signup_page.dart';
 //Utils
 import 'package:auth/utils/fire_auth.dart';

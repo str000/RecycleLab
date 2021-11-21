@@ -9,6 +9,8 @@ import 'package:auth/utils/fire_auth.dart';
 //Theme
 
 //Widgets
+import 'package:auth/widgets/top_bar.dart';
+import 'package:auth/widgets/nav_bar.dart';
 
 class ProfilePage extends StatefulWidget {
   final User user;
@@ -34,8 +36,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
+      appBar: const TopBar(
+        height: 90,
       ),
       body: Center(
         child: Column(
@@ -128,6 +130,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
       ),
+      bottomNavigationBar: const NavBar(),
     );
   }
 }

@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 //Firebase Package
 import 'package:firebase_auth/firebase_auth.dart';
 //Pages
-import 'package:auth/pages/profile_page.dart';
+import 'package:auth/pages/home_page.dart';
 import 'package:auth/pages/signin_page.dart';
 //Utils
 import 'package:auth/utils/fire_auth.dart';
