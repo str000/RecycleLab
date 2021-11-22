@@ -1,3 +1,4 @@
+import 'package:auth/pages/settings_page.dart';
 import 'package:auth/theme/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +51,13 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
                           size: 35,
                           color: Color.fromRGBO(0, 0, 0, .5),
                         ),
-                        onPressed: () {}),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const SettingsPage(),
+                            ),
+                          );
+                        }),
                   ])
                 ])),
       ],
