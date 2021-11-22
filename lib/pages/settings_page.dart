@@ -1,3 +1,5 @@
+import 'package:auth/pages/settings/account_page.dart';
+import 'package:auth/pages/settings/notification_page.dart';
 import 'package:auth/pages/signin_page.dart';
 import 'package:auth/theme/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,8 +29,6 @@ class _SettingsPageState extends State<SettingsPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
                         padding: EdgeInsets.zero,
                         icon: const Icon(
                           Icons.arrow_back,
@@ -111,7 +111,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             Column(
                               children: const [
                                 Text(
-                                  'Dane Osobowe',
+                                  'Dane Konta',
                                   style: TextStyle(
                                     fontSize: 20.0,
                                     color: Colors.black,
@@ -131,7 +131,14 @@ class _SettingsPageState extends State<SettingsPage> {
                                     ),
                                     primary: halfBlackColor,
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const AccountPage(),
+                                      ),
+                                    );
+                                  },
                                   child: const Text('Edytuj'),
                                 ),
                               ],
@@ -165,7 +172,14 @@ class _SettingsPageState extends State<SettingsPage> {
                                     ),
                                     primary: halfBlackColor,
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const NotificationPage(),
+                                      ),
+                                    );
+                                  },
                                   child: const Text('Edytuj'),
                                 ),
                               ],
@@ -334,7 +348,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             Column(
                               children: const [
                                 Text(
-                                  'Usuń konto',
+                                  'Usuń Konto',
                                   style: TextStyle(
                                     fontSize: 20.0,
                                     color: Colors.black,
@@ -368,35 +382,6 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ],
           ),
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () {
-                  print("zastosuj");
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: primaryColor,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12.0,
-                  ),
-                ),
-                child: const Text(
-                  'Zastosuj',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );
