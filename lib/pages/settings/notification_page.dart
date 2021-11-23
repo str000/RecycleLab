@@ -1,4 +1,5 @@
 import 'package:auth/theme/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NotificationPage extends StatefulWidget {
@@ -9,6 +10,11 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
+  bool _notificationOneValue = false;
+  bool _notificationTwoValue = false;
+  bool _notificationThreeValue = false;
+  bool _notificationFourValue = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +41,17 @@ class _NotificationPageState extends State<NotificationPage> {
                           Navigator.pop(context);
                         },
                       ),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 10.0),
+                        child: Text(
+                          'Ustawienia',
+                          style: TextStyle(
+                            fontSize: 30.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   //------Napis Ustawienia------
@@ -57,42 +74,140 @@ class _NotificationPageState extends State<NotificationPage> {
                   Container(
                     margin: const EdgeInsets.all(10.0),
                     child: Column(
-                      children: [],
+                      children: [
+                        //Powiadomienia 1
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: const [
+                                Text(
+                                  'Powiadomienia 1',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                CupertinoSwitch(
+                                  value: _notificationOneValue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _notificationOneValue = value;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 13.0),
+
+                        //Powiadomienia 2
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: const [
+                                Text(
+                                  'Powiadomienia 2',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                CupertinoSwitch(
+                                  value: _notificationTwoValue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _notificationTwoValue = value;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 13.0),
+
+                        //Powiadomienia 3
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: const [
+                                Text(
+                                  'Powiadomienia 3',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                CupertinoSwitch(
+                                  value: _notificationThreeValue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _notificationThreeValue = value;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 13.0),
+
+                        //Powiadomienia 4
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: const [
+                                Text(
+                                  'Powiadomienia 4',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                CupertinoSwitch(
+                                  value: _notificationFourValue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _notificationFourValue = value;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ],
           ),
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () {
-                  print("zastosuj");
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: primaryColor,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12.0,
-                  ),
-                ),
-                child: const Text(
-                  'Zastosuj',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );

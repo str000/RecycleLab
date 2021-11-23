@@ -273,26 +273,32 @@ class _LoginPageState extends State<LoginPage> {
                                         top: 12.0,
                                         bottom: 12.0,
                                         left: 20.0,
-                                        right: 50.0,
+                                        right: 10.0,
                                       ),
                                     ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        Image(
+                                    child: Stack(
+                                      alignment: Alignment.centerLeft,
+                                      children: [
+                                        const Image(
                                             width: 26.0,
                                             height: 26.0,
                                             image: AssetImage(
                                                 'assets/google_logo.png')),
-                                        Text(
-                                          'Zaloguj przez Google',
-                                          style: TextStyle(
-                                            color: halfBlackColor,
-                                            fontSize: 20.0,
-                                            fontFamily: "Roboto",
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: const [
+                                            Text(
+                                              'Zaloguj przez Google',
+                                              style: TextStyle(
+                                                color: halfBlackColor,
+                                                fontSize: 20.0,
+                                                fontFamily: "Roboto",
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
@@ -325,26 +331,32 @@ class _LoginPageState extends State<LoginPage> {
                                         top: 12.0,
                                         bottom: 12.0,
                                         left: 20.0,
-                                        right: 30.0,
+                                        right: 10.0,
                                       ),
                                     ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        Image(
+                                    child: Stack(
+                                      alignment: Alignment.centerLeft,
+                                      children: [
+                                        const Image(
                                             width: 26.0,
                                             height: 26.0,
                                             image: AssetImage(
                                                 'assets/facebook_logo.png')),
-                                        Text(
-                                          'Zaloguj przez Facebook',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20.0,
-                                            fontFamily: "Roboto",
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: const [
+                                            Text(
+                                              'Zaloguj przez Facebook',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20.0,
+                                                fontFamily: "Roboto",
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
