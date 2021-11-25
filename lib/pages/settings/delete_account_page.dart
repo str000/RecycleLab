@@ -1,5 +1,7 @@
-import 'package:auth/theme/colors.dart';
+//Plugins
 import 'package:flutter/material.dart';
+//Theme
+import 'package:auth/theme/colors.dart';
 
 class DeleteAccountPage extends StatefulWidget {
   const DeleteAccountPage({Key? key}) : super(key: key);

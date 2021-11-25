@@ -1,12 +1,17 @@
-import 'package:auth/theme/colors.dart';
-import 'package:auth/theme/text.dart';
-import 'package:auth/utils/fire_auth.dart';
-import 'package:auth/utils/validator.dart';
-import 'package:auth/widgets/sign_widgets.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+//Plugins
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+//Firebase Package
+import 'package:firebase_auth/firebase_auth.dart';
+//Utils
+import 'package:auth/utils/fire_auth.dart';
+import 'package:auth/utils/validator.dart';
+//Theme
+import 'package:auth/theme/colors.dart';
+import 'package:auth/theme/text.dart';
+//Widgets
+import 'package:auth/widgets/sign_widgets.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({Key? key}) : super(key: key);

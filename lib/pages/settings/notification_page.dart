@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+//Plugins
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({Key? key}) : super(key: key);

@@ -1,5 +1,8 @@
-import 'package:auth/theme/colors.dart';
+//Plugins
 import 'package:flutter/material.dart';
+//Pages
+//Theme
+import 'package:auth/theme/colors.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({Key? key}) : super(key: key);

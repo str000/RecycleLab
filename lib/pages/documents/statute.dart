@@ -1,6 +1,8 @@
-import 'package:auth/theme/text.dart';
-import 'package:flutter/cupertino.dart';
+//Plugins
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+//Theme
+import 'package:auth/theme/text.dart';
 
 class StatutePage extends StatefulWidget {
   const StatutePage({Key? key}) : super(key: key);

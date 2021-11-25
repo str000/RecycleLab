@@ -1,6 +1,7 @@
+//Plugins
 import 'package:flutter/material.dart';
-
-import 'colors.dart';
+//Theme
+import 'package:auth/theme/colors.dart';
 
 class ModeTheme {
   static ThemeData get lightTheme {

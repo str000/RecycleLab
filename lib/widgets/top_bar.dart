@@ -1,12 +1,16 @@
+//Plugins
+import 'package:flutter/material.dart';
+//Pages
 import 'package:auth/pages/settings_page.dart';
+//Theme
 import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
-import 'package:flutter/material.dart';
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
 
-  const TopBar({Key? key, 
+  const TopBar({
+    Key? key,
     required this.height,
   }) : super(key: key);
 

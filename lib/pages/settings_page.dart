@@ -1,13 +1,19 @@
+//Plugins
+import 'package:flutter/material.dart';
+//Firebase Package
+import 'package:firebase_auth/firebase_auth.dart';
+//Pages
 import 'package:auth/pages/settings/account_page.dart';
 import 'package:auth/pages/settings/delete_account_page.dart';
 import 'package:auth/pages/settings/notification_page.dart';
 import 'package:auth/pages/signin_page.dart';
-import 'package:auth/theme/colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-
 import 'documents/data_processing.dart';
 import 'documents/statute.dart';
+//Utils
+
+//Theme
+import 'package:auth/theme/colors.dart';
+//Widgets
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -224,40 +230,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                           ],
                         ),
-                        //------Kod PIN/Odcisk Palca------
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: const [
-                                Text(
-                                  'Kod PIN/Odcisk Palca',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    textStyle: const TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w800,
-                                      fontFamily: "Nunito",
-                                    ),
-                                    primary: halfBlackColor,
-                                  ),
-                                  onPressed: () {},
-                                  child: const Text('Edytuj'),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+
                         Row(
                           children: [
                             Container(
