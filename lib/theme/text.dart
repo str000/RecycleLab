@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 //Theme
 import 'package:auth/theme/colors.dart';
 
+String appName = "Nazwa Apki";
+
 const appNameSign = TextStyle(
   fontSize: 40.0,
   fontWeight: FontWeight.w800,

@@ -170,8 +170,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
                     Column(
                       children: [
-                        const Text(
-                          'Nazwa Apki',
+                        Text(
+                          appName,
                           style: appNameSign,
                         ),
                         Container(

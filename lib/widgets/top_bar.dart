@@ -1,5 +1,6 @@
 import 'package:auth/pages/settings_page.dart';
 import 'package:auth/theme/colors.dart';
+import 'package:auth/theme/text.dart';
 import 'package:flutter/material.dart';
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget {
@@ -25,8 +26,8 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  const Text('Nazwa Apki',
-                      style: TextStyle(
+                  Text(appName,
+                      style: const TextStyle(
                         fontSize: 35.0,
                         color: primaryColor,
                         fontWeight: FontWeight.w700,

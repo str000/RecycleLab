@@ -71,7 +71,7 @@ class _DataProcessingPageState extends State<DataProcessingPage> {
                     child: Column(
                       children: const [
                         Text(
-                          '1. Administratorem danych osobowych jest drużyna "Różowe Jednorożce Patatające Po Łące W Szpileczkach"',
+                          '1. Administratorem danych osobowych jest drużyna "Różowe Jednorożce Patatające W Szpileczkach Po Tęczy"',
                           style: TextStyle(
                             fontSize: 22.0,
                             color: Colors.black,

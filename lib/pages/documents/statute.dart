@@ -1,4 +1,5 @@
 import 'package:auth/theme/colors.dart';
+import 'package:auth/theme/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -69,35 +70,37 @@ class _StatutePageState extends State<StatutePage> {
                   Container(
                     margin: const EdgeInsets.all(10.0),
                     child: Column(
-                      children: const [
+                      children: [
                         Text(
-                          '1. Niniejszy regulamin (dalej: Regulamin) określa zasady korzystania z aplikacji mobilnej "Nazwa Apki" (dalej: Aplikacja);',
+                          '1. Niniejszy regulamin (dalej: Regulamin) określa zasady korzystania z aplikacji mobilnej "' +
+                              appName +
+                              '" (dalej: Aplikacja);',
+                          style: const TextStyle(
+                            fontSize: 22.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 20.0),
+                        const Text(
+                          '2. Właścicielem aplikacji jest drużyna "Różowe Jednorożce Patatające Po Łące W Szpileczkach Po Tęczy";',
                           style: TextStyle(
                             fontSize: 22.0,
                             color: Colors.black,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        SizedBox(height: 20.0),
-                        Text(
-                          '2. Właścicielem aplikacji jest drużyna "Różowe Jednorożce Patatające Po Łące W Szpileczkach";',
+                        const SizedBox(height: 20.0),
+                        const Text(
+                          '3. Dostawcą i Administratorem aplikacj jest drużyna "Różowe Jednorożce Patatające Po Łące W Szpileczkach Po Tęczy";',
                           style: TextStyle(
                             fontSize: 22.0,
                             color: Colors.black,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        SizedBox(height: 20.0),
-                        Text(
-                          '3. Dostawcą i Administratorem aplikacj jest drużyna "Różowe Jednorożce Patatające Po Łące W Szpileczkach";',
-                          style: TextStyle(
-                            fontSize: 22.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        SizedBox(height: 20.0),
-                        Text(
+                        const SizedBox(height: 20.0),
+                        const Text(
                           '4. Użytkownikiem aplikacji jest każda osoba, która pobrała Aplikację;',
                           style: TextStyle(
                             fontSize: 22.0,
@@ -105,8 +108,8 @@ class _StatutePageState extends State<StatutePage> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        SizedBox(height: 20.0),
-                        Text(
+                        const SizedBox(height: 20.0),
+                        const Text(
                           '5. Aplikacja służy do ;',
                           style: TextStyle(
                             fontSize: 22.0,
@@ -114,8 +117,8 @@ class _StatutePageState extends State<StatutePage> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        SizedBox(height: 20.0),
-                        Text(
+                        const SizedBox(height: 20.0),
+                        const Text(
                           '6. Powyższy dokument jest tylko przykładowym dokumentem i twórcy aplikacji nie ponoszą żadnej odpowiedzialności za nie wywiązanie się z któregoś z powyższych punktów;',
                           style: TextStyle(
                             fontSize: 22.0,

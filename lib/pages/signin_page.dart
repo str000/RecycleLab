@@ -97,8 +97,8 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         Column(
                           children: [
-                            const Text(
-                              'Nazwa Apki',
+                            Text(
+                              appName,
                               style: appNameSign,
                             ),
                             Container(
