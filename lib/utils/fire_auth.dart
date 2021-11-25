@@ -20,16 +20,19 @@ class FireAuth {
       );
 
       user = userCredential.user;
-      await user!.updateProfile(displayName: name);
+      await user!.updateDisplayName(name);
       await user.reload();
       user = auth.currentUser;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
+        // ignore: avoid_print
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
+        // ignore: avoid_print
         print('The account already exists for that email.');
       }
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
 
@@ -52,8 +55,10 @@ class FireAuth {
       user = userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
+        // ignore: avoid_print
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
+        // ignore: avoid_print
         print('Wrong password provided.');
       }
     }

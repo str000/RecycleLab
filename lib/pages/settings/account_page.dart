@@ -336,6 +336,7 @@ class _AccountPageState extends State<AccountPage> {
                                               child: ElevatedButton(
                                                 onPressed: () async {
                                                   _scaffoldKey.currentState!
+                                                      // ignore: deprecated_member_use
                                                       .showSnackBar(
                                                     const SnackBar(
                                                       elevation: 6.0,

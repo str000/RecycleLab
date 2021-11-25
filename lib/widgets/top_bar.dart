@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 class TopBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
 
-  const TopBar({
+  const TopBar({Key? key, 
     required this.height,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

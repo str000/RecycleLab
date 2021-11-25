@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 //Firebase Package
 import 'package:firebase_auth/firebase_auth.dart';
 //Pages
-import 'package:auth/pages/signin_page.dart';
 //Utils
-import 'package:auth/utils/fire_auth.dart';
 //Theme
 
 //Widgets
@@ -15,7 +13,7 @@ import 'package:auth/widgets/nav_bar.dart';
 class ProfilePage extends StatefulWidget {
   final User user;
 
-  const ProfilePage({required this.user});
+  const ProfilePage({Key? key, required this.user}) : super(key: key);
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -31,7 +29,7 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [],
+          children: const [],
         ),
       ),
       bottomNavigationBar: const NavBar(),
