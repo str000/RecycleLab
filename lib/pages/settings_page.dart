@@ -1,9 +1,13 @@
 import 'package:auth/pages/settings/account_page.dart';
+import 'package:auth/pages/settings/delete_account_page.dart';
 import 'package:auth/pages/settings/notification_page.dart';
 import 'package:auth/pages/signin_page.dart';
 import 'package:auth/theme/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'documents/data_processing.dart';
+import 'documents/statute.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -299,7 +303,14 @@ class _SettingsPageState extends State<SettingsPage> {
                                     ),
                                     primary: halfBlackColor,
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const DataProcessingPage(),
+                                      ),
+                                    );
+                                  },
                                   child: const Text('Czytaj'),
                                 ),
                               ],
@@ -334,7 +345,14 @@ class _SettingsPageState extends State<SettingsPage> {
                                     ),
                                     primary: halfBlackColor,
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const StatutePage(),
+                                      ),
+                                    );
+                                  },
                                   child: const Text('Czytaj'),
                                 ),
                               ],
@@ -368,7 +386,14 @@ class _SettingsPageState extends State<SettingsPage> {
                                     ),
                                     primary: halfBlackColor,
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const DeleteAccountPage(),
+                                      ),
+                                    );
+                                  },
                                   child: const Text('Usuń'),
                                 ),
                               ],
