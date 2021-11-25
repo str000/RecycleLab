@@ -1,4 +1,5 @@
 //Plugins
+import 'package:auth/widgets/settings_widgets.dart';
 import 'package:flutter/material.dart';
 //Firebase Package
 import 'package:firebase_auth/firebase_auth.dart';
@@ -115,122 +116,38 @@ class _SettingsPageState extends State<SettingsPage> {
                     child: Column(
                       children: [
                         //------Dane Osobowe------
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: const [
-                                Text(
-                                  'Dane Konta',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    textStyle: const TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w800,
-                                      fontFamily: "Nunito",
-                                    ),
-                                    primary: halfBlackColor,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const AccountPage(),
-                                      ),
-                                    );
-                                  },
-                                  child: const Text('Edytuj'),
-                                ),
-                              ],
-                            ),
-                          ],
+                        SettingsWidgets.settingOption(
+                          optionText: "Dane Konta",
+                          optionAction: "Edytuj",
+                          onPress: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const AccountPage(),
+                              ),
+                            );
+                          },
+                          context: context,
                         ),
                         //------Powiadomienia------
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: const [
-                                Text(
-                                  'Powiadomienia',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    textStyle: const TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w800,
-                                      fontFamily: "Nunito",
-                                    ),
-                                    primary: halfBlackColor,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const NotificationPage(),
-                                      ),
-                                    );
-                                  },
-                                  child: const Text('Edytuj'),
-                                ),
-                              ],
-                            ),
-                          ],
+                        SettingsWidgets.settingOption(
+                          optionText: "Powiadomienia",
+                          optionAction: "Edytuj",
+                          onPress: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const NotificationPage(),
+                              ),
+                            );
+                          },
+                          context: context,
                         ),
                         //------Język------
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: const [
-                                Text(
-                                  'Język',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    textStyle: const TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w800,
-                                      fontFamily: "Nunito",
-                                    ),
-                                    primary: halfBlackColor,
-                                  ),
-                                  onPressed: () {},
-                                  child: const Text('Polski'),
-                                ),
-                              ],
-                            ),
-                          ],
+                        SettingsWidgets.settingOption(
+                          optionText: "Język",
+                          optionAction: "Polski",
+                          onPress: () {},
+                          context: context,
                         ),
-
                         Row(
                           children: [
                             Container(
@@ -250,128 +167,44 @@ class _SettingsPageState extends State<SettingsPage> {
                           ],
                         ),
                         //------Przetwarzanie Danych------
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: const [
-                                Text(
-                                  'Przetwarzanie Danych',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    textStyle: const TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w800,
-                                      fontFamily: "Nunito",
-                                    ),
-                                    primary: halfBlackColor,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const DataProcessingPage(),
-                                      ),
-                                    );
-                                  },
-                                  child: const Text('Czytaj'),
-                                ),
-                              ],
-                            ),
-                          ],
+                        SettingsWidgets.settingOption(
+                          optionText: "Przetwarzanie Danych",
+                          optionAction: "Czytaj",
+                          onPress: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const DataProcessingPage(),
+                              ),
+                            );
+                          },
+                          context: context,
                         ),
-
                         //------Regulamin------
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: const [
-                                Text(
-                                  'Regulamin',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    textStyle: const TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w800,
-                                      fontFamily: "Nunito",
-                                    ),
-                                    primary: halfBlackColor,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const StatutePage(),
-                                      ),
-                                    );
-                                  },
-                                  child: const Text('Czytaj'),
-                                ),
-                              ],
-                            ),
-                          ],
+                        SettingsWidgets.settingOption(
+                          optionText: "Regulamin",
+                          optionAction: "Czytaj",
+                          onPress: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const StatutePage(),
+                              ),
+                            );
+                          },
+                          context: context,
                         ),
                         //------Usuń konto------
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: const [
-                                Text(
-                                  'Usuń Konto',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    textStyle: const TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w800,
-                                      fontFamily: "Nunito",
-                                    ),
-                                    primary: halfBlackColor,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const DeleteAccountPage(),
-                                      ),
-                                    );
-                                  },
-                                  child: const Text('Usuń'),
-                                ),
-                              ],
-                            ),
-                          ],
+                        SettingsWidgets.settingOption(
+                          optionText: "Usuń Konto",
+                          optionAction: "Usuń",
+                          onPress: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const DeleteAccountPage(),
+                              ),
+                            );
+                          },
+                          context: context,
                         ),
                       ],
                     ),

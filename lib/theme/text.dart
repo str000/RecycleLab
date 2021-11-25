@@ -28,3 +28,9 @@ const signTextFormFieldHint = TextStyle(
   fontSize: 20.0,
   color: quarterBlackcolor,
 );
+
+const documentsText = TextStyle(
+  fontSize: 22.0,
+  color: Colors.black,
+  fontWeight: FontWeight.w700,
+);
