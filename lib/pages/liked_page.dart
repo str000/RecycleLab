@@ -10,16 +10,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:auth/widgets/top_bar.dart';
 import 'package:auth/widgets/nav_bar.dart';
 
-class HomePage extends StatefulWidget {
-  final User? user;
-
-  const HomePage({Key? key, required this.user}) : super(key: key);
-
+class LikedPage extends StatefulWidget {
+  const LikedPage({Key? key}) : super(key: key);
   @override
-  _HomePageState createState() => _HomePageState();
+  _LikedPageState createState() => _LikedPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _LikedPageState extends State<LikedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +26,9 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [],
+          children: const [
+            Text('Liked'),
+          ],
         ),
       ),
       bottomNavigationBar: const NavBar(),

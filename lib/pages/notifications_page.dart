@@ -1,16 +1,9 @@
 //Plugins
 import 'package:auth/widgets/notifications_widgets.dart';
-import 'package:auth/widgets/settings_widgets.dart';
 import 'package:flutter/material.dart';
 //Firebase Package
-import 'package:firebase_auth/firebase_auth.dart';
 //Pages
-import 'package:auth/pages/settings/account_page.dart';
-import 'package:auth/pages/settings/delete_account_page.dart';
 import 'package:auth/pages/settings/notification_page.dart';
-import 'package:auth/pages/signin_page.dart';
-import 'documents/data_processing.dart';
-import 'documents/statute.dart';
 //Utils
 
 //Theme

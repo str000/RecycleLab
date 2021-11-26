@@ -1,7 +1,6 @@
 //Plugins
 import 'package:flutter/material.dart';
 //Firebase Package
-import 'package:firebase_auth/firebase_auth.dart';
 //Pages
 //Utils
 //Theme
@@ -10,16 +9,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:auth/widgets/top_bar.dart';
 import 'package:auth/widgets/nav_bar.dart';
 
-class HomePage extends StatefulWidget {
-  final User? user;
-
-  const HomePage({Key? key, required this.user}) : super(key: key);
+class AccessibilityPage extends StatefulWidget {
+  const AccessibilityPage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _AccessibilityPageState createState() => _AccessibilityPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _AccessibilityPageState extends State<AccessibilityPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +26,9 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [],
+          children: const [
+            Text('Accessibility'),
+          ],
         ),
       ),
       bottomNavigationBar: const NavBar(),

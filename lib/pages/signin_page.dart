@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
     if (user != null) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => ProfilePage(
+          builder: (context) => HomePage(
             user: user,
           ),
         ),
@@ -185,7 +185,7 @@ class _LoginPageState extends State<LoginPage> {
                                                     .pushReplacement(
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        ProfilePage(user: user),
+                                                        HomePage(user: user),
                                                   ),
                                                 );
                                               }
@@ -262,7 +262,7 @@ class _LoginPageState extends State<LoginPage> {
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                ProfilePage(user: user),
+                                                HomePage(user: user),
                                           ),
                                         );
                                       }

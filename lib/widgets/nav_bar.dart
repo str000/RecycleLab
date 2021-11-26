@@ -1,6 +1,11 @@
 //Plugins
 import 'package:flutter/material.dart';
+//Firebase Package
+import 'package:firebase_auth/firebase_auth.dart';
 //Pages
+import 'package:auth/pages/accessibility_page.dart';
+import 'package:auth/pages/home_page.dart';
+import 'package:auth/pages/liked_page.dart';
 //Theme
 import 'package:auth/theme/colors.dart';
 
@@ -32,7 +37,13 @@ class NavBar extends StatelessWidget {
                   size: 40,
                   color: halfBlackColor,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const AccessibilityPage(),
+                    ),
+                  );
+                },
               ),
               IconButton(
                 splashColor: Colors.transparent,
@@ -43,7 +54,14 @@ class NavBar extends StatelessWidget {
                   size: 40,
                   color: primaryColor,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          HomePage(user: FirebaseAuth.instance.currentUser),
+                    ),
+                  );
+                },
               ),
               IconButton(
                 splashColor: Colors.transparent,
@@ -54,7 +72,13 @@ class NavBar extends StatelessWidget {
                   size: 40,
                   color: halfBlackColor,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const LikedPage(),
+                    ),
+                  );
+                },
               ),
             ],
           ),
