@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 //Pages
 import 'package:auth/pages/settings_page.dart';
+import 'package:auth/pages/notifications_page.dart';
 //Theme
 import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
@@ -46,7 +47,13 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
                           size: 35,
                           color: Color.fromRGBO(0, 0, 0, .5),
                         ),
-                        onPressed: () {}),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const NotificationsPage(),
+                            ),
+                          );
+                        }),
                     IconButton(
                         splashColor: Colors.transparent,
                         highlightColor: Colors.transparent,

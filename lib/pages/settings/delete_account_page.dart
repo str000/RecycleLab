@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 //Firebase Package
 import 'package:firebase_auth/firebase_auth.dart';
+//Pages
+import '../signin_page.dart';
 //Theme
 import 'package:auth/theme/colors.dart';
-
-import '../signin_page.dart';
 
 class DeleteAccountPage extends StatefulWidget {
   const DeleteAccountPage({Key? key}) : super(key: key);
