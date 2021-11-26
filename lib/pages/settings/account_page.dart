@@ -76,6 +76,20 @@ class _AccountPageState extends State<AccountPage> {
             ));
   }
 
+  bool _ischanged = false;
+
+  changed() {
+    if (_nameTextController.text != _currentUser?.displayName) {
+      setState(() {
+        _ischanged = true;
+      });
+    } else {
+      setState(() {
+        _ischanged = false;
+      });
+    }
+  }
+
   @override
   void initState() {
     _nameTextController.text = _currentUser!.displayName!;
@@ -94,6 +108,7 @@ class _AccountPageState extends State<AccountPage> {
         _currentUser = user;
       });
     }
+    initState();
   }
 
   @override
@@ -272,6 +287,7 @@ class _AccountPageState extends State<AccountPage> {
                                     ),
                                     onChanged: (String? value) {
                                       _formKey.currentState!.validate();
+                                      changed();
                                     },
                                   ),
                                   const SizedBox(height: 13.0),
@@ -405,7 +421,36 @@ class _AccountPageState extends State<AccountPage> {
             children: [
               Expanded(
                 child: ElevatedButton(
-                  onPressed: null,
+                  onPressed: _ischanged
+                      ? () {
+                          _currentUser
+                              ?.updateDisplayName(_nameTextController.text);
+                          refresh();
+                          setState(() {
+                            _ischanged = false;
+                          });
+                          _focusName.unfocus();
+                          _scaffoldKey.currentState!
+                              // ignore: deprecated_member_use
+                              .showSnackBar(
+                            const SnackBar(
+                              elevation: 6.0,
+                              backgroundColor: primaryColor,
+                              behavior: SnackBarBehavior.floating,
+                              content: Text(
+                                'Zastosowano zmiany',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Nunito',
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          );
+                        }
+                      : null,
                   style: ElevatedButton.styleFrom(
                     primary: primaryColor,
                     padding: const EdgeInsets.symmetric(

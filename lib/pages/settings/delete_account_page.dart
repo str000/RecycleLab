@@ -1,7 +1,11 @@
 //Plugins
 import 'package:flutter/material.dart';
+//Firebase Package
+import 'package:firebase_auth/firebase_auth.dart';
 //Theme
 import 'package:auth/theme/colors.dart';
+
+import '../signin_page.dart';
 
 class DeleteAccountPage extends StatefulWidget {
   const DeleteAccountPage({Key? key}) : super(key: key);
@@ -12,6 +16,8 @@ class DeleteAccountPage extends StatefulWidget {
 
 class _DeleteAccountPageState extends State<DeleteAccountPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final User? _currentUser = FirebaseAuth.instance.currentUser;
 
   bool isChecked = false;
 
@@ -141,7 +147,18 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: isChecked ? () {} : null,
+                      onPressed: isChecked
+                          ? () {
+                              _currentUser!
+                                  .delete()
+                                  .then((value) => Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginPage(),
+                                        ),
+                                      ));
+                            }
+                          : null,
                       style: ElevatedButton.styleFrom(
                         primary: primaryColor,
                         padding: const EdgeInsets.symmetric(
