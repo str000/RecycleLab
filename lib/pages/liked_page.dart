@@ -7,8 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 //Theme
 
 //Widgets
-import 'package:auth/widgets/top_bar.dart';
-import 'package:auth/widgets/nav_bar.dart';
 
 class LikedPage extends StatefulWidget {
   const LikedPage({Key? key}) : super(key: key);
@@ -19,19 +17,13 @@ class LikedPage extends StatefulWidget {
 class _LikedPageState extends State<LikedPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const TopBar(
-        height: 90,
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          Text('Liked'),
+        ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text('Liked'),
-          ],
-        ),
-      ),
-      bottomNavigationBar: const NavBar(),
     );
   }
 }

@@ -7,21 +7,21 @@ import 'package:flutter/material.dart';
 
 //Widgets
 
-class AccessibilityPage extends StatefulWidget {
-  const AccessibilityPage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  _AccessibilityPageState createState() => _AccessibilityPageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _AccessibilityPageState extends State<AccessibilityPage> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
-          Text('Accessibility'),
+          Text('Home'),
         ],
       ),
     );

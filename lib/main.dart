@@ -1,4 +1,6 @@
 //Plugins
+import 'package:auth/pages/accessibility_page.dart';
+import 'package:auth/pages/liked_page.dart';
 import 'package:auth/theme/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
