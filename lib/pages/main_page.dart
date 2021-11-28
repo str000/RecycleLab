@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 //Pages
 import 'package:auth/pages/accessibility_page.dart';
 import 'package:auth/pages/liked_page.dart';
-import 'package:auth/pages/settings/home_page.dart';
+import 'package:auth/pages/home_page.dart';
 //Theme
 import 'package:auth/theme/colors.dart';
 //Widgets
