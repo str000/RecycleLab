@@ -1,14 +1,12 @@
 //Plugins
-import 'package:auth/pages/accessibility_page.dart';
-import 'package:auth/pages/liked_page.dart';
-import 'package:auth/theme/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 //Pages
 import 'pages/signin_page.dart';
 //Theme
 import 'package:auth/theme/light_theme.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:auth/theme/text.dart';
 
 void main() {
   runApp(const MyApp());
