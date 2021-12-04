@@ -31,10 +31,6 @@ class _DisabilitiesPage extends State<DisabilitiesPage> {
     super.initState();
   }
 
-  bool _disabilitiesTwoValue = false;
-  bool _disabilitiesThreeValue = false;
-  bool _disabilitiesFourValue = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
