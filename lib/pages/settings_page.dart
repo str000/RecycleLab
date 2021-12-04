@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:auth/pages/settings/account_page.dart';
 import 'package:auth/pages/settings/delete_account_page.dart';
 import 'package:auth/pages/settings/notification_page.dart';
+import 'package:auth/pages/settings/disabilities_page.dart';
 import 'package:auth/pages/signin_page.dart';
 import 'documents/data_processing.dart';
 import 'documents/statute.dart';
@@ -124,6 +125,19 @@ class _SettingsPageState extends State<SettingsPage> {
                               MaterialPageRoute(
                                 builder: (context) => const AccountPage(),
                               ),
+                            );
+                          },
+                          context: context,
+                        ),
+                        //------Ułatwienia------
+                        SettingsWidgets.settingOption(
+                          optionText: "Ułatwienia dostępu",
+                          optionAction: "Edytuj",
+                          onPress: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const DisabilitiesPage(),
+                              )
                             );
                           },
                           context: context,
