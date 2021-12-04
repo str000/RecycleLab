@@ -1,4 +1,5 @@
 //Plugins
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 //Firebase Package
 import 'package:firebase_auth/firebase_auth.dart';
@@ -149,6 +150,10 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
                     child: ElevatedButton(
                       onPressed: isChecked
                           ? () {
+                              final ref = FirebaseDatabase.instance.reference();
+
+                              ref.child('users/' + _currentUser!.uid).remove();
+
                               _currentUser!
                                   .delete()
                                   .then((value) => Navigator.of(context).push(

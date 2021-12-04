@@ -1,4 +1,5 @@
 //Plugins
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
@@ -37,7 +38,7 @@ class _AccountPageState extends State<AccountPage> {
 
   bool _isgoogle = false;
 
-  DateTime? _chosenDate;
+  late DateTime _chosenDate;
   bool _dateChosen = false;
 
   void _showDatePicker(ctx) {
@@ -69,7 +70,10 @@ class _AccountPageState extends State<AccountPage> {
                       'Potwierdź',
                       style: signTextFormField,
                     ),
-                    onPressed: () => Navigator.of(ctx).pop(),
+                    onPressed: () {
+                      setBirthdate();
+                      Navigator.of(ctx).pop();
+                    },
                   )
                 ],
               ),
@@ -97,6 +101,13 @@ class _AccountPageState extends State<AccountPage> {
     if (_currentUser!.providerData[0].providerId == "google.com") {
       _isgoogle = true;
     }
+    ref.child('users/' + _currentUser!.uid + '/date').onValue.listen((event) {
+      var data = event.snapshot;
+      _chosenDate = DateTime.parse(data.value);
+      _dateChosen = true;
+      _dateTextController.text =
+          DateFormat('dd/MM/yyyy').format(_chosenDate).toString();
+    });
     super.initState();
   }
 
@@ -109,6 +120,14 @@ class _AccountPageState extends State<AccountPage> {
       });
     }
     initState();
+  }
+
+  final ref = FirebaseDatabase.instance.reference();
+
+  setBirthdate() {
+    ref.child('users/' + _currentUser!.uid).set({
+      'date': _chosenDate.toString(),
+    });
   }
 
   @override

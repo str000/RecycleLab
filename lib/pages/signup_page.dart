@@ -1,4 +1,6 @@
 //Plugins
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
@@ -302,6 +304,22 @@ class _RegisterPageState extends State<RegisterPage> {
                                                 });
 
                                                 if (user != null) {
+                                                  FirebaseApp firebaseApp =
+                                                      await Firebase
+                                                          .initializeApp();
+
+                                                  final ref = FirebaseDatabase
+                                                      .instance
+                                                      .reference();
+
+                                                  ref
+                                                      .child(
+                                                          'users/' + user.uid)
+                                                      .set({
+                                                    'date':
+                                                        _chosenDate.toString(),
+                                                  });
+
                                                   Navigator.of(context)
                                                       .pushAndRemoveUntil(
                                                     MaterialPageRoute(
