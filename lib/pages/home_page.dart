@@ -1,7 +1,8 @@
 //Plugins
-import 'package:firebase_database/firebase_database.dart';
+import 'package:auth/utils/data_models.dart';
 import 'package:flutter/material.dart';
 //Firebase Package
+import 'package:firebase_database/firebase_database.dart';
 //Pages
 //Utils
 //Theme
@@ -16,19 +17,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var retrievedName;
+  var retrievedName = {};
+  List<Test> companyList = [];
 
   @override
   void initState() {
     final ref = FirebaseDatabase.instance.reference();
 
-    ref.child("L2/Name").onValue.listen((event) {
+    ref.onValue.listen((event) {
       var data = event.snapshot;
-      print(data.value);
-      print(data.key);
       setState(() {
-        retrievedName = data.value;
+        retrievedName = data.value['L1'];
       });
+      print(retrievedName);
     });
     super.initState();
   }
@@ -39,7 +40,8 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(retrievedName ?? ""),
+          Text(retrievedName['Name'].toString()),
+          Text(retrievedName['Tel'].toString()),
         ],
       ),
     );
