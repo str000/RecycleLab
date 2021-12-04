@@ -30,7 +30,7 @@ const signTextFormFieldHint = TextStyle(
 );
 
 const documentsText = TextStyle(
-  fontSize: 22.0,
+  fontSize: fontSize,
   color: Colors.black,
   fontWeight: FontWeight.w700,
 );

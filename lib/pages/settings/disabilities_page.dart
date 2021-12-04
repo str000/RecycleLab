@@ -10,7 +10,27 @@ class DisabilitiesPage extends StatefulWidget {
 }
 
 class _DisabilitiesPage extends State<DisabilitiesPage> {
-  bool _disabilitiesOneValue = false;
+  late List<bool> isSelected;
+  late double fontSize = 17;
+
+  double getFontSize(int index){
+    if(index==0){return 14;}
+    else if (index==1){return 17;}
+    else if (index==2){return 20;}
+    else {return 17;
+    }
+  }
+
+  @override
+  void initState() {
+    isSelected = [
+      false,
+      true,
+      false,
+    ];
+    super.initState();
+  }
+
   bool _disabilitiesTwoValue = false;
   bool _disabilitiesThreeValue = false;
   bool _disabilitiesFourValue = false;
@@ -75,16 +95,16 @@ class _DisabilitiesPage extends State<DisabilitiesPage> {
                     margin: const EdgeInsets.all(10.0),
                     child: Column(
                       children: [
-                        //Powiadomienia 1
+                        //Rozmiar czcionki
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
-                              children: const [
+                              children: [
                                 Text(
-                                  'Powiadomienia 1',
+                                  'Rozmiar czcionki',
                                   style: TextStyle(
-                                    fontSize: 20.0,
+                                    fontSize: fontSize,
                                     color: Colors.black,
                                     fontWeight: FontWeight.w800,
                                   ),
@@ -93,114 +113,33 @@ class _DisabilitiesPage extends State<DisabilitiesPage> {
                             ),
                             Column(
                               children: [
-                                CupertinoSwitch(
-                                  value: _disabilitiesOneValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _disabilitiesOneValue = value;
-                                    });
-                                  },
-                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ToggleButtons(
+                                    children: const [
+                                      Text('A',style: TextStyle(fontSize: 14),),
+                                      Text('A',style: TextStyle(fontSize: 17),),
+                                      Text('A',style: TextStyle(fontSize: 20),),
+                                    ],
+                                    isSelected: isSelected,
+                                    onPressed: (index) {
+                                      for (var i=0; i<isSelected.length;i++){
+                                        if(i==index){
+                                          isSelected[i] = true;
+                                        }else{
+                                          isSelected[i] = false;
+                                        }
+                                      }
+                                      fontSize = getFontSize(index);
+                                      setState((){});
+                                    },
+                                  ),
+                                )
                               ],
                             ),
                           ],
                         ),
                         const SizedBox(height: 13.0),
-
-                        //Powiadomienia 2
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: const [
-                                Text(
-                                  'Powiadomienia 2',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                CupertinoSwitch(
-                                  value: _disabilitiesTwoValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _disabilitiesTwoValue = value;
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 13.0),
-
-                        //Powiadomienia 3
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: const [
-                                Text(
-                                  'Powiadomienia 3',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                CupertinoSwitch(
-                                  value: _disabilitiesThreeValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _disabilitiesThreeValue = value;
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 13.0),
-
-                        //Powiadomienia 4
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: const [
-                                Text(
-                                  'Powiadomienia 4',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                CupertinoSwitch(
-                                  value: _disabilitiesFourValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _disabilitiesFourValue = value;
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ),
