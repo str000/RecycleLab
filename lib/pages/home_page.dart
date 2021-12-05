@@ -1,20 +1,13 @@
 //Plugins
-import 'package:auth/theme/colors.dart';
-import 'package:auth/theme/text.dart';
-import 'package:auth/utils/data_models.dart';
-import 'package:auth/utils/validator.dart';
-import 'package:auth/widgets/sign_widgets.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 //Firebase Package
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 //Pages
 //Utils
 //Theme
-
+import 'package:auth/theme/text.dart';
 //Widgets
 
 class HomePage extends StatefulWidget {
@@ -30,7 +23,6 @@ class _HomePageState extends State<HomePage> {
   final User? _currentUser = FirebaseAuth.instance.currentUser;
 
   var retrievedName = {};
-  List<Test> companyList = [];
 
   late DateTime _chosenDate;
   bool _dateChosen = false;
@@ -90,17 +82,28 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  @override
-  void initState() {
-    ref.onValue.listen((event) {
-      var data = event.snapshot;
-      setState(() {
-        retrievedName = data.value['L1'];
+  List _needs = [];
+
+  getList() async {
+    List needs = [];
+
+    ref.child('posts').onValue.listen((event) async {
+      Map<dynamic, dynamic> values = event.snapshot.value;
+      needs = [];
+      values.forEach((key, values) {
+        values['id'] = key;
+        needs.add(values);
       });
-      print(retrievedName);
+      setState(() {
+        _needs = needs;
+      });
     });
 
-    super.initState();
+    //print(_needs[0]['Name']);
+  }
+
+  @override
+  void initState() {
     ref
         .child('users/' + _currentUser!.uid + '/date')
         .once()
@@ -109,18 +112,20 @@ class _HomePageState extends State<HomePage> {
         _showDatePicker(context);
       }
     });
+    getList();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(retrievedName['Name'].toString()),
-          Text(retrievedName['Tel'].toString()),
-        ],
-      ),
+    return ListView.builder(
+      itemCount: _needs.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Text(
+          _needs[index].toString(),
+          //_needs[index]['Name'].toString(),
+        );
+      },
     );
   }
 }
