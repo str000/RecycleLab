@@ -27,58 +27,14 @@ class _AccountPageState extends State<AccountPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final _nameTextController = TextEditingController();
-  final _dateTextController = TextEditingController();
   final _emailTextController = TextEditingController();
 
   final _focusName = FocusNode();
-  final _focusDate = FocusNode();
   final _focusEmail = FocusNode();
 
   User? _currentUser = FirebaseAuth.instance.currentUser;
 
   bool _isgoogle = false;
-
-  late DateTime _chosenDate;
-  bool _dateChosen = false;
-
-  void _showDatePicker(ctx) {
-    showCupertinoModalPopup(
-        context: ctx,
-        builder: (_) => Container(
-              height: 300,
-              color: Colors.white,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 245,
-                    child: CupertinoDatePicker(
-                        mode: CupertinoDatePickerMode.date,
-                        initialDateTime:
-                            _dateChosen ? _chosenDate : DateTime.now(),
-                        maximumDate: DateTime.now(),
-                        onDateTimeChanged: (val) {
-                          setState(() {
-                            _chosenDate = val;
-                            _dateChosen = true;
-                          });
-                          _dateTextController.text =
-                              DateFormat('dd/MM/yyyy').format(val).toString();
-                        }),
-                  ),
-                  CupertinoButton(
-                    child: const Text(
-                      'Potwierdź',
-                      style: signTextFormField,
-                    ),
-                    onPressed: () {
-                      setBirthdate();
-                      Navigator.of(ctx).pop();
-                    },
-                  )
-                ],
-              ),
-            ));
-  }
 
   bool _ischanged = false;
 
@@ -101,13 +57,6 @@ class _AccountPageState extends State<AccountPage> {
     if (_currentUser!.providerData[0].providerId == "google.com") {
       _isgoogle = true;
     }
-    ref.child('users/' + _currentUser!.uid + '/date').onValue.listen((event) {
-      var data = event.snapshot;
-      _chosenDate = DateTime.parse(data.value);
-      _dateChosen = true;
-      _dateTextController.text =
-          DateFormat('dd/MM/yyyy').format(_chosenDate).toString();
-    });
     super.initState();
   }
 
@@ -122,20 +71,11 @@ class _AccountPageState extends State<AccountPage> {
     initState();
   }
 
-  final ref = FirebaseDatabase.instance.reference();
-
-  setBirthdate() {
-    ref.child('users/' + _currentUser!.uid).set({
-      'date': _chosenDate.toString(),
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         _focusName.unfocus();
-        _focusDate.unfocus();
         _focusEmail.unfocus();
       },
       child: Scaffold(
@@ -310,38 +250,6 @@ class _AccountPageState extends State<AccountPage> {
                                     },
                                   ),
                                   const SizedBox(height: 13.0),
-                                  //TODO Dodać datę urodzenia do bazy używając UID
-                                  Stack(
-                                      alignment: Alignment.centerRight,
-                                      children: [
-                                        TextFormField(
-                                          controller: _dateTextController,
-                                          focusNode: _focusDate,
-                                          validator: (value) {
-                                            Validator.validateDate(
-                                              date: value,
-                                            );
-                                          },
-                                          enabled: false,
-                                          style: signTextFormField,
-                                          decoration:
-                                              CommonStyle.textFieldStyle(
-                                            labelTextStr: "Data Urodzenia",
-                                          ),
-                                          onChanged: (String? value) {
-                                            _formKey.currentState!.validate();
-                                          },
-                                        ),
-                                        IconButton(
-                                          onPressed: () {
-                                            _showDatePicker(context);
-                                          },
-                                          icon:
-                                              const Icon(Icons.calendar_today),
-                                          color: halfBlackColor,
-                                        ),
-                                      ]),
-                                  const SizedBox(height: 13.0),
                                   TextFormField(
                                     controller: _emailTextController,
                                     focusNode: _focusEmail,
@@ -359,7 +267,6 @@ class _AccountPageState extends State<AccountPage> {
                                     },
                                   ),
                                   const SizedBox(height: 5.0),
-
                                   _currentUser!.emailVerified
                                       ? const Text(
                                           'Email Zweryfikowany',

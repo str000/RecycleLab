@@ -29,13 +29,11 @@ class _RegisterPageState extends State<RegisterPage> {
   final _registerFormKey = GlobalKey<FormState>();
 
   final _nameTextController = TextEditingController();
-  final _dateTextController = TextEditingController();
   final _emailTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
   final _repasswordTextController = TextEditingController();
 
   final _focusName = FocusNode();
-  final _focusDate = FocusNode();
   final _focusEmail = FocusNode();
   final _focusPassword = FocusNode();
   final _focusRePassword = FocusNode();
@@ -50,9 +48,6 @@ class _RegisterPageState extends State<RegisterPage> {
       offset = (controller.hasClients) ? controller.offset : 0;
     });
   }
-
-  DateTime? _chosenDate;
-  bool _dateChosen = false;
 
   bool _isButtonDisabled = true;
 
@@ -85,7 +80,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   validate(String? value) {
     if (_nameTextController.text.isNotEmpty &&
-        _dateTextController.text.isNotEmpty &&
         _emailTextController.text.isNotEmpty &&
         _passwordTextController.text.isNotEmpty &&
         _repasswordTextController.text.isNotEmpty) {
@@ -107,48 +101,11 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  void _showDatePicker(ctx) {
-    showCupertinoModalPopup(
-        context: ctx,
-        builder: (_) => Container(
-              height: 300,
-              color: Colors.white,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 245,
-                    child: CupertinoDatePicker(
-                        mode: CupertinoDatePickerMode.date,
-                        initialDateTime:
-                            _dateChosen ? _chosenDate : DateTime.now(),
-                        maximumDate: DateTime.now(),
-                        onDateTimeChanged: (val) {
-                          setState(() {
-                            _chosenDate = val;
-                            _dateChosen = true;
-                          });
-                          _dateTextController.text =
-                              DateFormat('dd/MM/yyyy').format(val).toString();
-                        }),
-                  ),
-                  CupertinoButton(
-                    child: const Text(
-                      'Potwierdź',
-                      style: signTextFormField,
-                    ),
-                    onPressed: () => Navigator.of(ctx).pop(),
-                  )
-                ],
-              ),
-            ));
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
           _focusName.unfocus();
-          _focusDate.unfocus();
           _focusEmail.unfocus();
           _focusPassword.unfocus();
           _focusRePassword.unfocus();
@@ -201,34 +158,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 onChanged: validate,
                               ),
-                              const SizedBox(height: 13.0),
-                              //TODO Dodać datę urodzenia do bazy używając UID
-                              Stack(
-                                  alignment: Alignment.centerRight,
-                                  children: [
-                                    TextFormField(
-                                      controller: _dateTextController,
-                                      focusNode: _focusDate,
-                                      validator: (value) {
-                                        Validator.validateDate(
-                                          date: value,
-                                        );
-                                      },
-                                      enabled: false,
-                                      style: signTextFormField,
-                                      decoration: CommonStyle.textFieldStyle(
-                                        labelTextStr: "Data Urodzenia",
-                                      ),
-                                      onChanged: validate,
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        _showDatePicker(context);
-                                      },
-                                      icon: const Icon(Icons.calendar_today),
-                                      color: halfBlackColor,
-                                    ),
-                                  ]),
                               const SizedBox(height: 13.0),
                               TextFormField(
                                 controller: _emailTextController,
@@ -307,18 +236,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                                   FirebaseApp firebaseApp =
                                                       await Firebase
                                                           .initializeApp();
-
-                                                  final ref = FirebaseDatabase
-                                                      .instance
-                                                      .reference();
-
-                                                  ref
-                                                      .child(
-                                                          'users/' + user.uid)
-                                                      .set({
-                                                    'date':
-                                                        _chosenDate.toString(),
-                                                  });
 
                                                   Navigator.of(context)
                                                       .pushAndRemoveUntil(
