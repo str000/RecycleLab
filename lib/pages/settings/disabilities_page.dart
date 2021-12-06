@@ -116,8 +116,8 @@ class _DisabilitiesPage extends State<DisabilitiesPage> {
                                           isSelected[i] = false;
                                         }
                                       }
-                                      fontSize = getFontSize(index);
-                                      setState((){});
+
+                                      setState((){fontSize = getFontSize(index);});
                                     },
                                   ),
                                 )

@@ -7,15 +7,14 @@ import 'package:auth/theme/colors.dart';
 String appName = "Nazwa Apki";
 
 var fontSize;
-late List<bool> isSelected;
+
+List<bool> isSelected = [false, true, false];
 
 void initState() {
-  isSelected = [
-    false,
-    true,
-    false,
-  ];
+  isSelected = [false, true, false];
 }
+
+var fontSizeValue = fontSize;
 
 const appNameSign = TextStyle(
   fontSize: 40.0,
@@ -42,7 +41,7 @@ const signTextFormFieldHint = TextStyle(
 );
 
 TextStyle documentsText = TextStyle(
-  fontSize: fontSize,
+  fontSize: fontSizeValue,
   color: Colors.black,
   fontWeight: FontWeight.w700,
 );
