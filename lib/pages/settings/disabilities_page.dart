@@ -13,6 +13,7 @@ class DisabilitiesPage extends StatefulWidget {
 }
 
 class _DisabilitiesPage extends State<DisabilitiesPage> {
+
   final ref = FirebaseDatabase.instance.reference();
   final User? _currentUser = FirebaseAuth.instance.currentUser;
 
@@ -120,6 +121,17 @@ class _DisabilitiesPage extends State<DisabilitiesPage> {
                                         }
                                       }
                                       fontSize = getFontSize(index);
+
+                                      if((ref.child('users/' + _currentUser!.uid)==null)){
+                                        ref.child('users/' + _currentUser!.uid).push().set({
+                                          'fontSize':  fontSize,
+                                        });
+                                      }else{
+                                        ref.child('users/' + _currentUser!.uid).update({
+                                          'fontSize':  fontSize,
+                                        });
+                                      }
+
                                       setState((){});
                                     },
                                   ),

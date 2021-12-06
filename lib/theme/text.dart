@@ -1,20 +1,25 @@
 //Plugins
 import 'package:auth/pages/settings/disabilities_page.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 //Theme
 import 'package:auth/theme/colors.dart';
 
 String appName = "Nazwa Apki";
 
+//--------------------------------------------
+//do przeniesienia
+
 var fontSize;
 
 List<bool> isSelected = [false, true, false];
 
-void initState() {
-  isSelected = [false, true, false];
-}
+void initState() {isSelected = [false, true, false];}
 
 var fontSizeValue = fontSize;
+
+//-------------------------------------------
 
 const appNameSign = TextStyle(
   fontSize: 40.0,
