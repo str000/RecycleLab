@@ -117,7 +117,7 @@ class _MainPageState extends State<MainPage> {
 
   List<IconData> listOfIcons = [
     Icons.accessibility,
-    Icons.home,
-    Icons.favorite,
+    Icons.delete,
+    Icons.photo_camera,
   ];
 }
