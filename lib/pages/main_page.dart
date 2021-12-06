@@ -28,7 +28,7 @@ class _MainPageState extends State<MainPage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: const TopBar(
-        height: 90,
+        height: 70,
       ),
       body: DoubleBackToCloseApp(
         child: IndexedStack(
