@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 //Theme
 import 'package:auth/theme/colors.dart';
+import 'package:auth/theme/data_get.dart';
 
 String appName = "Nazwa Apki";
 
@@ -17,7 +18,7 @@ List<bool> isSelected = [false, true, false];
 
 void initState() {isSelected = [false, true, false];}
 
-var fontSizeValue = fontSize;
+var fontSizeValue = get();
 
 //-------------------------------------------
 
