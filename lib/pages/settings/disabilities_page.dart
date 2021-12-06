@@ -1,7 +1,8 @@
 //Plugins
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:auth/theme/text.dart';
 
 class DisabilitiesPage extends StatefulWidget {
@@ -12,6 +13,8 @@ class DisabilitiesPage extends StatefulWidget {
 }
 
 class _DisabilitiesPage extends State<DisabilitiesPage> {
+  final ref = FirebaseDatabase.instance.reference();
+  final User? _currentUser = FirebaseAuth.instance.currentUser;
 
   double getFontSize(int index){
     if(index==0){return 14;}
