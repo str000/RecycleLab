@@ -79,27 +79,27 @@ class _StatutePageState extends State<StatutePage> {
                           style: documentsText,
                         ),
                         const SizedBox(height: 20.0),
-                        const Text(
+                        Text(
                           '2. Właścicielem aplikacji jest drużyna "Różowe Jednorożce Patatające Po Łące W Szpileczkach Po Tęczy";',
                           style: documentsText,
                         ),
                         const SizedBox(height: 20.0),
-                        const Text(
+                        Text(
                           '3. Dostawcą i Administratorem aplikacj jest drużyna "Różowe Jednorożce Patatające Po Łące W Szpileczkach Po Tęczy";',
                           style: documentsText,
                         ),
                         const SizedBox(height: 20.0),
-                        const Text(
+                        Text(
                           '4. Użytkownikiem aplikacji jest każda osoba, która pobrała Aplikację;',
                           style: documentsText,
                         ),
                         const SizedBox(height: 20.0),
-                        const Text(
+                        Text(
                           '5. Aplikacja służy do ;',
                           style: documentsText,
                         ),
                         const SizedBox(height: 20.0),
-                        const Text(
+                        Text(
                           '6. Powyższy dokument jest tylko przykładowym dokumentem i twórcy aplikacji nie ponoszą żadnej odpowiedzialności za nie wywiązanie się z któregoś z powyższych punktów;',
                           style: documentsText,
                         ),

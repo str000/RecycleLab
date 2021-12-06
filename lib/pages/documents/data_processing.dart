@@ -70,62 +70,62 @@ class _DataProcessingPageState extends State<DataProcessingPage> {
                   Container(
                     margin: const EdgeInsets.all(10.0),
                     child: Column(
-                      children: const [
+                      children:  [
                         Text(
                           '1. Administratorem danych osobowych jest drużyna "Różowe Jednorożce Patatające W Szpileczkach Po Tęczy"',
                           style: documentsText,
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         Text(
                           '2. Administrator wyznaczył inspektora ochrony danych osobowych. Dane kontaktowe inspektora: ',
                           style: documentsText,
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         Text(
                           '3. Przekazane dane osobowe przetwarzane będą w celu realizacji usług, obsługi zgłoszeń i udzielania odpowiedzi na zgłoszenia;',
                           style: documentsText,
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         Text(
                           '4. Kategorie danych osobowych obejmują m.in. imię i nazwisko, datę urodzenia, adres e-mail, dane dedykowane do procesu/usługi/projektu;',
                           style: documentsText,
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         Text(
                           '5. Pani / Pana dane osobowe mogą być przekazywane podmiotom przetwarzającym dane osobowe na zlecenie administratora: dostawcy usług IT;',
                           style: documentsText,
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         Text(
                           '6. Państwa dane osobowe będą przechowywane przez okres istnienia prawnie uzasadnionego interesu administratora, chyba że Pani / Pan wyrazi sprzeciw wobec przetwarzania danych;',
                           style: documentsText,
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         Text(
                           '7. Państwa dane mogą być przekazywane do państwa trzeciego lub organizacji międzynarodowej;',
                           style: documentsText,
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         Text(
                           '8. Posiadają Państwo prawo dostępu do treści swoich danych oraz prawo ich sprostowania, usunięcia, ograniczenia przetwarzania, prawo do przenoszenia danych, prawo wniesienia sprzeciwu, prawo do cofnięcia zgody w dowolnym momencie bez wpływu na zgodność z prawem przetwarzania, którego dokonano na podstawie zgody przed jej cofnięciem;',
                           style: documentsText,
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         Text(
                           '9. Dane udostępnione przez Panią/Pana nie będą podlegały zautomatyzowanemu podejmowaniu decyzji oraz profilowaniu;',
                           style: documentsText,
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         Text(
                           '10. Dane pochodzą od osób, których dane dotyczą;',
                           style: documentsText,
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         Text(
                           '11. Podanie przez Państwa danych osobowych jest dobrowolne; ',
                           style: documentsText,
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         Text(
                           '12. Powyższy dokument jest tylko przykładowym dokumentem i twórcy aplikacji nie ponoszą żadnej odpowiedzialności za nie wywiązanie się z któregoś z powyższych punktów.',
                           style: documentsText,

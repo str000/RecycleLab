@@ -1,9 +1,21 @@
 //Plugins
+import 'package:auth/pages/settings/disabilities_page.dart';
 import 'package:flutter/material.dart';
 //Theme
 import 'package:auth/theme/colors.dart';
 
 String appName = "Nazwa Apki";
+
+var fontSize;
+late List<bool> isSelected;
+
+void initState() {
+  isSelected = [
+    false,
+    true,
+    false,
+  ];
+}
 
 const appNameSign = TextStyle(
   fontSize: 40.0,
@@ -29,8 +41,8 @@ const signTextFormFieldHint = TextStyle(
   color: quarterBlackcolor,
 );
 
-const documentsText = TextStyle(
-  fontSize: 22.0,
+TextStyle documentsText = TextStyle(
+  fontSize: fontSize,
   color: Colors.black,
   fontWeight: FontWeight.w700,
 );

@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'package:auth/theme/text.dart';
+
 class DisabilitiesPage extends StatefulWidget {
   const DisabilitiesPage({Key? key}) : super(key: key);
 
@@ -10,8 +12,6 @@ class DisabilitiesPage extends StatefulWidget {
 }
 
 class _DisabilitiesPage extends State<DisabilitiesPage> {
-  late List<bool> isSelected;
-  late double fontSize = 17;
 
   double getFontSize(int index){
     if(index==0){return 14;}
@@ -19,16 +19,6 @@ class _DisabilitiesPage extends State<DisabilitiesPage> {
     else if (index==2){return 20;}
     else {return 17;
     }
-  }
-
-  @override
-  void initState() {
-    isSelected = [
-      false,
-      true,
-      false,
-    ];
-    super.initState();
   }
 
   @override
