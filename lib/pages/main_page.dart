@@ -23,11 +23,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   var currentIndex = 1;
-  final List<Widget> _widgetOptions = [
-    const AccessibilityPage(),
-    const HomePage(),
-    const LikedPage(),
-  ];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -36,7 +31,14 @@ class _MainPageState extends State<MainPage> {
         height: 90,
       ),
       body: DoubleBackToCloseApp(
-        child: _widgetOptions.elementAt(currentIndex),
+        child: IndexedStack(
+          children: const <Widget>[
+            AccessibilityPage(),
+            HomePage(),
+            LikedPage(),
+          ],
+          index: currentIndex,
+        ),
         snackBar: const SnackBar(
           elevation: 6.0,
           behavior: SnackBarBehavior.floating,

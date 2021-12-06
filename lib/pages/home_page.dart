@@ -1,16 +1,14 @@
 //Plugins
-import 'package:auth/theme/colors.dart';
-import 'package:auth/widgets/sign_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 //Firebase Package
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 //Pages
 //Utils
 //Theme
 import 'package:auth/theme/text.dart';
+import 'package:auth/theme/colors.dart';
 //Widgets
+import 'package:auth/widgets/sign_widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,10 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final ref = FirebaseDatabase.instance.reference();
-
-  final User? _currentUser = FirebaseAuth.instance.currentUser;
-
-  var retrievedName = {};
+  //final User? _currentUser = FirebaseAuth.instance.currentUser;
 
   List _needs = [];
 
