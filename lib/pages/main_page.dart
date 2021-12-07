@@ -5,8 +5,9 @@ import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 //Pages
 import 'package:auth/pages/accessibility_page.dart';
-import 'package:auth/pages/liked_page.dart';
+import 'package:auth/pages/search_page.dart';
 import 'package:auth/pages/home_page.dart';
+import 'package:auth/pages/profile_page.dart';
 //Theme
 import 'package:auth/theme/colors.dart';
 //Widgets
@@ -35,7 +36,8 @@ class _MainPageState extends State<MainPage> {
           children: const <Widget>[
             AccessibilityPage(),
             HomePage(),
-            LikedPage(),
+            SearchPage(),
+            ProfilePage(),
           ],
           index: currentIndex,
         ),
@@ -66,7 +68,7 @@ class _MainPageState extends State<MainPage> {
         ]),
         child: Center(
           child: ListView.builder(
-            itemCount: 3,
+            itemCount: 4,
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
             itemBuilder: (context, index) => InkWell(
@@ -96,8 +98,8 @@ class _MainPageState extends State<MainPage> {
                     width: 60,
                     margin: EdgeInsets.only(
                       bottom: 0,
-                      right: size.width * 0.05,
-                      left: size.width * 0.05,
+                      right: size.width * 0.03,
+                      left: size.width * 0.03,
                     ),
                     decoration: const BoxDecoration(
                       color: primaryColor,
@@ -116,8 +118,9 @@ class _MainPageState extends State<MainPage> {
   }
 
   List<IconData> listOfIcons = [
-    Icons.accessibility,
-    Icons.delete,
-    Icons.photo_camera,
+    Icons.accessibility_rounded,
+    Icons.home_rounded,
+    Icons.search_rounded,
+    Icons.person_rounded,
   ];
 }

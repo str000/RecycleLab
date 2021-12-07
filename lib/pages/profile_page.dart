@@ -7,20 +7,21 @@ import 'package:flutter/material.dart';
 
 //Widgets
 
-class LikedPage extends StatefulWidget {
-  const LikedPage({Key? key}) : super(key: key);
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
+
   @override
-  _LikedPageState createState() => _LikedPageState();
+  _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _LikedPageState extends State<LikedPage> {
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
-          Text('Liked'),
+          Text('Profile'),
         ],
       ),
     );

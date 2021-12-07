@@ -47,72 +47,39 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  final _searchTextController = TextEditingController();
-  final _focusSearch = FocusNode();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        _focusSearch.unfocus();
-      },
-      child: Scaffold(
-        key: _scaffoldKey,
-        body: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Stack(
-                alignment: Alignment.centerRight,
+    return Scaffold(
+      key: _scaffoldKey,
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TextFormField(
-                    controller: _searchTextController,
-                    focusNode: _focusSearch,
-                    style: signTextFormField,
-                    decoration: CommonStyle.textFieldStyle(
-                      labelTextStr: "Wyszukaj",
-                    ),
-                    onChanged: (String? value) {},
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: IconButton(
-                      onPressed: () {
-                        print("Głosowo");
-                      },
-                      icon: const Icon(Icons.mic),
-                      color: halfBlackColor,
-                      iconSize: 30,
+                  SizedBox(
+                    height: 200,
+                    child: Center(
+                      child: ListView.builder(
+                        itemCount: _needs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Text(
+                            _needs[index].toString(),
+                            //_needs[index]['Name'].toString(),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
-              SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      height: 200,
-                      child: Center(
-                        child: ListView.builder(
-                          itemCount: _needs.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Text(
-                              _needs[index].toString(),
-                              //_needs[index]['Name'].toString(),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
