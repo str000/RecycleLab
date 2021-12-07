@@ -1,4 +1,5 @@
 //Plugins
+import 'package:auth/theme/myservice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -14,6 +15,8 @@ class _NotificationPageState extends State<NotificationPage> {
   bool _notificationTwoValue = false;
   bool _notificationThreeValue = false;
   bool _notificationFourValue = false;
+
+  MyService _myService = MyService();
 
   @override
   Widget build(BuildContext context) {
@@ -80,14 +83,13 @@ class _NotificationPageState extends State<NotificationPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
-                              children: const [
+                              children: <Widget>[
                                 Text(
-                                  'Powiadomienia 1',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w800,
-                                  ),
+                                  'You have pushed the button this many times:',
+                                ),
+                                Text(
+                                  '${_myService.myVariable}',
+                                  style: Theme.of(context).textTheme.headline4,
                                 ),
                               ],
                             ),

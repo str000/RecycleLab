@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auth/theme/myservice.dart';
 import 'dart:developer';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,21 +22,39 @@ class AccessibilityPage extends StatefulWidget {
 }
 
 class _AccessibilityPageState extends State<AccessibilityPage> {
-  Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
-    // For your reference print the AppDoc directory
-    print(directory.path);
-    return directory.path;
+  MyService _myService = MyService();
+
+  void _incrementCounter() {
+    setState(() {
+      _myService.incrementMyVariable();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Text('Accessibility'),
-        ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("chuj"),
+      ),
+      body: Center(
+        child: Column(
+
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'You have pushed the button this many times:',
+            ),
+            Text(
+              '${_myService.myVariable}',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
       ),
     );
   }
