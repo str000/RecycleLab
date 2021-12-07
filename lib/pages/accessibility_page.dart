@@ -34,7 +34,7 @@ class _AccessibilityPageState extends State<AccessibilityPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("chuj"),
+        title: Text("1"),
       ),
       body: Center(
         child: Column(
