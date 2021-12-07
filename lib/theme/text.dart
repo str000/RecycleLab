@@ -34,3 +34,15 @@ const documentsText = TextStyle(
   color: Colors.black,
   fontWeight: FontWeight.w700,
 );
+
+const postTitleStyle = TextStyle(
+  fontSize: 22.0,
+  color: halfBlackColor,
+  fontWeight: FontWeight.w700,
+);
+
+const postSmallName = TextStyle(
+  fontSize: 12.0,
+  color: halfBlackColor,
+  fontWeight: FontWeight.w700,
+);
