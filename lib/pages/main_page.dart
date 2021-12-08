@@ -8,6 +8,7 @@ import 'package:auth/pages/accessibility_page.dart';
 import 'package:auth/pages/search_page.dart';
 import 'package:auth/pages/home_page.dart';
 import 'package:auth/pages/profile_page.dart';
+import 'package:auth/pages/colorFilters.dart';
 //Theme
 import 'package:auth/theme/colors.dart';
 //Widgets
@@ -32,6 +33,8 @@ class _MainPageState extends State<MainPage> {
         height: 70,
       ),
       body: DoubleBackToCloseApp(
+        child: ColorFiltered(
+          colorFilter: returnColorFilter(colorFilterSwitchValue),
         child: IndexedStack(
           children: const <Widget>[
             AccessibilityPage(),
@@ -40,7 +43,7 @@ class _MainPageState extends State<MainPage> {
             ProfilePage(),
           ],
           index: currentIndex,
-        ),
+        ),),
         snackBar: const SnackBar(
           elevation: 6.0,
           behavior: SnackBarBehavior.floating,
