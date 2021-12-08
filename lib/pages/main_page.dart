@@ -29,90 +29,93 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: const TopBar(
-        height: 70,
-      ),
-    body: ColorFiltered(
-      colorFilter: returnColorFilter(colorFilterSwitchValue),
-      child: DoubleBackToCloseApp(
-          child: IndexedStack(
-          children: const <Widget>[
-            AccessibilityPage(),
-            HomePage(),
-            SearchPage(),
-            ProfilePage(),
-          ],
-          index: currentIndex,
-         ),
-        snackBar: const SnackBar(
-          elevation: 6.0,
-          behavior: SnackBarBehavior.floating,
-          content: Text(
-            'Naciśnij ponownie aby opuścić',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14.0,
-              fontWeight: FontWeight.w500,
-              fontFamily: 'Nunito',
-            ),
-            textAlign: TextAlign.center,
+      body: ColorFiltered(
+        colorFilter: returnColorFilter(colorFilterSwitchValue),
+        child: Scaffold(
+          appBar: const TopBar(
+            height: 70,
           ),
-        ),
-      ),
-    ),
-      bottomNavigationBar: Container(
-        height: 53,
-        padding: const EdgeInsets.only(top: 5),
-        decoration: const BoxDecoration(color: Colors.white, boxShadow: [
-          BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, .15),
-            blurRadius: 30,
-            offset: Offset(0, 0),
-          )
-        ]),
-        child: Center(
-          child: ListView.builder(
-            itemCount: 4,
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            itemBuilder: (context, index) => InkWell(
-              onTap: () {
-                setState(
-                  () {
-                    currentIndex = index;
+          body: DoubleBackToCloseApp(
+              child: IndexedStack(
+              children: const <Widget>[
+                AccessibilityPage(),
+                HomePage(),
+                SearchPage(),
+                ProfilePage(),
+              ],
+              index: currentIndex,
+             ),
+            snackBar: const SnackBar(
+              elevation: 6.0,
+              behavior: SnackBarBehavior.floating,
+              content: Text(
+                'Naciśnij ponownie aby opuścić',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Nunito',
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+
+          bottomNavigationBar: Container(
+            height: 53,
+            padding: const EdgeInsets.only(top: 5),
+            decoration: const BoxDecoration(color: Colors.white, boxShadow: [
+              BoxShadow(
+                color: Color.fromRGBO(0, 0, 0, .15),
+                blurRadius: 30,
+                offset: Offset(0, 0),
+              )
+            ]),
+            child: Center(
+              child: ListView.builder(
+                itemCount: 4,
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemBuilder: (context, index) => InkWell(
+                  onTap: () {
+                    setState(
+                      () {
+                        currentIndex = index;
+                      },
+                    );
                   },
-                );
-              },
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(
-                    listOfIcons[index],
-                    size: 40,
-                    color:
-                        index == currentIndex ? primaryColor : halfBlackColor,
-                  ),
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 1500),
-                    curve: Curves.fastLinearToSlowEaseIn,
-                    height: index == currentIndex ? 5 : 0,
-                    width: 60,
-                    margin: EdgeInsets.only(
-                      bottom: 0,
-                      right: size.width * 0.03,
-                      left: size.width * 0.03,
-                    ),
-                    decoration: const BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(5),
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        listOfIcons[index],
+                        size: 40,
+                        color:
+                            index == currentIndex ? primaryColor : halfBlackColor,
                       ),
-                    ),
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 1500),
+                        curve: Curves.fastLinearToSlowEaseIn,
+                        height: index == currentIndex ? 5 : 0,
+                        width: 60,
+                        margin: EdgeInsets.only(
+                          bottom: 0,
+                          right: size.width * 0.03,
+                          left: size.width * 0.03,
+                        ),
+                        decoration: const BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(5),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),

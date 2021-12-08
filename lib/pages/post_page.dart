@@ -6,13 +6,11 @@ import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/general_widgets.dart';
 import 'package:flutter/material.dart';
-
 import 'accessibility_page.dart';
 //Firebase Package
 //Pages
 //Utils
 //Theme
-
 //Widgets
 
 class PostPage extends StatefulWidget {
