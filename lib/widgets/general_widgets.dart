@@ -213,4 +213,102 @@ class GeneralWidgets {
       ),
     );
   }
+
+  static Column comment({
+    String commentUserName = "",
+    String commentPhotoUrl = "",
+    String comment = "",
+    final onProfilePhoto,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(commentPhotoUrl),
+                              ),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                          ),
+                          Positioned.fill(
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: onProfilePhoto,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      commentUserName,
+                      style: signTextFormField,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Row(
+              children: const [
+                Icon(
+                  Icons.star_rounded,
+                  color: quarterBlackcolor,
+                  size: 20,
+                ),
+                Icon(
+                  Icons.star_rounded,
+                  color: quarterBlackcolor,
+                  size: 20,
+                ),
+                Icon(
+                  Icons.star_rounded,
+                  color: quarterBlackcolor,
+                  size: 20,
+                ),
+                Icon(
+                  Icons.star_rounded,
+                  color: quarterBlackcolor,
+                  size: 20,
+                ),
+                Icon(
+                  Icons.star_rounded,
+                  color: quarterBlackcolor,
+                  size: 20,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        GeneralWidgets.line(),
+        const SizedBox(height: 10),
+        Text(
+          comment,
+          style: const TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 20.0,
+            color: Colors.black,
+          ),
+        ),
+        const SizedBox(height: 30),
+      ],
+    );
+  }
 }

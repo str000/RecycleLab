@@ -1,4 +1,5 @@
 //Plugins
+import 'package:auth/pages/post/comments_overlay.dart';
 import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/general_widgets.dart';
@@ -136,7 +137,9 @@ class _GeneralPageState extends State<GeneralPage> {
                         ),
                         primary: halfBlackColor,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(CommentsOverlay());
+                      },
                       child: Row(
                         children: const [
                           Icon(

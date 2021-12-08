@@ -1,4 +1,5 @@
 //Plugins
+import 'package:auth/pages/post/comments_overlay.dart';
 import 'package:auth/pages/post_page.dart';
 import 'package:auth/widgets/general_widgets.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                   print('Like');
                 },
                 onComment: () {
-                  print("Comment");
+                  Navigator.of(context).push(CommentsOverlay());
                 },
                 onShared: () {
                   print("Share");
