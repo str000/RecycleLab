@@ -6,6 +6,8 @@ import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/general_widgets.dart';
 import 'package:flutter/material.dart';
+
+import 'accessibility_page.dart';
 //Firebase Package
 //Pages
 //Utils
@@ -26,8 +28,10 @@ class _PostPageState extends State<PostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
+        body: ColorFiltered(
+        colorFilter: returnColorFilter(colorFilterSwitchValue),
+          child: SingleChildScrollView(
+          child: Column(
           children: [
             Padding(
               padding:
@@ -281,7 +285,7 @@ class _PostPageState extends State<PostPage> {
             )
           ],
         ),
-      ),
+      ),),
     );
   }
 }

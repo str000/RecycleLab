@@ -8,6 +8,7 @@ import 'package:auth/pages/settings/account_page.dart';
 import 'package:auth/pages/settings/delete_account_page.dart';
 import 'package:auth/pages/settings/notification_page.dart';
 import 'package:auth/pages/signin_page.dart';
+import 'accessibility_page.dart';
 import 'documents/data_processing.dart';
 import 'documents/statute.dart';
 //Utils
@@ -27,7 +28,9 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+        body: ColorFiltered(
+        colorFilter: returnColorFilter(colorFilterSwitchValue),
+      child: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 30.0),
           child: Column(
@@ -214,7 +217,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ],
           ),
         ),
-      ),
+      ),),
     );
   }
 }

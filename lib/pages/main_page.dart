@@ -32,10 +32,10 @@ class _MainPageState extends State<MainPage> {
       appBar: const TopBar(
         height: 70,
       ),
-      body: DoubleBackToCloseApp(
-        child: ColorFiltered(
-          colorFilter: returnColorFilter(colorFilterSwitchValue),
-        child: IndexedStack(
+    body: ColorFiltered(
+      colorFilter: returnColorFilter(colorFilterSwitchValue),
+      child: DoubleBackToCloseApp(
+          child: IndexedStack(
           children: const <Widget>[
             AccessibilityPage(),
             HomePage(),
@@ -43,7 +43,7 @@ class _MainPageState extends State<MainPage> {
             ProfilePage(),
           ],
           index: currentIndex,
-        ),),
+         ),
         snackBar: const SnackBar(
           elevation: 6.0,
           behavior: SnackBarBehavior.floating,
@@ -59,6 +59,7 @@ class _MainPageState extends State<MainPage> {
           ),
         ),
       ),
+    ),
       bottomNavigationBar: Container(
         height: 53,
         padding: const EdgeInsets.only(top: 5),
