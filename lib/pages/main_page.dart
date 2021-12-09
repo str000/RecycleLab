@@ -78,6 +78,7 @@ class _MainPageState extends State<MainPage> {
                     currentIndex = index;
                   },
                 );
+                FocusScope.of(context).unfocus();
               },
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,

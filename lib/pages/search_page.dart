@@ -1,4 +1,6 @@
 //Plugins
+import 'package:auth/pages/search/categories_page.dart';
+import 'package:auth/pages/search/subcategories_page.dart';
 import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/general_widgets.dart';
@@ -22,6 +24,17 @@ class _SearchPageState extends State<SearchPage> {
   final _focusSearch = FocusNode();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  var _index = 0;
+
+  String _category = '';
+
+  void _updateCategory(String count) {
+    setState(() {
+      _category = count;
+      _index = 1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -30,12 +43,13 @@ class _SearchPageState extends State<SearchPage> {
       },
       child: Scaffold(
         key: _scaffoldKey,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 5),
-            child: Column(
-              children: [
-                Stack(
+        body: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 5),
+                child: Stack(
                   alignment: Alignment.centerRight,
                   children: [
                     TextFormField(
@@ -60,127 +74,49 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GeneralWidgets.category(
-                      categoryName: "Pojemniki",
-                      icon: Icons.liquor_rounded,
-                      onClick: () {},
-                      context: context,
-                    ),
-                    GeneralWidgets.category(
-                      categoryName: "Materiały Budowlane",
-                      icon: Icons.construction_rounded,
-                      onClick: () {},
-                      context: context,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GeneralWidgets.category(
-                      categoryName: "Elektronika",
-                      icon: Icons.electrical_services_rounded,
-                      onClick: () {},
-                      context: context,
-                    ),
-                    GeneralWidgets.category(
-                      categoryName: "Guma",
-                      icon: Icons.waves_rounded,
-                      onClick: () {},
-                      context: context,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GeneralWidgets.category(
-                      categoryName: "Środki Czystości",
-                      icon: Icons.clean_hands_rounded,
-                      onClick: () {},
-                      context: context,
-                    ),
-                    GeneralWidgets.category(
-                      categoryName: "Meble",
-                      icon: Icons.chair_rounded,
-                      onClick: () {},
-                      context: context,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GeneralWidgets.category(
-                      categoryName: "Artykuły Biurowe",
-                      icon: Icons.edit_rounded,
-                      onClick: () {},
-                      context: context,
-                    ),
-                    GeneralWidgets.category(
-                      categoryName: "Kosmetyki",
-                      icon: Icons.sanitizer_rounded,
-                      onClick: () {},
-                      context: context,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(5.0),
-                      child: Stack(
+              ),
+              if (_index == 1)
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 5),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            height: 80,
-                            width: MediaQuery.of(context).size.width - 40,
-                            decoration: BoxDecoration(
-                              color: const Color.fromRGBO(236, 236, 236, 1),
-                              borderRadius: BorderRadius.circular(5),
+                          IconButton(
+                            padding: EdgeInsets.zero,
+                            icon: const Icon(
+                              Icons.arrow_back,
+                              size: 35,
+                              color: Colors.black,
                             ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Icon(
-                                  Icons.more_horiz,
-                                  size: 35,
-                                  color: halfBlackColor,
-                                ),
-                                Text(
-                                  'Inne',
-                                  style: TextStyle(
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w800,
-                                    color: halfBlackColor,
-                                  ),
-                                )
-                              ],
-                            ),
+                            onPressed: () {
+                              setState(() {
+                                _index = 0;
+                              });
+                            },
                           ),
-                          Positioned.fill(
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () {},
-                              ),
-                            ),
+                          Text(
+                            "${_category[0].toUpperCase()}${_category.substring(1)}",
+                            style: documentsText,
                           ),
                         ],
                       ),
-                    )
-                  ],
+                      const SizedBox(height: 5),
+                      GeneralWidgets.line(),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 20),
-              ],
-            ),
+              Expanded(
+                child: IndexedStack(
+                  children: <Widget>[
+                    CategoriesPage(category: _updateCategory),
+                    SubCategoriesPage(category: _category),
+                  ],
+                  index: _index,
+                ),
+              )
+            ],
           ),
         ),
       ),
