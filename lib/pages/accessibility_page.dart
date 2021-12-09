@@ -14,7 +14,13 @@ bool colorFilterSwitchValue = false;
 
 ColorFilter returnColorFilter(bool colorFilterSwitchValue){
 
-  //tutaj trzeba pobieranie bazy zamiast brania lokanej wartości
+  final ref = FirebaseDatabase.instance.reference();
+  final User? _currentUser = FirebaseAuth.instance.currentUser;
+
+  ref.child('users/' + _currentUser!.uid).onValue.listen((event) {
+    var data = event.snapshot;
+    colorFilterSwitchValue = data.value;
+  });
 
   if(colorFilterSwitchValue == true){
     return sepia;
