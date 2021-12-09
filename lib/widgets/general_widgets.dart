@@ -296,4 +296,53 @@ class GeneralWidgets {
       ],
     );
   }
+
+  static ClipRRect category({
+    String categoryName = "",
+    final icon,
+    final onClick,
+    final context,
+  }) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(5.0),
+      child: Stack(
+        children: [
+          Container(
+            height: 80,
+            width: MediaQuery.of(context).size.width / 2 - 30,
+            decoration: BoxDecoration(
+              color: const Color.fromRGBO(236, 236, 236, 1),
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  size: 35,
+                  color: halfBlackColor,
+                ),
+                Text(
+                  categoryName,
+                  style: const TextStyle(
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.w800,
+                    color: halfBlackColor,
+                  ),
+                )
+              ],
+            ),
+          ),
+          Positioned.fill(
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: onClick,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
