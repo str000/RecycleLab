@@ -57,7 +57,7 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
       bottomNavigationBar: Container(
-        height: 53,
+        height: 60,
         padding: const EdgeInsets.only(top: 5),
         decoration: const BoxDecoration(color: Colors.white, boxShadow: [
           BoxShadow(
@@ -85,11 +85,16 @@ class _MainPageState extends State<MainPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(
-                    listOfIcons[index],
-                    size: 40,
-                    color:
-                        index == currentIndex ? primaryColor : halfBlackColor,
+                  Container(
+                    alignment: Alignment.center,
+                    height: 50,
+                    width: 50,
+                    child: Icon(
+                      listOfIcons[index],
+                      size: index == 0 ? 50 : 40,
+                      color:
+                          index == currentIndex ? primaryColor : halfBlackColor,
+                    ),
                   ),
                   AnimatedContainer(
                     duration: const Duration(milliseconds: 1500),
@@ -118,7 +123,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   List<IconData> listOfIcons = [
-    Icons.accessibility_rounded,
+    Icons.add_rounded,
     Icons.home_rounded,
     Icons.search_rounded,
     Icons.person_rounded,
