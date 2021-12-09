@@ -1,8 +1,9 @@
 //Plugins
-import 'package:auth/theme/text.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_star_rating/smooth_star_rating.dart';
 //Theme
 import 'package:auth/theme/colors.dart';
+import 'package:auth/theme/text.dart';
 
 class GeneralWidgets {
   static Container line() {
@@ -265,34 +266,18 @@ class GeneralWidgets {
                 ),
               ],
             ),
-            Row(
-              children: const [
-                Icon(
-                  Icons.star_rounded,
-                  color: quarterBlackcolor,
-                  size: 20,
-                ),
-                Icon(
-                  Icons.star_rounded,
-                  color: quarterBlackcolor,
-                  size: 20,
-                ),
-                Icon(
-                  Icons.star_rounded,
-                  color: quarterBlackcolor,
-                  size: 20,
-                ),
-                Icon(
-                  Icons.star_rounded,
-                  color: quarterBlackcolor,
-                  size: 20,
-                ),
-                Icon(
-                  Icons.star_rounded,
-                  color: quarterBlackcolor,
-                  size: 20,
-                ),
-              ],
+            SmoothStarRating(
+              allowHalfRating: false,
+              onRated: (v) {},
+              starCount: 5,
+              size: 25.0,
+              rating: 2,
+              isReadOnly: true,
+              filledIconData: Icons.star_rounded,
+              defaultIconData: Icons.star_rounded,
+              color: const Color.fromRGBO(251, 188, 5, 1),
+              borderColor: quarterBlackcolor,
+              spacing: 0.0,
             ),
           ],
         ),
