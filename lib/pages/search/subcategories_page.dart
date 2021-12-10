@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 //Widgets
 
 class SubCategoriesPage extends StatefulWidget {
-  String category;
+  List category;
   SubCategoriesPage({Key? key, required this.category}) : super(key: key);
 
   @override
@@ -20,29 +20,9 @@ class SubCategoriesPage extends StatefulWidget {
 }
 
 class _SubCategoriesPageState extends State<SubCategoriesPage> {
-  final ref = FirebaseDatabase.instance.reference();
-  List _needs = [];
-  var categoryCurr = '';
-
-  getList() {
-    if (_needs.isEmpty || categoryCurr != widget.category) {
-      ref.child('category/' + widget.category).once().then((event) async {
-        var values = event.value;
-        setState(() {
-          _needs = values;
-          categoryCurr = widget.category;
-        });
-        print(values);
-      });
-      print(widget.category);
-    } else {
-      print("pełna");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    getList();
+    //getList();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -51,7 +31,7 @@ class _SubCategoriesPageState extends State<SubCategoriesPage> {
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: _needs.length,
+              itemCount: widget.category.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   margin: const EdgeInsets.only(bottom: 20),
@@ -70,7 +50,7 @@ class _SubCategoriesPageState extends State<SubCategoriesPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "${_needs[index].toString()[0].toUpperCase()}${_needs[index].toString().substring(1)}",
+                                "${widget.category[index].toString()[0].toUpperCase()}${widget.category[index].toString().substring(1)}",
                                 style: const TextStyle(
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.w800,
