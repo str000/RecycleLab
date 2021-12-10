@@ -1,11 +1,4 @@
-//Plugins
 import 'package:flutter/material.dart';
-//Firebase Package
-//Pages
-//Utils
-//Theme
-
-//Widgets
 
 class AccessibilityPage extends StatefulWidget {
   const AccessibilityPage({Key? key}) : super(key: key);
