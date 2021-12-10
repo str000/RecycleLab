@@ -11,18 +11,15 @@ import 'package:flutter/material.dart';
 
 //Widgets
 
-class SubCategoriesPage extends StatefulWidget {
+class SubCategoriesPage extends StatelessWidget {
   List category;
-  SubCategoriesPage({Key? key, required this.category}) : super(key: key);
+  final ValueChanged<String> subcategoryName;
+  SubCategoriesPage(
+      {Key? key, required this.category, required this.subcategoryName})
+      : super(key: key);
 
-  @override
-  _SubCategoriesPageState createState() => _SubCategoriesPageState();
-}
-
-class _SubCategoriesPageState extends State<SubCategoriesPage> {
   @override
   Widget build(BuildContext context) {
-    //getList();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -31,7 +28,7 @@ class _SubCategoriesPageState extends State<SubCategoriesPage> {
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: widget.category.length,
+              itemCount: category.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   margin: const EdgeInsets.only(bottom: 20),
@@ -40,23 +37,26 @@ class _SubCategoriesPageState extends State<SubCategoriesPage> {
                     child: Stack(
                       children: [
                         Container(
-                          height: 50,
                           width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.only(
+                              top: 15, bottom: 15, left: 5, right: 5),
                           decoration: BoxDecoration(
                             color: const Color.fromRGBO(236, 236, 236, 1),
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          child: Row(
                             children: [
-                              Text(
-                                "${widget.category[index].toString()[0].toUpperCase()}${widget.category[index].toString().substring(1)}",
-                                style: const TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w800,
-                                  color: halfBlackColor,
+                              Expanded(
+                                child: Text(
+                                  "${category[index].toString()[0].toUpperCase()}${category[index].toString().substring(1)}",
+                                  style: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w800,
+                                    color: halfBlackColor,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -64,7 +64,10 @@ class _SubCategoriesPageState extends State<SubCategoriesPage> {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                subcategoryName(category[index].toString());
+                                FocusScope.of(context).unfocus();
+                              },
                             ),
                           ),
                         ),
