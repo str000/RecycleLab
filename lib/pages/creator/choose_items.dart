@@ -2,6 +2,7 @@ import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/general_widgets.dart';
 import 'package:auth/widgets/sign_widgets.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class ChooseItems extends StatefulWidget {
@@ -13,6 +14,27 @@ class ChooseItems extends StatefulWidget {
 
 class _ChooseItems extends State<ChooseItems> {
   final myController = TextEditingController();
+
+  final ref = FirebaseDatabase.instance.reference();
+  List _needs = [];
+  var categoryCurr = '';
+  var guma = "guma";
+
+  getList() {
+    if (_needs.isEmpty || categoryCurr != guma) {
+      ref.child('category/' + guma).once().then((event) async {
+        var values = event.value;
+        setState(() {
+          _needs = values;
+          categoryCurr = guma;
+        });
+        print(values);
+      });
+      print(guma);
+    } else {
+      print("pełna");
+    }
+  }
 
   @override
   void dispose() {
