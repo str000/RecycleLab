@@ -57,6 +57,52 @@ class _ChooseItems extends State<ChooseItems> {
                     ),
                   ],
                 ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: _needs.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 20),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(5.0),
+                        child: Stack(
+                          children: [
+                            Container(
+                              height: 50,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                color: const Color.fromRGBO(236, 236, 236, 1),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "${_needs[index].toString()[0].toUpperCase()}${_needs[index].toString().substring(1)}",
+                                    style: const TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.w800,
+                                      color: halfBlackColor,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Positioned.fill(
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () {},
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),
