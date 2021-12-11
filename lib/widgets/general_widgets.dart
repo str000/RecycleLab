@@ -186,8 +186,6 @@ class GeneralWidgets {
   }) {
     return Container(
       padding: const EdgeInsets.only(
-        left: 30,
-        right: 30,
         top: 5,
         bottom: 5,
       ),
@@ -195,19 +193,21 @@ class GeneralWidgets {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10.0),
         child: SizedBox(
-          height: 40,
           child: ElevatedButton(
             onPressed: onClick,
             style: ElevatedButton.styleFrom(
               primary: color,
               padding: const EdgeInsets.only(
-                left: 30,
-                right: 30,
+                left: 20,
+                right: 20,
+                top: 5,
+                bottom: 5,
               ),
             ),
             child: Text(
               materialName,
               style: documentsText,
+              textAlign: TextAlign.center,
             ),
           ),
         ),

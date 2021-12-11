@@ -62,7 +62,7 @@ class _PostPageState extends State<PostPage> {
                     TextButton(
                       style: TextButton.styleFrom(
                         textStyle: const TextStyle(
-                          fontSize: 20.0,
+                          fontSize: 18.0,
                           fontWeight: FontWeight.w800,
                           fontFamily: "Nunito",
                         ),
@@ -81,7 +81,7 @@ class _PostPageState extends State<PostPage> {
                     TextButton(
                       style: TextButton.styleFrom(
                         textStyle: const TextStyle(
-                          fontSize: 20.0,
+                          fontSize: 18.0,
                           fontWeight: FontWeight.w800,
                           fontFamily: "Nunito",
                         ),
@@ -100,7 +100,7 @@ class _PostPageState extends State<PostPage> {
                     TextButton(
                       style: TextButton.styleFrom(
                         textStyle: const TextStyle(
-                          fontSize: 20.0,
+                          fontSize: 18.0,
                           fontWeight: FontWeight.w800,
                           fontFamily: "Nunito",
                         ),

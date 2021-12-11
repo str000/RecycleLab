@@ -122,7 +122,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(10.0),
         child: SizedBox(
-          height: 100,
+          height: 120,
           child: Column(
             children: [
               Row(children: [

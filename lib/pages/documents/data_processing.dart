@@ -53,17 +53,21 @@ class _DataProcessingPageState extends State<DataProcessingPage> {
                   //------Napis Ustawienia------
                   Row(
                     children: [
-                      Container(
-                        margin: const EdgeInsets.all(10.0),
-                        child: const Text(
-                          'Przetwarzanie Danych',
-                          style: TextStyle(
-                            fontSize: 30.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w700,
+                      Flexible(
+                        child: Container(
+                          margin: const EdgeInsets.all(10.0),
+                          child: const Text(
+                            'Przetwarzanie Danych',
+                            style: TextStyle(
+                              fontSize: 30.0,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w700,
+                            ),
+                            overflow: TextOverflow.fade,
+                            textAlign: TextAlign.end,
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                   //------Ustawienia------

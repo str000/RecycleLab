@@ -69,11 +69,9 @@ class ResultsPage extends StatelessWidget {
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      constraints:
-                          const BoxConstraints(maxWidth: 230, maxHeight: 220),
+                    Padding(
+                      padding: const EdgeInsets.all(30),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           const Icon(
@@ -81,16 +79,19 @@ class ResultsPage extends StatelessWidget {
                             size: 85,
                             color: halfBlackColor,
                           ),
+                          const SizedBox(height: 10),
                           const Text(
                             'Trochę tu pusto',
                             style: pageNameSign,
                             textAlign: TextAlign.center,
                           ),
+                          const SizedBox(height: 10),
                           const Text(
                             'Utwórz własny poradnik wykorzystując ten przedmiot',
                             style: postSmallName,
                             textAlign: TextAlign.center,
                           ),
+                          const SizedBox(height: 20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

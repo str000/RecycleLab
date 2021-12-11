@@ -47,7 +47,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(25.0),
                         child: SizedBox(
-                          width: 260,
                           height: 35,
                           child: ElevatedButton(
                             onPressed: () {

@@ -29,8 +29,8 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
       body: SnappingSheet(
         lockOverflowDrag: true,
         snappingPositions: const [
-          SnappingPosition.factor(
-            positionFactor: 0.0,
+          SnappingPosition.pixels(
+            positionPixels: 130,
             snappingCurve: Curves.easeOutExpo,
             snappingDuration: Duration(seconds: 1),
             grabbingContentOffset: GrabbingContentOffset.top,
@@ -43,20 +43,25 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
           ),
         ],
         child: Stack(
+          alignment: AlignmentDirectional.topStart,
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height / 2 + 100,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80',
+            Stack(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height - 200,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(
+                        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80',
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 30, left: 10),
+              padding: const EdgeInsets.only(top: 40, left: 10),
               child: GeneralWidgets.actionButton(
                 backgroundColor: quarterBlackcolor,
                 icon: const Icon(
@@ -71,9 +76,8 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
             ),
           ],
         ),
-        grabbingHeight: 315,
+        grabbingHeight: 140,
         grabbing: Container(
-          height: 315,
           decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(topRight: Radius.circular(60)),
@@ -139,6 +143,29 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
                     ),
                     const SizedBox(height: 20),
                     GeneralWidgets.line(),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        sheetBelow: SnappingSheetContent(
+          childScrollController: _myScrollController,
+          draggable: true,
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+            ),
+            child: SingleChildScrollView(
+              controller: _myScrollController,
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 20.0,
+                  right: 20.0,
+                ),
+                child: Column(
+                  children: [
                     const SizedBox(height: 20),
                     Container(
                       constraints: const BoxConstraints(maxWidth: 220),
@@ -216,71 +243,64 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
                     ),
                     const SizedBox(height: 20),
                     GeneralWidgets.line(),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'Poradniki',
-                      style: signTextFormField,
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "Instrukcje",
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w800,
+                            color: halfBlackColor,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 17),
-                    GeneralWidgets.line(),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        sheetBelow: SnappingSheetContent(
-          childScrollController: _myScrollController,
-          sizeBehavior:
-              SheetSizeStatic(size: MediaQuery.of(context).size.height / 2),
-          draggable: true,
-          child: Container(
-            height: MediaQuery.of(context).size.height / 2,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-            ),
-            child: SingleChildScrollView(
-              controller: _myScrollController,
-              physics: const BouncingScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 20.0,
-                  right: 20.0,
-                ),
-                child: Column(
-                  children: [
-                    GeneralWidgets.post(
-                      postTitle: "Poduszka z folii",
-                      profilePhotoUrl:
-                          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
-                      postMainPhotoUrl:
-                          "https://images.unsplash.com/photo-1520899981500-21af7ff24c2a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1077&q=80",
-                      postLikes: "205",
-                      postComents: "25",
-                      isLiked: true,
-                      onLiked: () {
-                        print('Like');
-                      },
-                      onComment: () {
-                        Navigator.of(context).push(CommentsOverlay());
-                      },
-                      onShared: () {
-                        print("Share");
-                      },
-                      onPhoto: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const PostPage(),
-                          ),
-                        );
-                      },
-                      onProfilePhoto: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const PublicProfilePage(),
-                          ),
-                        );
-                      },
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height - 190,
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          children: [
+                            GeneralWidgets.post(
+                              postTitle: "Poduszka z folii",
+                              profilePhotoUrl:
+                                  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
+                              postMainPhotoUrl:
+                                  "https://images.unsplash.com/photo-1520899981500-21af7ff24c2a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1077&q=80",
+                              postLikes: "205",
+                              postComents: "25",
+                              isLiked: true,
+                              onLiked: () {
+                                print('Like');
+                              },
+                              onComment: () {
+                                Navigator.of(context).push(CommentsOverlay());
+                              },
+                              onShared: () {
+                                print("Share");
+                              },
+                              onPhoto: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const PostPage(),
+                                  ),
+                                );
+                              },
+                              onProfilePhoto: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const PublicProfilePage(),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),

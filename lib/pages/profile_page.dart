@@ -33,10 +33,10 @@ class _ProfilePageState extends State<ProfilePage> {
       body: SnappingSheet(
         lockOverflowDrag: true,
         snappingPositions: [
-          SnappingPosition.pixels(
-            positionPixels: MediaQuery.of(context).size.height / 2 - 200,
+          const SnappingPosition.pixels(
+            positionPixels: 130,
             snappingCurve: Curves.easeOutExpo,
-            snappingDuration: const Duration(seconds: 1),
+            snappingDuration: Duration(seconds: 1),
             grabbingContentOffset: GrabbingContentOffset.top,
           ),
           SnappingPosition.pixels(
@@ -52,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Stack(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height / 2 + 100,
+                  height: MediaQuery.of(context).size.height - 200,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.cover,
@@ -68,9 +68,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
             Padding(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height / 2 - 60,
-                  left: 10),
+              padding: const EdgeInsets.only(bottom: 290, left: 10),
               child: GeneralWidgets.actionButton(
                 backgroundColor: quarterBlackcolor,
                 icon: const Icon(
@@ -83,7 +81,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ],
         ),
-        grabbingHeight: MediaQuery.of(context).size.height / 2 - 218,
+        grabbingHeight: 140,
         grabbing: Container(
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -251,53 +249,51 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(height: 20),
                     GeneralWidgets.line(),
                     const SizedBox(height: 10),
-                    Container(
-                      constraints: const BoxConstraints(maxWidth: 250),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              textStyle: const TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w800,
-                                fontFamily: "Nunito",
-                              ),
-                              primary: currentIndex == 0
-                                  ? Colors.black
-                                  : halfBlackColor,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: const TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w800,
+                              fontFamily: "Nunito",
                             ),
-                            onPressed: () {
-                              setState(
-                                () {
-                                  currentIndex = 0;
-                                },
-                              );
-                            },
-                            child: const Text("Instrukcje"),
+                            primary: currentIndex == 0
+                                ? Colors.black
+                                : halfBlackColor,
                           ),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              textStyle: const TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w800,
-                                fontFamily: "Nunito",
-                              ),
-                              primary: currentIndex == 1
-                                  ? Colors.black
-                                  : halfBlackColor,
+                          onPressed: () {
+                            setState(
+                              () {
+                                currentIndex = 0;
+                              },
+                            );
+                          },
+                          child: const Text("Instrukcje"),
+                        ),
+                        const SizedBox(width: 20),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: const TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w800,
+                              fontFamily: "Nunito",
                             ),
-                            onPressed: () {
-                              setState(
-                                () {
-                                  currentIndex = 1;
-                                },
-                              );
-                            },
-                            child: const Text("Polubione"),
+                            primary: currentIndex == 1
+                                ? Colors.black
+                                : halfBlackColor,
                           ),
-                        ],
-                      ),
+                          onPressed: () {
+                            setState(
+                              () {
+                                currentIndex = 1;
+                              },
+                            );
+                          },
+                          child: const Text("Polubione"),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 10),
                     SizedBox(
