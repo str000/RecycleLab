@@ -14,27 +14,46 @@ class ChooseItems extends StatefulWidget {
 
 class _ChooseItems extends State<ChooseItems> {
   final myController = TextEditingController();
-
+  final _focusSearch = FocusNode();
   final ref = FirebaseDatabase.instance.reference();
+
+  var _index = 0;
+  var _result = 0;
+
+  List<String> selectedItems = [];
+
+  List _category = [];
+  final _categories = [];
+  final filter = [];
+  final _allCategories = [];
+  bool _isCategory = false;
+  String _categoryName = '';
+
   String? providedNeedName;
   List _needs = [];
   var categoryCurr = '';
-  String guma = "guma";
 
-  getList() {
-    if (_needs.isEmpty || categoryCurr != guma) {
-      ref.child('category/' + guma).once().then((event) async {
-        var values = event.value;
-          setState(() {
-            _needs = values;
-            categoryCurr = guma;
-          });
-        print(values);
+  @override
+  void initState() {
+    super.initState();
+    ref.child('category').once().then((event) async {
+      var values = event.value;
+      setState(() {
+        _needs.add(values);
+        _category = values['guma'];
+        _categoryName = ' ';
+        _index = 0;
+        _result = 0;
       });
-      print(guma);
-    } else {
-      print("pełna");
-    }
+
+      final allElements = values.values;
+
+      for (final element in allElements) {
+        setState(() {
+          _allCategories.addAll(element.where((item) => item != null));
+        });
+      }
+    });
   }
 
   @override
@@ -48,95 +67,214 @@ class _ChooseItems extends State<ChooseItems> {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding:
-                const EdgeInsets.only(bottom: 0, right: 20, top: 0, left: 20),
-            child: Column(
-              children: [
-                Column(
-                  children: [
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            bottom: 20, right: 20, top: 20, left: 20),
-                        child: Text(
-                          'Wybierz przedmioty',
-                          style: documentsText,
-                        ),
+        body: Padding(
+          padding:
+              const EdgeInsets.only(bottom: 0, right: 20, top: 0, left: 20),
+          child: Column(
+            children: [
+              Column(
+                children: [
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          bottom: 20, right: 20, top: 20, left: 20),
+                      child: Text(
+                        'Wybierz przedmioty',
+                        style: documentsText,
                       ),
                     ),
-                    Stack(
-                      alignment: Alignment.centerRight,
-                      children: [
-                        TextFormField(
+                  ),
+                  Stack(
+                    alignment: Alignment.centerRight,
+                    children: [
+                      TextFormField(
                           style: signTextFormField,
+                          focusNode: _focusSearch,
                           controller: myController,
                           decoration: CommonStyle.textFieldStyle(
                             labelTextStr: "np. butelka",
                           ),
-                          onChanged: (String? value) {
-                            setState(() {
-                              providedNeedName = value;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: _needs.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 20),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(5.0),
-                          child: Stack(
-                            children: [
-                              Container(
-                                height: 50,
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                  color: const Color.fromRGBO(236, 236, 236, 1),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "${_needs[index].toString()[0].toUpperCase()}${_needs[index].toString().substring(1)}",
-                                      style: const TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.w800,
-                                        color: halfBlackColor,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Positioned.fill(
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    onTap: () {},
+                          onChanged: (String? value) async {
+                            if (_index == 0) {
+                              setState(() {
+                                _isCategory = false;
+                              });
+                            }
+
+                            if (_isCategory == false) {
+                              if (value!.length >= 3) {
+                                final filter = [];
+                                for (int x = 0;
+                                    x < _allCategories.length;
+                                    x++) {
+                                  if (_allCategories[x].contains(value)) {
+                                    filter.add(_allCategories[x]);
+                                  }
+                                }
+                                setState(() {
+                                  _category = filter;
+                                  _categoryName = 'Wyniki';
+                                  _index = 1;
+                                });
+                              } else {
+                                setState(() {
+                                  _index = 0;
+                                });
+                              }
+                            } else {
+                              if (value!.length >= 3) {
+                                for (int x = 0; x < _category.length; x++) {
+                                  if (_category[x].contains(value)) {
+                                    filter.add(_category[x]);
+                                  }
+                                }
+                                setState(() {
+                                  _category = filter;
+                                });
+                              } else {
+                                setState(() {
+                                  _category = _categories[0][_categoryName];
+                                });
+                              }
+                            }
+                          }),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 200,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: _category.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 20),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(5.0),
+                            child: Stack(
+                              children: [
+                                Container(
+                                  height: 50,
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                    color:
+                                        const Color.fromRGBO(236, 236, 236, 1),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      GestureDetector(
+                                        child: Text(
+                                          "${_category[index].toString()[0].toUpperCase()}${_category[index].toString().substring(1)}",
+                                          style: const TextStyle(
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.w800,
+                                            color: halfBlackColor,
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 ),
-                              ),
-                            ],
+                                Positioned.fill(
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedItems[index] =
+                                              _category[index];
+                                          print(selectedItems[index]);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ],
-            ),
+              ),
+              const Divider(),
+              const Text(
+                'Wybrane przedmioty',
+                style: documentsText,
+              ),
+              SizedBox(
+                height: 200,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: _category.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 20),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(5.0),
+                            child: Stack(
+                              children: [
+                                Container(
+                                  height: 50,
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                    color:
+                                        const Color.fromRGBO(0, 181, 255, 1.0),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      GestureDetector(
+                                        child: Text(
+                                          "${_category[index].toString()[0].toUpperCase()}${_category[index].toString().substring(1)}",
+                                          style: const TextStyle(
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.w800,
+                                            color: halfBlackColor,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Positioned.fill(
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedItems[index] =
+                                              _category[index];
+                                          print(selectedItems[index]);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

@@ -3,10 +3,10 @@ import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/general_widgets.dart';
 import 'package:flutter/material.dart';
 
-import 'title_page.dart';
-import 'choose_items.dart';
-import 'choose_tools.dart';
-import 'instruction.dart';
+import 'creator/title_page.dart';
+import 'creator/choose_items.dart';
+import 'creator/choose_tools.dart';
+import 'creator/instruction.dart';
 
 class MainCreator extends StatefulWidget {
   const MainCreator({Key? key}) : super(key: key);
@@ -17,6 +17,23 @@ class MainCreator extends StatefulWidget {
 
 class _MainCreator extends State<MainCreator> {
   var currentIndex = 0;
+
+  String title = ' ';
+  String desc = ' ';
+  List<String> items = [];
+  List<String> tools = [];
+  List<String> steps = [];
+  bool public = false;
+
+  callback(title,desc) {
+    setState(() {
+      title = ' ';
+      desc = ' ';
+      items = [];
+      tools = [];
+      public = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
