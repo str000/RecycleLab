@@ -28,9 +28,12 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: const TopBar(
-        height: 70,
-      ),
+      appBar: currentIndex != 3
+          ? const TopBar(
+              height: 70,
+              color: Colors.white,
+            )
+          : null,
       body: DoubleBackToCloseApp(
         child: IndexedStack(
           children: const <Widget>[

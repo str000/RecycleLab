@@ -9,11 +9,8 @@ import 'package:auth/theme/text.dart';
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
-
-  const TopBar({
-    Key? key,
-    required this.height,
-  }) : super(key: key);
+  final color;
+  const TopBar({Key? key, required this.height, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +18,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
       children: [
         Container(
             height: 90,
-            color: Colors.white,
+            color: color,
             padding: const EdgeInsets.only(
               top: 30.0,
               left: 20.0,
