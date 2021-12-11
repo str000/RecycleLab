@@ -20,7 +20,8 @@ class _ChooseItems extends State<ChooseItems> {
   var _index = 0;
   var _result = 0;
 
-  List<String> selectedItems = [];
+  List<String> selectedItems = [ ];
+  String itemName = ' ';
 
   List _category = [];
   final _categories = [];
@@ -32,6 +33,14 @@ class _ChooseItems extends State<ChooseItems> {
   String? providedNeedName;
   List _needs = [];
   var categoryCurr = '';
+
+  add(String name) {
+    selectedItems.add(name);
+  }
+
+  del(int index) {
+    selectedItems.removeAt(index);
+  }
 
   @override
   void initState() {
@@ -189,9 +198,9 @@ class _ChooseItems extends State<ChooseItems> {
                                     child: InkWell(
                                       onTap: () {
                                         setState(() {
-                                          selectedItems[index] =
-                                              _category[index];
-                                          print(selectedItems[index]);
+                                          itemName = "${_category[index].toString()[0].toUpperCase()}${_category[index].toString().substring(1)}";
+                                          add(itemName);
+                                          print(itemName);
                                         });
                                       },
                                     ),
@@ -219,7 +228,7 @@ class _ChooseItems extends State<ChooseItems> {
                     child: ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: _category.length,
+                      itemCount: selectedItems.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
                           margin: const EdgeInsets.only(bottom: 20),
@@ -240,7 +249,7 @@ class _ChooseItems extends State<ChooseItems> {
                                     children: [
                                       GestureDetector(
                                         child: Text(
-                                          "${_category[index].toString()[0].toUpperCase()}${_category[index].toString().substring(1)}",
+                                          "${selectedItems[index].toString()[0].toUpperCase()}${selectedItems[index].toString().substring(1)}",
                                           style: const TextStyle(
                                             fontSize: 20.0,
                                             fontWeight: FontWeight.w800,
@@ -257,9 +266,9 @@ class _ChooseItems extends State<ChooseItems> {
                                     child: InkWell(
                                       onTap: () {
                                         setState(() {
-                                          selectedItems[index] =
-                                              _category[index];
-                                          print(selectedItems[index]);
+                                          itemName = "${_category[index].toString()[0].toUpperCase()}${_category[index].toString().substring(1)}";
+                                          del(index);
+                                          print(itemName);
                                         });
                                       },
                                     ),
