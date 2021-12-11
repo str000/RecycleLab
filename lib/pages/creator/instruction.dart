@@ -12,8 +12,8 @@ class Intruction extends StatefulWidget {
 }
 
 class _Intruction extends State<Intruction> {
-  List<String> _steps = [];
-  var _numbersOfSteps = 1;
+  final List<String> _steps = [];
+  final _numbersOfSteps = 1;
   var currentIndex = 0;
 
   add(String name) {
@@ -27,7 +27,11 @@ class _Intruction extends State<Intruction> {
   @override
   void initState() {
     super.initState();
-    _numbersOfSteps;
+     setState((){
+       _steps;
+       _numbersOfSteps;
+       currentIndex;
+     });
   }
 
   @override

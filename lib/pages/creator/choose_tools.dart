@@ -23,6 +23,15 @@ class _ChooseTools extends State<ChooseTools> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    setState((){
+      toolsNames;
+      toolName;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Scaffold(
@@ -63,10 +72,12 @@ class _ChooseTools extends State<ChooseTools> {
                           padding: const EdgeInsets.only(right: 10),
                           child: IconButton(
                             onPressed: () {
-                              if (toolName != null) {
-                                add(toolName!);
-                              }
-                              print(toolsNames[0]);
+                              setState(() {
+                                if (toolName != null) {
+                                  add(toolName!);
+                                }
+                                print(toolsNames[0]);
+                              });
                             },
                             icon: const Icon(Icons.mic),
                             color: halfBlackColor,
