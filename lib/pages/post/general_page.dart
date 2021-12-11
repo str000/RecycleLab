@@ -1,5 +1,6 @@
 //Plugins
 import 'package:auth/pages/post/comments_overlay.dart';
+import 'package:auth/pages/public_profile_page.dart';
 import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/general_widgets.dart';
@@ -23,6 +24,8 @@ class _GeneralPageState extends State<GeneralPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics:
+          const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       child: Column(
         children: [
           Padding(
@@ -54,7 +57,12 @@ class _GeneralPageState extends State<GeneralPage> {
                           color: Colors.transparent,
                           child: InkWell(
                             onTap: () {
-                              print("Profile");
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const PublicProfilePage(),
+                                ),
+                              );
                             },
                           ),
                         ),

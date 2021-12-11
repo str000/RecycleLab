@@ -21,6 +21,7 @@ class _MaterialsPageState extends State<MaterialsPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Center(

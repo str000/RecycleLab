@@ -1,3 +1,4 @@
+import 'package:auth/pages/public_profile_page.dart';
 import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/general_widgets.dart';
@@ -266,8 +267,8 @@ class CommentsOverlay extends ModalRoute<void> {
                                     MediaQuery.of(context).size.height / 2 - 75,
                                 width: MediaQuery.of(context).size.width,
                                 child: SingleChildScrollView(
-                                  physics:
-                                      const AlwaysScrollableScrollPhysics(),
+                                  physics: const BouncingScrollPhysics(
+                                      parent: AlwaysScrollableScrollPhysics()),
                                   child: Padding(
                                     padding: const EdgeInsets.all(20),
                                     child: Column(
@@ -277,7 +278,14 @@ class CommentsOverlay extends ModalRoute<void> {
                                           commentPhotoUrl:
                                               'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80',
                                           comment: 'Świetny pomysł. Polecam!',
-                                          onProfilePhoto: () {},
+                                          onProfilePhoto: () {
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const PublicProfilePage(),
+                                              ),
+                                            );
+                                          },
                                         )
                                       ],
                                     ),

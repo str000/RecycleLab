@@ -345,4 +345,35 @@ class GeneralWidgets {
       ),
     );
   }
+
+  static ClipRRect actionButton({
+    final backgroundColor,
+    final icon,
+    final onClick,
+  }) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(50),
+      child: Stack(
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: icon,
+          ),
+          Positioned.fill(
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: onClick,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
