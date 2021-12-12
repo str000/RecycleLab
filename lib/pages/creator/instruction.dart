@@ -22,7 +22,8 @@ class _Intruction extends State<Intruction> {
   final _step1TextController = TextEditingController();
   final _step1Focus = FocusNode();
 
-  List<String> _stepsList = [];
+  List _stepsList = [];
+  List _stepsImg = [];
 
   var _image;
   int currentStepValue = 0;
@@ -32,6 +33,20 @@ class _Intruction extends State<Intruction> {
     await FirebaseStorage.instance
         .ref('users/' + _currentUser!.uid + '/profile-photo.png')
         .putFile(_image);
+  }
+
+  add(String name, int index) {
+    if(_stepsList.isEmpty){
+      _stepsList.insert(index, name);
+    }else {
+
+      _stepsList[index] = name;
+    }
+
+  }
+
+  del(String index) {
+    _stepsList.removeWhere((item) => item == index);
   }
 
   @override
@@ -45,7 +60,7 @@ class _Intruction extends State<Intruction> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        _step1Focus.unfocus();
+        FocusScope.of(context).unfocus();
       },
       child: Scaffold(
         body: SingleChildScrollView(
@@ -83,19 +98,31 @@ class _Intruction extends State<Intruction> {
                         stepColor: Colors.black,
                         onChanged: (String value) {
                           //_stepsList[0] = value;
-                          if(index == currentStepValue){
+                          if (index == currentStepValue) {
                             setState(() {
                               currentStepValue++;
+                              _stepsList.length = currentStepValue;
                             });
                           }
 
-                          if(value == ''){
+                          if (value == '') {
                             setState(() {
                               currentStepValue--;
                             });
+                          }else{}
+
+                          if (value == '' && index == currentStepValue-1) {
+                            setState(() {
+                              _stepsList.length = currentStepValue;
+                            });
                           }
 
+                          setState(()  {
+                            add(value,index);
+                          });
+
                           print(_stepsList);
+
                         },
                       );
                     }),
