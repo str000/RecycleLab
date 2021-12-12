@@ -191,15 +191,35 @@ class _LoginPageState extends State<LoginPage> {
                                               setState(() {
                                                 _isProcessing = false;
                                               });
+                                              final ref = FirebaseDatabase
+                                                  .instance
+                                                  .reference();
 
                                               if (user != null) {
-                                                Navigator.of(context)
-                                                    .pushReplacement(
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        MainPage(user: user),
-                                                  ),
-                                                );
+                                                ref
+                                                    .child('users/' + user.uid)
+                                                    .once()
+                                                    .then((value) {
+                                                  if (value.exists == false) {
+                                                    Navigator.of(context)
+                                                        .pushReplacement(
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const CompleteProfilPage(),
+                                                      ),
+                                                    );
+                                                  } else {
+                                                    Navigator.of(context)
+                                                        .pushReplacement(
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            MainPage(
+                                                          user: user,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
+                                                });
                                               }
                                             }
                                           },
@@ -270,13 +290,32 @@ class _LoginPageState extends State<LoginPage> {
                                       User? user =
                                           await FireAuth.signInWithGoogle(
                                               context: context);
+                                      final ref =
+                                          FirebaseDatabase.instance.reference();
                                       if (user != null) {
-                                        Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                MainPage(user: user),
-                                          ),
-                                        );
+                                        ref
+                                            .child('users/' + user.uid)
+                                            .once()
+                                            .then((value) {
+                                          if (value.exists == false) {
+                                            Navigator.of(context)
+                                                .pushReplacement(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const CompleteProfilPage(),
+                                              ),
+                                            );
+                                          } else {
+                                            Navigator.of(context)
+                                                .pushReplacement(
+                                              MaterialPageRoute(
+                                                builder: (context) => MainPage(
+                                                  user: user,
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        });
                                       }
                                     },
                                     style: ElevatedButton.styleFrom(

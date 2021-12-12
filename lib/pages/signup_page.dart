@@ -1,4 +1,5 @@
 //Plugins
+import 'package:auth/pages/complete_profil_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -66,14 +67,25 @@ class _RegisterPageState extends State<RegisterPage> {
       setState(() {
         _isProcessing = false;
       });
-
+      final ref = FirebaseDatabase.instance.reference();
       if (user != null) {
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (context) => MainPage(user: user),
-          ),
-          ModalRoute.withName('/'),
-        );
+        ref.child('users/' + user.uid).once().then((value) {
+          if (value.exists == false) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => const CompleteProfilPage(),
+              ),
+            );
+          } else {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => MainPage(
+                  user: user,
+                ),
+              ),
+            );
+          }
+        });
       }
     }
   }
