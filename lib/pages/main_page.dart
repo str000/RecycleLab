@@ -1,4 +1,5 @@
 //Plugins
+import 'package:auth/pages/complete_profil_page.dart';
 import 'package:flutter/material.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 //Firebase Package

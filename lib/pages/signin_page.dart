@@ -1,4 +1,5 @@
 //Plugins
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 //Firebase Package
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 //Pages
 import 'package:auth/pages/main_page.dart';
 import 'package:auth/pages/signup_page.dart';
+import 'package:auth/pages/complete_profil_page.dart';
 //Utils
 import 'package:auth/utils/fire_auth.dart';
 import 'package:auth/utils/validator.dart';
@@ -35,17 +37,27 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<FirebaseApp> _initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
-
+    final ref = FirebaseDatabase.instance.reference();
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => MainPage(
-            user: user,
-          ),
-        ),
-      );
+      ref.child('users/' + user.uid).once().then((value) {
+        if (value.exists == false) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const CompleteProfilPage(),
+            ),
+          );
+        } else {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => MainPage(
+                user: user,
+              ),
+            ),
+          );
+        }
+      });
     }
 
     return firebaseApp;
