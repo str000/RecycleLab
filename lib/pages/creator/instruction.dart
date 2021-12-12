@@ -28,11 +28,11 @@ class _Intruction extends State<Intruction> {
   @override
   void initState() {
     super.initState();
-     setState((){
-       _steps;
-       _numbersOfSteps;
-       currentIndex;
-     });
+    setState(() {
+      _steps;
+      _numbersOfSteps;
+      currentIndex;
+    });
   }
 
   @override
@@ -40,22 +40,18 @@ class _Intruction extends State<Intruction> {
     return GestureDetector(
       child: Scaffold(
         body: Padding(
-          padding:
-              const EdgeInsets.only(bottom: 0, right: 20, top: 20, left: 20),
+          padding: const EdgeInsets.symmetric(vertical: 20),
           child: Column(
             children: [
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding:
-                      EdgeInsets.only(bottom: 20, right: 20, top: 0, left: 20),
-                  child: Text(
-                    'Stwórz instrukcje',
-                    style: documentsText,
+              Row(
+                children: const [
+                  Text(
+                    'Stwórz Instrukcje',
+                    style: newPostStepName,
                   ),
-                ),
+                ],
               ),
-
+              const SizedBox(height: 20),
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -84,17 +80,14 @@ class _Intruction extends State<Intruction> {
                                   ),
                                   onChanged: (String? value) {
                                     step = value!;
-                                    setState(() {
-                                    });
+                                    setState(() {});
                                   },
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(right: 10),
                                   child: IconButton(
                                     onPressed: () {
-                                      setState(() {
-                                        
-                                      });
+                                      setState(() {});
                                     },
                                     icon: const Icon(Icons.mic),
                                     color: halfBlackColor,

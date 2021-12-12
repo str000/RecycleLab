@@ -37,23 +37,20 @@ class _ChooseTools extends State<ChooseTools> {
       child: Scaffold(
         body: SingleChildScrollView(
           child: Padding(
-            padding:
-                const EdgeInsets.only(bottom: 0, right: 20, top: 0, left: 20),
+            padding: const EdgeInsets.symmetric(vertical: 20),
             child: Column(
               children: [
                 Column(
                   children: [
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            bottom: 20, right: 20, top: 20, left: 20),
-                        child: Text(
-                          'Wprowadź narzędzia',
-                          style: documentsText,
+                    Row(
+                      children: const [
+                        Text(
+                          'Wybierz Narzędzia',
+                          style: newPostStepName,
                         ),
-                      ),
+                      ],
                     ),
+                    const SizedBox(height: 20),
                     Stack(
                       alignment: Alignment.centerRight,
                       children: [

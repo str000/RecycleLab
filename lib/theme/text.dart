@@ -46,3 +46,9 @@ const postSmallName = TextStyle(
   color: halfBlackColor,
   fontWeight: FontWeight.w700,
 );
+
+const newPostStepName = TextStyle(
+  fontSize: 25.0,
+  color: halfBlackColor,
+  fontWeight: FontWeight.w700,
+);
