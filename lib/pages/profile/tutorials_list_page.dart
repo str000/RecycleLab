@@ -51,7 +51,7 @@ class _TutorialsPageState extends State<TutorialsPage> {
                               ),
                               child: const Icon(
                                 Icons.delete_rounded,
-                                color: Colors.red,
+                                color: likeColor,
                                 size: 30,
                               ),
                             ),

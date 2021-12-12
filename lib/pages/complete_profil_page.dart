@@ -261,7 +261,7 @@ class _CompleteProfilPageState extends State<CompleteProfilPage> {
                   onPressed: _isButtonDisabled
                       ? null
                       : () async {
-                          uploadFile();
+                          await uploadFile();
                           ref.child('users/' + _currentUser!.uid).set({
                             'nameID': _nameIDTextController.text,
                           });
