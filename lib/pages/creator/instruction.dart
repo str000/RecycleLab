@@ -23,7 +23,7 @@ class _Intruction extends State<Intruction> {
   final _step1Focus = FocusNode();
 
   List _stepsList = [];
-  List _stepsImg = [];
+  List<File> _stepsImg = [];
 
   var _image;
   int currentStepValue = 0;
@@ -36,17 +36,19 @@ class _Intruction extends State<Intruction> {
   }
 
   add(String name, int index) {
-    if(_stepsList.isEmpty){
+    if (_stepsList.isEmpty) {
       _stepsList.insert(index, name);
-    }else {
-
+    } else {
       _stepsList[index] = name;
     }
-
   }
 
-  del(String index) {
-    _stepsList.removeWhere((item) => item == index);
+  addImg(File name, int index) async {
+    if (_stepsImg.isEmpty) {
+      _stepsImg.insert(index, name);
+    } else {
+      _stepsImg[index] = name;
+    }
   }
 
   @override
@@ -84,16 +86,14 @@ class _Intruction extends State<Intruction> {
                     itemBuilder: (BuildContext context, int index) {
                       return GeneralWidgets.stepEditor(
                         context: context,
-                        image: _image,
+                        image: _stepsImg.isEmpty ? null : currentStepValue == index ? null : _stepsImg[index],
                         photoClick: () async {
                           XFile image = await imagePicker.pickImage(
                               source: ImageSource.gallery);
-                          setState(() {
-                            _image = File(image.path);
-                          });
+
+                          await addImg(File(image.path), index);
+
                         },
-                        //textController: _step1TextController,
-                        //focusController: _step1Focus,
                         stepNumber: 'Krok ${index + 1}',
                         stepColor: Colors.black,
                         onChanged: (String value) {
@@ -102,6 +102,7 @@ class _Intruction extends State<Intruction> {
                             setState(() {
                               currentStepValue++;
                               _stepsList.length = currentStepValue;
+                              _stepsImg.length = currentStepValue;
                             });
                           }
 
@@ -109,20 +110,21 @@ class _Intruction extends State<Intruction> {
                             setState(() {
                               currentStepValue--;
                             });
-                          }else{}
+                          } else {}
 
-                          if (value == '' && index == currentStepValue-1) {
+                          if (value == '' && index == currentStepValue - 1) {
                             setState(() {
                               _stepsList.length = currentStepValue;
+                              _stepsImg.length = currentStepValue;
                             });
                           }
 
-                          setState(()  {
-                            add(value,index);
+                          setState(() {
+                            add(value, index);
                           });
 
                           print(_stepsList);
-
+                          print(_stepsImg);
                         },
                       );
                     }),
