@@ -2,6 +2,7 @@ import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/sign_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TitlePage extends StatefulWidget {
   const TitlePage({Key? key}) : super(key: key);
@@ -66,9 +67,13 @@ class _TitlePage extends State<TitlePage> {
                       style: signTextFormField,
                       decoration: CommonStyle.textFieldStyle(
                         labelTextStr: "Opis",
+                        
                       ),
                       maxLines: 15,
                       minLines: 10,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(500),
+                      ],
                       onChanged: (String? value) {
                         setState(() {
                           _desc = value!;
