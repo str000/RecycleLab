@@ -14,6 +14,8 @@ import 'package:auth/theme/colors.dart';
 //Widgets
 import 'package:auth/widgets/top_bar.dart';
 
+import 'main_creator.dart';
+
 class MainPage extends StatefulWidget {
   final User? user;
 
@@ -38,7 +40,7 @@ class _MainPageState extends State<MainPage> {
       body: DoubleBackToCloseApp(
         child: IndexedStack(
           children: const <Widget>[
-            AccessibilityPage(),
+            MainCreator(),
             HomePage(),
             SearchPage(),
             ProfilePage(),
