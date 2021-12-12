@@ -1,5 +1,5 @@
-name: app
-description: project
+name: auth
+description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.15.0-116.0.dev <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -29,11 +29,23 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-
+  flutter_cupertino_localizations: ^1.0.1
+  flutter_localizations:
+    sdk: flutter
+  firebase_core: ^1.10.0
+  firebase_auth: ^3.2.0
+  google_sign_in: ^5.2.1
+  # flutter_facebook_auth: "^3.5.0"
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  double_back_to_close_app: ^2.0.1
+  firebase_database: ^8.2.0
+  smooth_star_rating: ^1.1.1
+  snapping_sheet: ^3.1.0
+  flutter_slidable: ^1.1.0
+  image_picker: ^0.8.4+4
+  firebase_storage: ^10.2.3
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +68,24 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  assets:
+    - assets/google_logo.png
+    - assets/facebook_logo.png
+
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: fonts/Nunito-Regular.ttf
+          weight: 400
+        - asset: fonts/Nunito-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Nunito-Bold.ttf
+          weight: 700
+        - asset: fonts/Nunito-ExtraBold.ttf
+          weight: 800
+        - asset: fonts/Nunito-Black.ttf
+          weight: 900
 
   # To add assets to your application, add an assets section, like this:
   # assets:

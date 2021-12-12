@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "app",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--no-sound-null-safety"
+            ]
+        },
+        {
+            "name": "app (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile",
+            "args": [
+                "--no-sound-null-safety"
+            ]
+            
+        },
+        {
+            "name": "Flutter",
+            "program": "lib/main.dart",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--no-sound-null-safety"
+            ]
+        }
+    ]
+}
