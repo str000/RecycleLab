@@ -70,6 +70,7 @@ class _Intruction extends State<Intruction> {
                   },
                   textControler: _step1TextController,
                   focusController: _step1Focus,
+                  stepNumber: 'Krok 1',
                 ),
               ],
             ),

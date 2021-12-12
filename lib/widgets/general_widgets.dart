@@ -384,6 +384,7 @@ class GeneralWidgets {
     final photoClick,
     final focusController,
     final textControler,
+    required String stepNumber,
   }) {
     return Column(
       children: [
@@ -399,8 +400,8 @@ class GeneralWidgets {
                 color: quarterBlackcolor,
               ),
             ),
-            const Text(
-              'Krok 1',
+            Text(
+              stepNumber,
               style: documentsText,
             ),
             Container(
@@ -477,7 +478,7 @@ class GeneralWidgets {
           focusNode: focusController,
           style: signTextFormField,
           decoration: CommonStyle.textFieldStyle(
-            labelTextStr: "Krok 1",
+            labelTextStr: stepNumber,
           ),
           maxLines: 5,
         ),
