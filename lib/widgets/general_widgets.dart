@@ -382,8 +382,10 @@ class GeneralWidgets {
     final context,
     final image,
     final photoClick,
+    final onChanged,
+    final stepColor,
     final focusController,
-    final textControler,
+    final textController,
     required String stepNumber,
   }) {
     return Column(
@@ -402,7 +404,11 @@ class GeneralWidgets {
             ),
             Text(
               stepNumber,
-              style: documentsText,
+              style: TextStyle(
+                fontSize: 22.0,
+                color: stepColor,
+                fontWeight: FontWeight.w700,
+              ),
             ),
             Container(
               height: 1,
@@ -474,12 +480,13 @@ class GeneralWidgets {
         ),
         const SizedBox(height: 20),
         TextFormField(
-          controller: textControler,
+          controller: textController,
           focusNode: focusController,
           style: signTextFormField,
           decoration: CommonStyle.textFieldStyle(
             labelTextStr: stepNumber,
           ),
+          onChanged: onChanged,
           maxLines: 5,
         ),
       ],

@@ -22,7 +22,10 @@ class _Intruction extends State<Intruction> {
   final _step1TextController = TextEditingController();
   final _step1Focus = FocusNode();
 
+  List<String> _stepsList = [];
+
   var _image;
+  int currentStepValue = 0;
   var imagePicker;
 
   Future<void> uploadFile() async {
@@ -35,6 +38,7 @@ class _Intruction extends State<Intruction> {
   void initState() {
     super.initState();
     imagePicker = ImagePicker();
+    currentStepValue = 0;
   }
 
   @override
@@ -58,20 +62,43 @@ class _Intruction extends State<Intruction> {
                     ),
                   ],
                 ),
-                GeneralWidgets.stepEditor(
-                  context: context,
-                  image: _image,
-                  photoClick: () async {
-                    XFile image = await imagePicker.pickImage(
-                        source: ImageSource.gallery);
-                    setState(() {
-                      _image = File(image.path);
-                    });
-                  },
-                  textControler: _step1TextController,
-                  focusController: _step1Focus,
-                  stepNumber: 'Krok 1',
-                ),
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: currentStepValue + 1,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GeneralWidgets.stepEditor(
+                        context: context,
+                        image: _image,
+                        photoClick: () async {
+                          XFile image = await imagePicker.pickImage(
+                              source: ImageSource.gallery);
+                          setState(() {
+                            _image = File(image.path);
+                          });
+                        },
+                        //textController: _step1TextController,
+                        //focusController: _step1Focus,
+                        stepNumber: 'Krok ${index + 1}',
+                        stepColor: Colors.black,
+                        onChanged: (String value) {
+                          //_stepsList[0] = value;
+                          if(index == currentStepValue){
+                            setState(() {
+                              currentStepValue++;
+                            });
+                          }
+
+                          if(value == ''){
+                            setState(() {
+                              currentStepValue--;
+                            });
+                          }
+
+                          print(_stepsList);
+                        },
+                      );
+                    }),
               ],
             ),
           ),
