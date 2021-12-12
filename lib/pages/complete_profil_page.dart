@@ -1,22 +1,22 @@
 //Plugins
-import 'package:auth/pages/post/general_page.dart';
-import 'package:auth/pages/post/materials_page.dart';
-import 'package:auth/pages/post/tutorial_page.dart';
-import 'package:auth/theme/colors.dart';
-import 'package:auth/theme/text.dart';
-import 'package:auth/widgets/general_widgets.dart';
-import 'package:auth/widgets/sign_widgets.dart';
-import 'package:double_back_to_close_app/double_back_to_close_app.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:image_picker/image_picker.dart';
 //Firebase Package
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
 //Pages
+import 'package:auth/pages/main_page.dart';
 //Utils
 //Theme
-import 'dart:io';
-
+import 'package:auth/theme/colors.dart';
+import 'package:auth/theme/text.dart';
 //Widgets
+import 'package:auth/widgets/general_widgets.dart';
+import 'package:auth/widgets/sign_widgets.dart';
 
 class CompleteProfilPage extends StatefulWidget {
   const CompleteProfilPage({Key? key}) : super(key: key);
@@ -26,6 +26,7 @@ class CompleteProfilPage extends StatefulWidget {
 }
 
 class _CompleteProfilPageState extends State<CompleteProfilPage> {
+  final User? _currentUser = FirebaseAuth.instance.currentUser;
   final ref = FirebaseDatabase.instance.reference();
 
   final _nameTextController = TextEditingController();
@@ -45,6 +46,12 @@ class _CompleteProfilPageState extends State<CompleteProfilPage> {
     imagePicker = ImagePicker();
   }
 
+  Future<void> uploadFile() async {
+    await FirebaseStorage.instance
+        .ref('users/' + _currentUser!.uid + '/profile-photo.png')
+        .putFile(_image);
+  }
+
   checkNameID(String? valueT) async {
     var nameIDArray = [];
     await ref.child('users').once().then((value) {
@@ -57,6 +64,7 @@ class _CompleteProfilPageState extends State<CompleteProfilPage> {
         setState(() {
           _isFreeNameID = true;
         });
+        validate();
       } else {
         setState(() {
           _isFreeNameID = false;
@@ -65,24 +73,19 @@ class _CompleteProfilPageState extends State<CompleteProfilPage> {
     });
   }
 
-  validate(String? value) {
+  validate() {
     if (_nameTextController.text.isNotEmpty &&
         _nameIDTextController.text.isNotEmpty &&
         _image != null) {
-      setState(() {
-        if (_isFreeNameID == true && _nameIDTextController.text.length >= 6) {
-          setState(() {
-            _isButtonDisabled = false;
-          });
-        } else {
-          setState(() {
-            _isButtonDisabled = true;
-          });
-        }
+      if (_isFreeNameID == true && _nameIDTextController.text.length >= 6) {
         setState(() {
           _isButtonDisabled = false;
         });
-      });
+      } else {
+        setState(() {
+          _isButtonDisabled = true;
+        });
+      }
     } else {
       setState(() {
         _isButtonDisabled = true;
@@ -217,7 +220,7 @@ class _CompleteProfilPageState extends State<CompleteProfilPage> {
                     decoration: CommonStyle.textFieldStyle(
                       labelTextStr: "Nazwa",
                     ),
-                    onChanged: validate,
+                    onChanged: validate(),
                   ),
                   const SizedBox(height: 13.0),
                   TextFormField(
@@ -235,7 +238,6 @@ class _CompleteProfilPageState extends State<CompleteProfilPage> {
                         )),
                     onChanged: (v) {
                       checkNameID(v);
-                      validate;
                     },
                   ),
                   const SizedBox(height: 5.0),
@@ -256,7 +258,23 @@ class _CompleteProfilPageState extends State<CompleteProfilPage> {
             children: [
               Expanded(
                 child: ElevatedButton(
-                  onPressed: _isButtonDisabled ? null : () async {},
+                  onPressed: _isButtonDisabled
+                      ? null
+                      : () async {
+                          uploadFile();
+                          ref.child('users/' + _currentUser!.uid).set({
+                            'nameID': _nameIDTextController.text,
+                          });
+                          _currentUser
+                              ?.updateDisplayName(_nameTextController.text);
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => MainPage(
+                                user: _currentUser,
+                              ),
+                            ),
+                          );
+                        },
                   style: ElevatedButton.styleFrom(
                     primary: primaryColor,
                     padding: const EdgeInsets.symmetric(

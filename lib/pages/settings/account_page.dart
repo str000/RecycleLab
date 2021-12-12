@@ -1,10 +1,12 @@
 //Plugins
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 //Firebase Package
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 //Utils
 import 'package:auth/utils/fire_auth.dart';
 import 'package:auth/utils/validator.dart';
@@ -13,6 +15,7 @@ import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
 //Widgets
 import 'package:auth/widgets/sign_widgets.dart';
+import 'package:auth/widgets/general_widgets.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({Key? key}) : super(key: key);
@@ -22,15 +25,22 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
+  final ref = FirebaseDatabase.instance.reference();
   final _formKey = GlobalKey<FormState>();
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final _nameTextController = TextEditingController();
+  final _nameIDTextController = TextEditingController();
   final _emailTextController = TextEditingController();
 
   final _focusName = FocusNode();
+  final _focusNameID = FocusNode();
   final _focusEmail = FocusNode();
+
+  var _image;
+  var imagePicker;
+  var profileImageURL;
 
   User? _currentUser = FirebaseAuth.instance.currentUser;
 
@@ -39,7 +49,8 @@ class _AccountPageState extends State<AccountPage> {
   bool _ischanged = false;
 
   changed() {
-    if (_nameTextController.text != _currentUser?.displayName) {
+    if (_nameTextController.text != _currentUser?.displayName ||
+        _image != null) {
       setState(() {
         _ischanged = true;
       });
@@ -50,9 +61,35 @@ class _AccountPageState extends State<AccountPage> {
     }
   }
 
+  Future<void> uploadFile() async {
+    await FirebaseStorage.instance
+        .ref('users/' + _currentUser!.uid + '/profile-photo.png')
+        .putFile(_image);
+  }
+
+  Future<void> downloadProfilePhoto() async {
+    final ref = FirebaseStorage.instance
+        .ref('users/' + _currentUser!.uid + '/profile-photo.png');
+    var url = await ref.getDownloadURL();
+    setState(() {
+      profileImageURL = url;
+    });
+  }
+
   @override
   void initState() {
+    imagePicker = ImagePicker();
+    _image = null;
+    profileImageURL = null;
+    _ischanged = false;
+    _focusName.unfocus();
+    downloadProfilePhoto();
+
     _nameTextController.text = _currentUser!.displayName!;
+    ref.child('users/' + _currentUser!.uid + '/nameID').once().then((value) {
+      _nameIDTextController.text = '@' + value.value;
+    });
+
     _emailTextController.text = _currentUser!.email!;
     if (_currentUser!.providerData[0].providerId == "google.com") {
       _isgoogle = true;
@@ -76,6 +113,7 @@ class _AccountPageState extends State<AccountPage> {
     return GestureDetector(
       onTap: () {
         _focusName.unfocus();
+        _focusNameID.unfocus();
         _focusEmail.unfocus();
       },
       child: Scaffold(
@@ -151,6 +189,8 @@ class _AccountPageState extends State<AccountPage> {
                                             children: [
                                               Expanded(
                                                 child: Container(
+                                                  margin: const EdgeInsets.only(
+                                                      bottom: 13.0),
                                                   decoration: BoxDecoration(
                                                     color: Colors.white,
                                                     borderRadius:
@@ -217,22 +257,97 @@ class _AccountPageState extends State<AccountPage> {
                                           )
                                         : null,
                                   ),
-                                  Container(
-                                    child: _isgoogle
-                                        ? Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 13.0, bottom: 13.0),
-                                            child: ClipRRect(
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                            height: 250,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            decoration: BoxDecoration(
+                                              color: contrastWhite,
                                               borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(50)),
-                                              child: Image.network(_currentUser!
-                                                  .photoURL
-                                                  .toString()),
+                                                  BorderRadius.circular(5),
                                             ),
-                                          )
-                                        : null,
+                                            child: Stack(
+                                              alignment: Alignment.bottomRight,
+                                              children: [
+                                                _image != null
+                                                    ? Image.file(
+                                                        _image,
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        height: 250,
+                                                        fit: BoxFit.cover,
+                                                      )
+                                                    : profileImageURL != null
+                                                        ? Image.network(
+                                                            profileImageURL,
+                                                            width:
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width,
+                                                            height: 250,
+                                                            fit: BoxFit.cover,
+                                                          )
+                                                        : Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: const [
+                                                                  CircularProgressIndicator(),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(10),
+                                                  child: GeneralWidgets
+                                                      .actionButton(
+                                                    backgroundColor:
+                                                        quarterBlackcolor,
+                                                    icon: const Icon(
+                                                      Icons.image_rounded,
+                                                      color: Colors.black,
+                                                      size: 35,
+                                                    ),
+                                                    onClick: () {},
+                                                  ),
+                                                ),
+                                              ],
+                                            )),
+                                        Positioned.fill(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: InkWell(
+                                              onTap: () async {
+                                                XFile image =
+                                                    await imagePicker.pickImage(
+                                                        source: ImageSource
+                                                            .gallery);
+                                                setState(() {
+                                                  _image = File(image.path);
+                                                });
+                                                changed();
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
+                                  const SizedBox(height: 13.0),
                                   TextFormField(
                                     controller: _nameTextController,
                                     focusNode: _focusName,
@@ -251,9 +366,23 @@ class _AccountPageState extends State<AccountPage> {
                                   ),
                                   const SizedBox(height: 13.0),
                                   TextFormField(
+                                    controller: _nameIDTextController,
+                                    focusNode: _focusNameID,
+                                    enabled: false,
+                                    style: signTextFormField,
+                                    decoration: CommonStyle.textFieldStyle(
+                                      labelTextStr: "Unikalna nazwa konta",
+                                    ),
+                                    onChanged: (String? value) {
+                                      _formKey.currentState!.validate();
+                                      changed();
+                                    },
+                                  ),
+                                  const SizedBox(height: 13.0),
+                                  TextFormField(
                                     controller: _emailTextController,
                                     focusNode: _focusEmail,
-                                    enabled: _isgoogle ? false : true,
+                                    enabled: false,
                                     validator: (value) =>
                                         Validator.validateEmail(
                                       email: value,
@@ -348,14 +477,17 @@ class _AccountPageState extends State<AccountPage> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: _ischanged
-                      ? () {
-                          _currentUser
-                              ?.updateDisplayName(_nameTextController.text);
+                      ? () async {
+                          if (_nameTextController.text !=
+                              _currentUser?.displayName) {
+                            _currentUser
+                                ?.updateDisplayName(_nameTextController.text);
+                          } else if (_image != null) {
+                            await uploadFile();
+                          }
+
                           refresh();
-                          setState(() {
-                            _ischanged = false;
-                          });
-                          _focusName.unfocus();
+
                           _scaffoldKey.currentState!
                               // ignore: deprecated_member_use
                               .showSnackBar(
