@@ -12,10 +12,10 @@ class TitlePage extends StatefulWidget {
 
 class _TitlePage extends State<TitlePage>{
 
-  bool _private = false;
+  bool _private = false; //!!! finalny status postu
 
-  String _title = ' ';
-  String _desc = ' ';
+  String _title = ' '; //!!! finalny tytuł
+  String _desc = ' '; //!!! finalny opis
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,6 @@ class _TitlePage extends State<TitlePage>{
                           onChanged: (String? value) {
                             setState(() {
                               _title = value!;
-                              print(_title);
                             });
                           },
                         ),

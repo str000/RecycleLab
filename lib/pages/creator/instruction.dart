@@ -12,8 +12,9 @@ class Intruction extends StatefulWidget {
 }
 
 class _Intruction extends State<Intruction> {
-  final List<String> _steps = [];
-  final _numbersOfSteps = 1;
+  List<String> _steps = [];
+  String step = ' ';
+  var _numbersOfSteps = 1;
   var currentIndex = 0;
 
   add(String name) {
@@ -54,6 +55,7 @@ class _Intruction extends State<Intruction> {
                   ),
                 ),
               ),
+
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -72,8 +74,8 @@ class _Intruction extends State<Intruction> {
                               color: const Color.fromRGBO(236, 236, 236, 1),
                               borderRadius: BorderRadius.circular(5),
                             ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            child: Stack(
+                              alignment: Alignment.centerRight,
                               children: [
                                 TextFormField(
                                   style: signTextFormField,
@@ -81,9 +83,23 @@ class _Intruction extends State<Intruction> {
                                     labelTextStr: "Krok ${index + 1}",
                                   ),
                                   onChanged: (String? value) {
+                                    step = value!;
                                     setState(() {
                                     });
                                   },
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        
+                                      });
+                                    },
+                                    icon: const Icon(Icons.mic),
+                                    color: halfBlackColor,
+                                    iconSize: 30,
+                                  ),
                                 ),
                               ],
                             ),

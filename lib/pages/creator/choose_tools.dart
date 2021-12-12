@@ -11,7 +11,7 @@ class ChooseTools extends StatefulWidget {
 }
 
 class _ChooseTools extends State<ChooseTools> {
-  List<String> toolsNames = [];
+  List<String> toolsNames = []; //!!! finalna lista
   String? toolName = ' ';
 
   add(String name) {
@@ -25,7 +25,7 @@ class _ChooseTools extends State<ChooseTools> {
   @override
   void initState() {
     super.initState();
-    setState((){
+    setState(() {
       toolsNames;
       toolName;
     });
@@ -76,7 +76,6 @@ class _ChooseTools extends State<ChooseTools> {
                                 if (toolName != null) {
                                   add(toolName!);
                                 }
-                                print(toolsNames[0]);
                               });
                             },
                             icon: const Icon(Icons.mic),

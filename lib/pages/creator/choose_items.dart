@@ -1,6 +1,5 @@
 import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
-import 'package:auth/widgets/general_widgets.dart';
 import 'package:auth/widgets/sign_widgets.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -16,23 +15,23 @@ class _ChooseItems extends State<ChooseItems> {
   final myController = TextEditingController();
   final _focusSearch = FocusNode();
   final ref = FirebaseDatabase.instance.reference();
-
-  var _index = 0;
-  var _result = 0;
-
-  List<String> selectedItems = [ ];
-  String itemName = ' ';
-
-  List _category = [];
   final _categories = [];
   final filter = [];
   final _allCategories = [];
-  bool _isCategory = false;
-  String _categoryName = '';
+  final List _needs = [];
 
-  String? providedNeedName;
-  List _needs = [];
+  var _index = 0;
   var categoryCurr = '';
+  var _result = 0;
+
+  List<String> selectedItems = []; //!!! finalna lista
+  List _category = [];
+
+  String itemName = ' ';
+  String _categoryName = '';
+  String? providedNeedName;
+
+  bool _isCategory = false;
 
   add(String name) {
     selectedItems.add(name);
@@ -49,7 +48,7 @@ class _ChooseItems extends State<ChooseItems> {
       var values = event.value;
       setState(() {
         _needs.add(values);
-        _category = values['guma'];
+        _category = values['elektronika'];
         _categoryName = ' ';
         _index = 0;
         _result = 0;
@@ -198,9 +197,9 @@ class _ChooseItems extends State<ChooseItems> {
                                     child: InkWell(
                                       onTap: () {
                                         setState(() {
-                                          itemName = "${_category[index].toString()[0].toUpperCase()}${_category[index].toString().substring(1)}";
+                                          itemName =
+                                              "${_category[index].toString()[0].toUpperCase()}${_category[index].toString().substring(1)}";
                                           add(itemName);
-                                          print(itemName);
                                         });
                                       },
                                     ),
@@ -266,9 +265,9 @@ class _ChooseItems extends State<ChooseItems> {
                                     child: InkWell(
                                       onTap: () {
                                         setState(() {
-                                          itemName = "${_category[index].toString()[0].toUpperCase()}${_category[index].toString().substring(1)}";
+                                          itemName =
+                                          "${_category[index].toString()[0].toUpperCase()}${_category[index].toString().substring(1)}";
                                           del(index);
-                                          print(itemName);
                                         });
                                       },
                                     ),
