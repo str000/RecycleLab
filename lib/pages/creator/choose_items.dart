@@ -30,8 +30,6 @@ class _ChooseItems extends State<ChooseItems> {
   add(String name) {
     if (selectedItems.contains(name) == false) {
       selectedItems.add(name);
-    } else {
-      print("pow");
     }
   }
 
@@ -173,9 +171,35 @@ class _ChooseItems extends State<ChooseItems> {
                           );
                         },
                       ),
-                      const Text(
-                        'Wybrane',
-                        style: documentsText,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            height: 1,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(2),
+                              color: quarterBlackcolor,
+                            ),
+                          ),
+                          selectedItems.isEmpty
+                              ? const Text(
+                                  'Wybierz',
+                                  style: documentsText,
+                                )
+                              : const Text(
+                                  'Wybrane',
+                                  style: documentsText,
+                                ),
+                          Container(
+                            height: 1,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(2),
+                              color: quarterBlackcolor,
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 20),
                       ListView.builder(
