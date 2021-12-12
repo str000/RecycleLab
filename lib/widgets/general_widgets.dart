@@ -1,4 +1,5 @@
 //Plugins
+import 'package:auth/widgets/sign_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 //Theme
@@ -374,6 +375,113 @@ class GeneralWidgets {
           ),
         ],
       ),
+    );
+  }
+
+  static Column stepEditor({
+    final context,
+    final image,
+    final photoClick,
+    final focusController,
+    final textControler,
+  }) {
+    return Column(
+      children: [
+        const SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: 1,
+              width: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(2),
+                color: quarterBlackcolor,
+              ),
+            ),
+            const Text(
+              'Krok 1',
+              style: documentsText,
+            ),
+            Container(
+              height: 1,
+              width: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(2),
+                color: quarterBlackcolor,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(5.0),
+          child: Stack(
+            children: [
+              Container(
+                height: 200,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: contrastWhite,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: image != null
+                    ? Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          Image.file(
+                            image,
+                            width: MediaQuery.of(context).size.width,
+                            height: 200,
+                            fit: BoxFit.cover,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: GeneralWidgets.actionButton(
+                              backgroundColor: quarterBlackcolor,
+                              icon: const Icon(
+                                Icons.image_rounded,
+                                color: Colors.black,
+                                size: 35,
+                              ),
+                              onClick: () {},
+                            ),
+                          ),
+                        ],
+                      )
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(
+                            Icons.add_photo_alternate_rounded,
+                            color: halfBlackColor,
+                            size: 100,
+                          ),
+                        ],
+                      ),
+              ),
+              Positioned.fill(
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: photoClick,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20),
+        TextFormField(
+          controller: textControler,
+          focusNode: focusController,
+          style: signTextFormField,
+          decoration: CommonStyle.textFieldStyle(
+            labelTextStr: "Krok 1",
+          ),
+          maxLines: 5,
+        ),
+      ],
     );
   }
 }

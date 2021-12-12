@@ -1,8 +1,13 @@
 import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
+import 'package:auth/widgets/general_widgets.dart';
 import 'package:auth/widgets/sign_widgets.dart';
+import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Intruction extends StatefulWidget {
   const Intruction({Key? key}) : super(key: key);
@@ -12,98 +17,62 @@ class Intruction extends StatefulWidget {
 }
 
 class _Intruction extends State<Intruction> {
-  List<String> _steps = [];
-  String step = ' ';
-  var _numbersOfSteps = 1;
-  var currentIndex = 0;
+  final User? _currentUser = FirebaseAuth.instance.currentUser;
 
-  add(String name) {
-    _steps.add(name);
-  }
+  final _step1TextController = TextEditingController();
+  final _step1Focus = FocusNode();
 
-  del(int index) {
-    _steps.removeAt(index);
+  var _image;
+  var imagePicker;
+
+  Future<void> uploadFile() async {
+    await FirebaseStorage.instance
+        .ref('users/' + _currentUser!.uid + '/profile-photo.png')
+        .putFile(_image);
   }
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      _steps;
-      _numbersOfSteps;
-      currentIndex;
-    });
+    imagePicker = ImagePicker();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () {
+        _step1Focus.unfocus();
+      },
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: Column(
-            children: [
-              Row(
-                children: const [
-                  Text(
-                    'Stwórz Instrukcje',
-                    style: newPostStepName,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: _numbersOfSteps,
-                itemBuilder: (BuildContext context, int index) {
-                  return ClipRRect(
-                    borderRadius: BorderRadius.circular(5.0),
-                    child: Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            height: 50,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              color: const Color.fromRGBO(236, 236, 236, 1),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Stack(
-                              alignment: Alignment.centerRight,
-                              children: [
-                                TextFormField(
-                                  style: signTextFormField,
-                                  decoration: CommonStyle.textFieldStyle(
-                                    labelTextStr: "Krok ${index + 1}",
-                                  ),
-                                  onChanged: (String? value) {
-                                    step = value!;
-                                    setState(() {});
-                                  },
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      setState(() {});
-                                    },
-                                    icon: const Icon(Icons.mic),
-                                    color: halfBlackColor,
-                                    iconSize: 30,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Column(
+              children: [
+                Row(
+                  children: const [
+                    Text(
+                      'Stwórz Instrukcje',
+                      style: newPostStepName,
                     ),
-                  );
-                },
-              ),
-            ],
+                  ],
+                ),
+                GeneralWidgets.stepEditor(
+                  context: context,
+                  image: _image,
+                  photoClick: () async {
+                    XFile image = await imagePicker.pickImage(
+                        source: ImageSource.gallery);
+                    setState(() {
+                      _image = File(image.path);
+                    });
+                  },
+                  textControler: _step1TextController,
+                  focusController: _step1Focus,
+                ),
+              ],
+            ),
           ),
         ),
       ),
