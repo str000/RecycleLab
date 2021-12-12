@@ -1,14 +1,17 @@
 //Plugins
-import 'package:auth/pages/post/comments_overlay.dart';
-import 'package:auth/pages/post_page.dart';
 import 'package:auth/pages/profile/liked_page.dart';
 import 'package:auth/pages/profile/tutorials_list_page.dart';
-import 'package:auth/pages/public_profile_page.dart';
+import 'package:auth/pages/settings/account_page.dart';
 import 'package:auth/theme/colors.dart';
-import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/general_widgets.dart';
 import 'package:auth/widgets/top_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+
 //Firebase Package
 //Pages
 //Utils
@@ -25,6 +28,42 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final User? _currentUser = FirebaseAuth.instance.currentUser;
+  final ref = FirebaseDatabase.instance.reference();
+
+  String userName = 'Nazwa';
+  String userID = '@NazwaID';
+  String profileImageURL = '';
+  var _image;
+  var imagePicker;
+  bool imageSending = false;
+
+  Future<void> uploadFile() async {
+    await FirebaseStorage.instance
+        .ref('users/' + _currentUser!.uid + '/profile-photo.png')
+        .putFile(_image);
+  }
+
+  Future<void> downloadProfilePhoto() async {
+    final ref = FirebaseStorage.instance
+        .ref('users/' + _currentUser!.uid + '/profile-photo.png');
+    var url = await ref.getDownloadURL();
+    setState(() {
+      profileImageURL = url;
+    });
+  }
+
+  @override
+  void initState() {
+    imagePicker = ImagePicker();
+    downloadProfilePhoto();
+    userName = _currentUser!.displayName!;
+    ref.child('users/' + _currentUser!.uid + '/nameID').once().then((value) {
+      userID = '@' + value.value;
+    });
+    super.initState();
+  }
+
   final ScrollController _myScrollController = ScrollController();
   var currentIndex = 0;
   @override
@@ -51,17 +90,35 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             Stack(
               children: [
-                Container(
-                  height: MediaQuery.of(context).size.height - 200,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(
-                        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80',
-                      ),
-                    ),
-                  ),
-                ),
+                _image != null
+                    ? Image.file(
+                        _image,
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height - 200,
+                        fit: BoxFit.cover,
+                      )
+                    : profileImageURL != ''
+                        ? Image.network(
+                            profileImageURL,
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height - 200,
+                            fit: BoxFit.cover,
+                          )
+                        : SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height - 200,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    CircularProgressIndicator(),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
                 const TopBar(
                   height: 70,
                 ),
@@ -69,15 +126,82 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 290, left: 10),
-              child: GeneralWidgets.actionButton(
-                backgroundColor: quarterBlackcolor,
-                icon: const Icon(
-                  Icons.add_photo_alternate_rounded,
-                  color: halfBlackColor,
-                  size: 30,
-                ),
-                onClick: () {},
-              ),
+              child: _image != null
+                  ? SizedBox(
+                      height: 50,
+                      width: 110,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GeneralWidgets.actionButton(
+                            backgroundColor: quarterBlackcolor,
+                            icon: imageSending
+                                ? SizedBox(
+                                    width: 40,
+                                    height: 40,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: const [
+                                            CircularProgressIndicator(),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : const Icon(
+                                    Icons.done_rounded,
+                                    color: Color.fromRGBO(1, 124, 13, 1),
+                                    size: 30,
+                                  ),
+                            onClick: () async {
+                              setState(() {
+                                imageSending = true;
+                              });
+                              await uploadFile();
+                              setState(() {
+                                profileImageURL = '';
+                                _image = null;
+                                imageSending = false;
+                              });
+                              downloadProfilePhoto();
+                            },
+                          ),
+                          GeneralWidgets.actionButton(
+                            backgroundColor: quarterBlackcolor,
+                            icon: const Icon(
+                              Icons.clear_rounded,
+                              color: likeColor,
+                              size: 30,
+                            ),
+                            onClick: () {
+                              setState(() {
+                                _image = null;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    )
+                  : GeneralWidgets.actionButton(
+                      backgroundColor: quarterBlackcolor,
+                      icon: const Icon(
+                        Icons.add_photo_alternate_rounded,
+                        color: Colors.black,
+                        size: 30,
+                      ),
+                      onClick: () async {
+                        XFile image = await imagePicker.pickImage(
+                            source: ImageSource.gallery);
+                        setState(() {
+                          _image = File(image.path);
+                        });
+                      },
+                    ),
             ),
           ],
         ),
@@ -116,18 +240,18 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
-                              'Dominika Kowalska',
-                              style: TextStyle(
+                              userName,
+                              style: const TextStyle(
                                 fontSize: 25.0,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
                             Text(
-                              '@dominikakowalska',
-                              style: TextStyle(
+                              userID,
+                              style: const TextStyle(
                                 fontSize: 16.0,
                                 color: halfBlackColor,
                                 fontWeight: FontWeight.w700,
@@ -142,7 +266,13 @@ class _ProfilePageState extends State<ProfilePage> {
                             color: halfBlackColor,
                             size: 30,
                           ),
-                          onClick: () {},
+                          onClick: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const AccountPage(),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
