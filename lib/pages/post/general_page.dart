@@ -45,26 +45,19 @@ class _GeneralPageState extends State<GeneralPage> {
         _user = needs;
       });
     });
-    downloadProfileUserPhoto();
-    downloadProfilePhoto();
   }
 
-  Future<void> downloadProfilePhoto() async {
-    final ref = FirebaseStorage.instance
-        .ref('posts/' + widget.needs[0]['id'] + '/photo0');
+  Future<String> downloadProfilePhoto(String postID) async {
+    final ref = FirebaseStorage.instance.ref('posts/' + postID + '/photo0');
     var url = await ref.getDownloadURL();
-    setState(() {
-      mainPhoto = url;
-    });
+    return url;
   }
 
-  Future<void> downloadProfileUserPhoto() async {
+  Future<String> downloadProfileUserPhoto(String authorID) async {
     final ref = FirebaseStorage.instance
-        .ref('users/' + widget.needs[0]['authorID'] + '/profile-photo.png');
+        .ref('users/' + authorID + '/profile-photo.png');
     var url = await ref.getDownloadURL();
-    setState(() {
-      profilePhoto = url;
-    });
+    return url;
   }
 
   @override

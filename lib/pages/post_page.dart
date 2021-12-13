@@ -46,118 +46,119 @@ class _PostPageState extends State<PostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 30.0),
-            child: Column(
-              children: [
-                //------Pasek Górny------
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        size: 35,
-                        color: Colors.black,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
+      body: Column(children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 30.0),
+          child: Column(
+            children: [
+              //------Pasek Górny------
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      size: 35,
+                      color: Colors.black,
                     ),
-                    Text(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  Expanded(
+                    child: Text(
                       _needs[0]['title'],
                       style: documentsText,
                       overflow: TextOverflow.fade,
+                      textAlign: TextAlign.end,
                     ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                GeneralWidgets.line(),
-                const SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        textStyle: const TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w800,
-                          fontFamily: "Nunito",
-                        ),
-                        primary:
-                            currentIndex == 0 ? Colors.black : halfBlackColor,
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 5),
+              GeneralWidgets.line(),
+              const SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: const TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w800,
+                        fontFamily: "Nunito",
                       ),
-                      onPressed: () {
-                        setState(
-                          () {
-                            currentIndex = 0;
-                          },
-                        );
-                      },
-                      child: const Text("Ogólne"),
+                      primary:
+                          currentIndex == 0 ? Colors.black : halfBlackColor,
                     ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        textStyle: const TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w800,
-                          fontFamily: "Nunito",
-                        ),
-                        primary:
-                            currentIndex == 1 ? Colors.black : halfBlackColor,
+                    onPressed: () {
+                      setState(
+                        () {
+                          currentIndex = 0;
+                        },
+                      );
+                    },
+                    child: const Text("Ogólne"),
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: const TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w800,
+                        fontFamily: "Nunito",
                       ),
-                      onPressed: () {
-                        setState(
-                          () {
-                            currentIndex = 1;
-                          },
-                        );
-                      },
-                      child: const Text("Materiały"),
+                      primary:
+                          currentIndex == 1 ? Colors.black : halfBlackColor,
                     ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        textStyle: const TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w800,
-                          fontFamily: "Nunito",
-                        ),
-                        primary:
-                            currentIndex == 2 ? Colors.black : halfBlackColor,
+                    onPressed: () {
+                      setState(
+                        () {
+                          currentIndex = 1;
+                        },
+                      );
+                    },
+                    child: const Text("Materiały"),
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: const TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w800,
+                        fontFamily: "Nunito",
                       ),
-                      onPressed: () {
-                        setState(
-                          () {
-                            currentIndex = 2;
-                          },
-                        );
-                      },
-                      child: const Text("Instrukcja"),
+                      primary:
+                          currentIndex == 2 ? Colors.black : halfBlackColor,
                     ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                GeneralWidgets.line(),
-                const SizedBox(height: 10),
-              ],
-            ),
+                    onPressed: () {
+                      setState(
+                        () {
+                          currentIndex = 2;
+                        },
+                      );
+                    },
+                    child: const Text("Instrukcja"),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 5),
+              GeneralWidgets.line(),
+              const SizedBox(height: 10),
+            ],
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height - 153,
-            child: IndexedStack(
-              children: <Widget>[
-                GeneralPage(needs: _needs),
-                MaterialsPage(needs: _needs),
-                TutorialPage(needs: _needs),
-              ],
-              index: currentIndex,
-            ),
+        ),
+        Expanded(
+          child: IndexedStack(
+            children: <Widget>[
+              GeneralPage(needs: _needs),
+              MaterialsPage(needs: _needs),
+              TutorialPage(needs: _needs),
+            ],
+            index: currentIndex,
           ),
-        ],
-      ),
+        ),
+      ]),
     );
   }
 }

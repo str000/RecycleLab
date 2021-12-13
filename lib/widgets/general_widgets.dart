@@ -31,7 +31,6 @@ class GeneralWidgets {
     final onProfilePhoto,
   }) {
     return SizedBox(
-      height: 320,
       child: Column(
         children: [
           GeneralWidgets.line(),
@@ -39,9 +38,12 @@ class GeneralWidgets {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                postTitle,
-                style: postTitleStyle,
+              Expanded(
+                child: Text(
+                  postTitle,
+                  style: postTitleStyle,
+                  overflow: TextOverflow.fade,
+                ),
               ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(50),
