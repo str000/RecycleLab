@@ -283,11 +283,11 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
                                 print("Share");
                               },
                               onPhoto: () {
-                                Navigator.of(context).push(
+                                /*Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) => const PostPage(),
+                                    builder: (context) => PostPage(),
                                   ),
-                                );
+                                );*/
                               },
                               onProfilePhoto: () {
                                 Navigator.of(context).push(

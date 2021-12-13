@@ -24,7 +24,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final ref = FirebaseDatabase.instance.reference();
-  //final User? _currentUser = FirebaseAuth.instance.currentUser;
 
   List _needs = [];
 
@@ -108,7 +107,8 @@ class _HomePageState extends State<HomePage> {
                                 onPhoto: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) => const PostPage(),
+                                      builder: (context) =>
+                                          PostPage(postID: _needs[index]['id']),
                                     ),
                                   );
                                 },

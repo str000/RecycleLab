@@ -5,6 +5,7 @@ import 'package:auth/pages/post/tutorial_page.dart';
 import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/general_widgets.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 //Firebase Package
 //Pages
@@ -14,14 +15,33 @@ import 'package:flutter/material.dart';
 //Widgets
 
 class PostPage extends StatefulWidget {
-  const PostPage({Key? key}) : super(key: key);
+  String postID;
+  PostPage({Key? key, required this.postID}) : super(key: key);
 
   @override
   _PostPageState createState() => _PostPageState();
 }
 
 class _PostPageState extends State<PostPage> {
+  final ref = FirebaseDatabase.instance.reference();
+  List _needs = [];
+
   var currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    ref.child('posts/' + widget.postID).onValue.listen((event) async {
+      Map<dynamic, dynamic> values = event.snapshot.value;
+      List needs = [];
+      values['id'] = event.snapshot.key;
+      needs.add(values);
+
+      setState(() {
+        _needs = needs;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +67,10 @@ class _PostPageState extends State<PostPage> {
                         Navigator.pop(context);
                       },
                     ),
-                    const Text(
-                      'Poduszka z folii',
+                    Text(
+                      _needs[0]['title'],
                       style: documentsText,
+                      overflow: TextOverflow.fade,
                     ),
                   ],
                 ),
@@ -127,10 +148,10 @@ class _PostPageState extends State<PostPage> {
           SizedBox(
             height: MediaQuery.of(context).size.height - 153,
             child: IndexedStack(
-              children: const <Widget>[
-                GeneralPage(),
-                MaterialsPage(),
-                TutorialPage(),
+              children: <Widget>[
+                GeneralPage(needs: _needs),
+                MaterialsPage(needs: _needs),
+                TutorialPage(needs: _needs),
               ],
               index: currentIndex,
             ),

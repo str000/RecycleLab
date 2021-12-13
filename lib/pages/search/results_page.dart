@@ -147,11 +147,11 @@ class ResultsPage extends StatelessWidget {
                             print("Share");
                           },
                           onPhoto: () {
-                            Navigator.of(context).push(
+                            /*Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => const PostPage(),
                               ),
-                            );
+                            );*/
                           },
                           onProfilePhoto: () {
                             print("Profile");

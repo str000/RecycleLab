@@ -4,6 +4,8 @@ import 'package:auth/pages/public_profile_page.dart';
 import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/general_widgets.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 //Firebase Package
 //Pages
@@ -13,14 +15,58 @@ import 'package:flutter/material.dart';
 //Widgets
 
 class GeneralPage extends StatefulWidget {
-  const GeneralPage({Key? key}) : super(key: key);
+  List needs;
+  GeneralPage({Key? key, required this.needs}) : super(key: key);
 
   @override
   _GeneralPageState createState() => _GeneralPageState();
 }
 
 class _GeneralPageState extends State<GeneralPage> {
+  final ref = FirebaseDatabase.instance.reference();
+  List _user = [];
   bool isLiked = false;
+  String profilePhoto = '';
+  String mainPhoto = '';
+
+  @override
+  void initState() {
+    super.initState();
+    ref
+        .child('users/' + widget.needs[0]['authorID'])
+        .onValue
+        .listen((event) async {
+      Map<dynamic, dynamic> values = event.snapshot.value;
+      List needs = [];
+
+      needs.add(values);
+
+      setState(() {
+        _user = needs;
+      });
+    });
+    downloadProfileUserPhoto();
+    downloadProfilePhoto();
+  }
+
+  Future<void> downloadProfilePhoto() async {
+    final ref = FirebaseStorage.instance
+        .ref('posts/' + widget.needs[0]['id'] + '/photo0');
+    var url = await ref.getDownloadURL();
+    setState(() {
+      mainPhoto = url;
+    });
+  }
+
+  Future<void> downloadProfileUserPhoto() async {
+    final ref = FirebaseStorage.instance
+        .ref('users/' + widget.needs[0]['authorID'] + '/profile-photo.png');
+    var url = await ref.getDownloadURL();
+    setState(() {
+      profilePhoto = url;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -43,14 +89,17 @@ class _GeneralPageState extends State<GeneralPage> {
                       Container(
                         width: 50,
                         height: 50,
-                        decoration: BoxDecoration(
-                          image: const DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                                'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'),
-                          ),
-                          borderRadius: BorderRadius.circular(50),
-                        ),
+                        decoration: profilePhoto == ''
+                            ? BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                              )
+                            : BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(profilePhoto),
+                                ),
+                                borderRadius: BorderRadius.circular(50),
+                              ),
                       ),
                       Positioned.fill(
                         child: Material(
@@ -73,13 +122,13 @@ class _GeneralPageState extends State<GeneralPage> {
                 const SizedBox(width: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'Dominika Kowalska',
                       style: documentsText,
                     ),
                     Text(
-                      '@dominikakowalska',
+                      '@' + _user[0]['nameID'],
                       style: postSmallName,
                     ),
                   ],
@@ -89,13 +138,14 @@ class _GeneralPageState extends State<GeneralPage> {
           ),
           Container(
             height: 250,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(
-                    'https://images.unsplash.com/photo-1520899981500-21af7ff24c2a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1077&q=80'),
-              ),
-            ),
+            decoration: mainPhoto == ''
+                ? null
+                : BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(mainPhoto),
+                    ),
+                  ),
           ),
           const SizedBox(height: 5),
           Padding(
@@ -191,11 +241,11 @@ class _GeneralPageState extends State<GeneralPage> {
             ),
             child: GeneralWidgets.line(),
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.all(20),
             child: Text(
-              'Wytworzenie takiej poduszki to możliwość recyklingu około 20 butelek PET. Poduszka EKO jest puszysta i miękka. Dobrze dopasowuje się do ciała, do naturalnego ułożenia głowy i szyi podczas snu.',
-              style: TextStyle(
+              widget.needs[0]['desc'],
+              style: const TextStyle(
                 fontSize: 20.0,
                 color: Colors.black,
                 fontWeight: FontWeight.w700,

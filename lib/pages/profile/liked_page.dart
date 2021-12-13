@@ -46,11 +46,11 @@ class _LikedPageState extends State<LikedPage> {
               print("Share");
             },
             onPhoto: () {
-              Navigator.of(context).push(
+              /*Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const PostPage(),
                 ),
-              );
+              );*/
             },
             onProfilePhoto: () {
               Navigator.of(context).push(
@@ -79,11 +79,11 @@ class _LikedPageState extends State<LikedPage> {
               print("Share");
             },
             onPhoto: () {
-              Navigator.of(context).push(
+              /*Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const PostPage(),
                 ),
-              );
+              );*/
             },
             onProfilePhoto: () {
               Navigator.of(context).push(

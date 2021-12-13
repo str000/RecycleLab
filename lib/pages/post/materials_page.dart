@@ -11,7 +11,8 @@ import 'package:flutter/material.dart';
 //Widgets
 
 class MaterialsPage extends StatefulWidget {
-  const MaterialsPage({Key? key}) : super(key: key);
+  List needs;
+  MaterialsPage({Key? key, required this.needs}) : super(key: key);
 
   @override
   _MaterialsPageState createState() => _MaterialsPageState();
@@ -27,20 +28,18 @@ class _MaterialsPageState extends State<MaterialsPage> {
         child: Center(
           child: Column(
             children: [
-              GeneralWidgets.material(
-                materialName: "Folia",
-                color: const Color.fromRGBO(251, 188, 5, 1),
-                onClick: () {},
-              ),
-              GeneralWidgets.material(
-                materialName: "Butelka plastikowa",
-                color: const Color.fromRGBO(251, 188, 5, 1),
-                onClick: () {},
-              ),
-              GeneralWidgets.material(
-                materialName: "Papier",
-                color: const Color.fromRGBO(66, 133, 244, 1),
-                onClick: () {},
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: widget.needs[0]['categories'].length,
+                itemBuilder: (BuildContext context, int index) {
+                  return GeneralWidgets.material(
+                    materialName:
+                        "${widget.needs[0]['categories'][index][0].toString().toUpperCase()}${widget.needs[0]['categories'][index].toString().substring(1)}",
+                    color: const Color.fromRGBO(251, 188, 5, 1),
+                    onClick: () {},
+                  );
+                },
               ),
               const SizedBox(height: 10),
               Row(
@@ -70,15 +69,23 @@ class _MaterialsPageState extends State<MaterialsPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
-              const Text(
-                'Nożyczki',
-                style: signTextFormField,
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                'Klej',
-                style: signTextFormField,
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: widget.needs[0]['items'].length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Text(
+                            widget.needs[0]['items'][index],
+                            style: signTextFormField,
+                          ))
+                    ],
+                  );
+                },
               ),
             ],
           ),
