@@ -1,9 +1,11 @@
+import 'dart:io';
+
 import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/general_widgets.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
+import 'package:image_picker/image_picker.dart';
 import 'creator/title_page.dart';
 import 'creator/choose_items.dart';
 import 'creator/choose_tools.dart';
@@ -23,6 +25,10 @@ class _MainCreator extends State<MainCreator> {
   List _category = [];
   final List<String> _selectedItems = [];
   final List<String> _toolsNames = [];
+  final List _stepsList = [];
+  final List<File> _stepsImg = [];
+  int _currentStepValue = 0;
+  var _imagePicker;
 
   var currentIndex = 0;
 
@@ -92,6 +98,61 @@ class _MainCreator extends State<MainCreator> {
     });
   }
 
+  void _add(String name, int index) {
+    if (_stepsList.isEmpty) {
+      _stepsList.insert(index, name);
+    } else {
+      _stepsList[index] = name;
+    }
+  }
+
+  void _addImg(File name, int index) {
+    if (_stepsImg.isEmpty) {
+      setState(() {
+        _stepsImg.insert(index, name);
+      });
+    } else {
+      setState(() {
+        _stepsImg[index] = name;
+      });
+    }
+  }
+
+  void _onChangedStep(String value, int index) {
+    if (index == _currentStepValue) {
+      setState(() {
+        _currentStepValue++;
+        _stepsList.length = _currentStepValue;
+        //stepsImg.length = currentStepValue;
+      });
+    }
+
+    if (value == '' && index == _currentStepValue - 1) {
+      _stepsImg.removeWhere((item) => item == _stepsImg[_currentStepValue]);
+      _stepsImg.length = 30;
+    }
+
+    if (value == '') {
+      setState(() {
+        _currentStepValue--;
+      });
+    } else {}
+
+    if (value == '' && index == _currentStepValue - 1) {
+      setState(() {
+        _stepsList.length = _currentStepValue;
+        //stepsImg.length = currentStepValue;
+      });
+    }
+
+    setState(() {
+      _add(value, index);
+    });
+
+    print(_stepsList);
+    print(_stepsImg);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -109,6 +170,9 @@ class _MainCreator extends State<MainCreator> {
         });
       }
     });
+    _stepsImg.length = 30;
+    _imagePicker = ImagePicker();
+    _currentStepValue = 0;
   }
 
   @override
@@ -135,7 +199,15 @@ class _MainCreator extends State<MainCreator> {
                 addTool: _addTool,
                 removeTool: _removeTool,
               ),
-              Intruction(),
+              Intruction(
+                stepsList: _stepsList,
+                stepsImg: _stepsImg,
+                currentStepValue: _currentStepValue,
+                imagePicker: _imagePicker,
+                add: _add,
+                addImg: _addImg,
+                onChangedStep: _onChangedStep,
+              ),
               TitlePage(),
             ],
             index: currentIndex,

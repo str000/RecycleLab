@@ -7,48 +7,41 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class Intruction extends StatefulWidget {
-  const Intruction({Key? key}) : super(key: key);
-
-  @override
-  _Intruction createState() => _Intruction();
-}
-
-class _Intruction extends State<Intruction> {
-  final User? _currentUser = FirebaseAuth.instance.currentUser;
-
-  final _step1TextController = TextEditingController();
-  final _step1Focus = FocusNode();
-
-  List _stepsList = [];
-  List<File> _stepsImg = [];
-
-  var _image;
-  int currentStepValue = 0;
+class Intruction extends StatelessWidget {
+  final List stepsList;
+  final List<File> stepsImg;
+  int currentStepValue;
   var imagePicker;
+  final Function add;
+  final Function addImg;
+  final Function onChangedStep;
+  Intruction({
+    Key? key,
+    required this.stepsList,
+    required this.stepsImg,
+    required this.currentStepValue,
+    required this.imagePicker,
+    required this.add,
+    required this.addImg,
+    required this.onChangedStep,
+  }) : super(key: key);
 
-  Future<void> uploadFile() async {
-    await FirebaseStorage.instance
-        .ref('users/' + _currentUser!.uid + '/profile-photo.png')
-        .putFile(_image);
-  }
-
-  add(String name, int index) {
-    if (_stepsList.isEmpty) {
-      _stepsList.insert(index, name);
+  /*add(String name, int index) {
+    if (stepsList.isEmpty) {
+      stepsList.insert(index, name);
     } else {
-      _stepsList[index] = name;
+      stepsList[index] = name;
     }
   }
 
   addImg(File name, int index) async {
-    if (_stepsImg.isEmpty) {
+    if (stepsImg.isEmpty) {
       setState(() {
-        _stepsImg.insert(index, name);
+        stepsImg.insert(index, name);
       });
     } else {
       setState(() {
-        _stepsImg[index] = name;
+        stepsImg[index] = name;
       });
     }
   }
@@ -56,11 +49,11 @@ class _Intruction extends State<Intruction> {
   @override
   void initState() {
     super.initState();
-    _stepsImg.length = 30;
+    stepsImg.length = 30;
     imagePicker = ImagePicker();
     currentStepValue = 0;
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -89,51 +82,18 @@ class _Intruction extends State<Intruction> {
                     itemBuilder: (BuildContext context, int index) {
                       return GeneralWidgets.stepEditor(
                         context: context,
-                        image: _stepsImg[index],
+                        image: stepsImg[index],
                         photoClick: () async {
-
                           XFile image = await imagePicker.pickImage(
                               source: ImageSource.gallery);
 
                           await addImg(File(image.path), index);
-
                         },
                         stepNumber: 'Krok ${index + 1}',
                         stepColor: Colors.black,
                         onChanged: (String value) {
-                          //_stepsList[0] = value;
-                          if (index == currentStepValue) {
-                            setState(() {
-                              currentStepValue++;
-                              _stepsList.length = currentStepValue;
-                              //_stepsImg.length = currentStepValue;
-                            });
-                          }
-
-                          if (value == '' && index == currentStepValue - 1){
-                            _stepsImg.removeWhere((item) => item == _stepsImg[currentStepValue]);
-                            _stepsImg.length = 30;
-                          }
-
-                          if (value == '') {
-                            setState(() {
-                              currentStepValue--;
-                            });
-                          } else {}
-
-                          if (value == '' && index == currentStepValue - 1) {
-                            setState(() {
-                              _stepsList.length = currentStepValue;
-                              //_stepsImg.length = currentStepValue;
-                            });
-                          }
-
-                          setState(() {
-                            add(value, index);
-                          });
-
-                          print(_stepsList);
-                          print(_stepsImg);
+                          //stepsList[0] = value;
+                          onChangedStep(value, index);
                         },
                       );
                     }),
