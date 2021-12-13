@@ -3,13 +3,15 @@ import 'dart:io';
 import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/general_widgets.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'creator/title_page.dart';
 import 'creator/choose_items.dart';
 import 'creator/choose_tools.dart';
 import 'creator/instruction.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class MainCreator extends StatefulWidget {
   const MainCreator({Key? key}) : super(key: key);
@@ -19,6 +21,7 @@ class MainCreator extends StatefulWidget {
 }
 
 class _MainCreator extends State<MainCreator> {
+  var postID;
   final ref = FirebaseDatabase.instance.reference();
   final _allCategories = [];
   final List _needs = [];
@@ -41,16 +44,6 @@ class _MainCreator extends State<MainCreator> {
   List<String> tools = [];
   List<String> steps = [];
   bool public = false;
-
-  callback(title, desc) {
-    setState(() {
-      title = ' ';
-      desc = ' ';
-      items = [];
-      tools = [];
-      public = false;
-    });
-  }
 
   void _onSearchItems(String searchValue) {
     if (searchValue.length >= 3) {
@@ -90,7 +83,6 @@ class _MainCreator extends State<MainCreator> {
         setState(() {
           _toolsNames.add(toolName);
         });
-        //_searchTextController.text = '';
       }
     }
   }
@@ -126,7 +118,6 @@ class _MainCreator extends State<MainCreator> {
       setState(() {
         _currentStepValue++;
         _stepsList.length = _currentStepValue;
-        //stepsImg.length = currentStepValue;
       });
     }
 
@@ -144,16 +135,12 @@ class _MainCreator extends State<MainCreator> {
     if (value == '' && index == _currentStepValue - 1) {
       setState(() {
         _stepsList.length = _currentStepValue;
-        //stepsImg.length = currentStepValue;
       });
     }
 
     setState(() {
       _add(value, index);
     });
-
-    print(_stepsList);
-    print(_stepsImg);
   }
 
   void _onTitleChange(String value) {
@@ -177,6 +164,7 @@ class _MainCreator extends State<MainCreator> {
   @override
   void initState() {
     super.initState();
+
     ref.child('category').once().then((event) async {
       var values = event.value;
       setState(() {
@@ -285,13 +273,52 @@ class _MainCreator extends State<MainCreator> {
                         ),
                       ),
                       onPressed: () {
-                        setState(
-                          () {
-                            if (currentIndex < 3) {
-                              currentIndex++;
-                            }
-                          },
-                        );
+                        if (currentIndex == 0) {
+                          //print("zapisz 1");
+                          if (postID == null) {
+                            var id = ref.child('posts').push().key;
+                            setState(() {
+                              postID = id;
+                            });
+                          }
+                          print(postID);
+                          ref.child('posts/' + postID + '/categories').set(
+                                _selectedItems,
+                              );
+                        } else if (currentIndex == 1) {
+                          ref.child('posts/' + postID + '/items').set(
+                                _toolsNames,
+                              );
+                        } else if (currentIndex == 2) {
+                          //print("zapisz 3");
+                          print(_stepsList);
+                          print(_stepsImg);
+                          print(_currentStepValue);
+                          ref
+                              .child('posts/' + postID + '/postStructure/texts')
+                              .set(
+                                _stepsList,
+                              );
+                          for (int x = 0; x < _currentStepValue; x++) {
+                            //print(_stepsImg[x]);
+
+                          }
+
+                          /*ref
+                                .child(
+                                    'posts/' + postID + '/postStructure/images')
+                                .set(
+                                  _stepsImg,
+                                );*/
+                        } else {
+                          //print("zapisz cały i zresetuj");
+                        }
+
+                        if (currentIndex < 3) {
+                          setState(() {
+                            currentIndex++;
+                          });
+                        }
                       },
                       child: Text(
                         currentIndex == 3 ? "Zakończ" : "Dalej",

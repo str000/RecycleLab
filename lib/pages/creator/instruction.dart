@@ -26,34 +26,6 @@ class Intruction extends StatelessWidget {
     required this.onChangedStep,
   }) : super(key: key);
 
-  /*add(String name, int index) {
-    if (stepsList.isEmpty) {
-      stepsList.insert(index, name);
-    } else {
-      stepsList[index] = name;
-    }
-  }
-
-  addImg(File name, int index) async {
-    if (stepsImg.isEmpty) {
-      setState(() {
-        stepsImg.insert(index, name);
-      });
-    } else {
-      setState(() {
-        stepsImg[index] = name;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    stepsImg.length = 30;
-    imagePicker = ImagePicker();
-    currentStepValue = 0;
-  }
-*/
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -92,7 +64,6 @@ class Intruction extends StatelessWidget {
                         stepNumber: 'Krok ${index + 1}',
                         stepColor: Colors.black,
                         onChanged: (String value) {
-                          //stepsList[0] = value;
                           onChangedStep(value, index);
                         },
                       );
