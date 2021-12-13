@@ -1,3 +1,4 @@
+import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/sign_widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,71 +42,54 @@ class TitlePage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 20, right: 20, top: 0, left: 20),
-                child: Stack(
-                  alignment: Alignment.centerRight,
-                  children: [
-                    TextFormField(
-                      style: signTextFormField,
-                      decoration: CommonStyle.textFieldStyle(
-                        labelTextStr: "np. Karmnik dla ptaków z butelek",
-                      ),
-                      onChanged: (String v) => onTitleChange(v),
-                    ),
-                  ],
+              TextFormField(
+                style: signTextFormField,
+                decoration: CommonStyle.textFieldStyle(
+                  labelTextStr: "Tytuł Instrukcji",
                 ),
+                onChanged: (String v) => onTitleChange(v),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 20, right: 20, top: 0, left: 20),
-                child: Stack(
-                  alignment: Alignment.centerRight,
-                  children: [
-                    TextFormField(
-                      style: signTextFormField,
-                      decoration: CommonStyle.textFieldStyle(
-                        labelTextStr: "Opis",
-                      ),
-                      maxLines: 15,
-                      minLines: 10,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(500),
-                      ],
-                      onChanged: (String v) => onDescChange(v),
+              const SizedBox(height: 20),
+              TextFormField(
+                style: signTextFormField,
+                decoration: InputDecoration(
+                  alignLabelWithHint: true,
+                  contentPadding: const EdgeInsets.all(20),
+                  labelText: 'Opis',
+                  labelStyle: signTextFormField,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: const BorderSide(
+                      color: quarterBlackcolor,
                     ),
-                  ],
+                  ),
                 ),
+                maxLines: 8,
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(500),
+                ],
+                onChanged: (String v) => onDescChange(v),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 20, right: 20, top: 0, left: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: const [
-                        Text(
-                          'Ustaw post publiczny',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                      ],
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Ustaw post publiczny',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: halfBlackColor,
+                      fontWeight: FontWeight.w700,
                     ),
-                    Column(
-                      children: [
-                        CupertinoSwitch(
-                          value: private,
-                          onChanged: (v) => onStatusChange(v),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                  ),
+                  CupertinoSwitch(
+                    value: private,
+                    onChanged: (v) => onStatusChange(v),
+                  ),
+                ],
               ),
             ],
           ),

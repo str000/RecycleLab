@@ -1,3 +1,4 @@
+import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/general_widgets.dart';
 import 'dart:io';
@@ -55,14 +56,21 @@ class Intruction extends StatelessWidget {
                       return GeneralWidgets.stepEditor(
                         context: context,
                         image: stepsImg[index],
-                        photoClick: () async {
-                          XFile image = await imagePicker.pickImage(
-                              source: ImageSource.gallery);
+                        photoClick: index == currentStepValue
+                            ? null
+                            : () async {
+                                XFile image = await imagePicker.pickImage(
+                                    source: ImageSource.gallery);
 
-                          await addImg(File(image.path), index);
-                        },
+                                await addImg(File(image.path), index);
+                              },
                         stepNumber: 'Krok ${index + 1}',
-                        stepColor: Colors.black,
+                        stepColor: index == currentStepValue
+                            ? halfBlackColor
+                            : Colors.black,
+                        imageIconColor: index == currentStepValue
+                            ? quarterBlackcolor
+                            : halfBlackColor,
                         onChanged: (String value) {
                           onChangedStep(value, index);
                         },

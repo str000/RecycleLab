@@ -21,6 +21,7 @@ class MainCreator extends StatefulWidget {
 }
 
 class _MainCreator extends State<MainCreator> {
+  User? _currentUser = FirebaseAuth.instance.currentUser;
   var postID;
   final ref = FirebaseDatabase.instance.reference();
   final _allCategories = [];
@@ -30,6 +31,7 @@ class _MainCreator extends State<MainCreator> {
   final List<String> _toolsNames = [];
   final List _stepsList = [];
   final List<File> _stepsImg = [];
+  final List _stepsImgURL = [];
   int _currentStepValue = 0;
   var _imagePicker;
   String _title = ' ';
@@ -184,6 +186,13 @@ class _MainCreator extends State<MainCreator> {
     _currentStepValue = 0;
   }
 
+  Future<void> uploadFile(var index, File _image) async {
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference ref =
+        storage.ref().child('posts/' + postID + '/photo' + index.toString());
+    ref.putFile(_image);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -274,14 +283,15 @@ class _MainCreator extends State<MainCreator> {
                       ),
                       onPressed: () {
                         if (currentIndex == 0) {
-                          //print("zapisz 1");
                           if (postID == null) {
                             var id = ref.child('posts').push().key;
                             setState(() {
                               postID = id;
                             });
                           }
-                          print(postID);
+                          ref.child('posts/' + postID).set({
+                            'authorID': _currentUser!.uid,
+                          });
                           ref.child('posts/' + postID + '/categories').set(
                                 _selectedItems,
                               );
@@ -290,29 +300,18 @@ class _MainCreator extends State<MainCreator> {
                                 _toolsNames,
                               );
                         } else if (currentIndex == 2) {
-                          //print("zapisz 3");
-                          print(_stepsList);
-                          print(_stepsImg);
-                          print(_currentStepValue);
+                          setState(() {
+                            _stepsImgURL.length = _currentStepValue;
+                          });
                           ref
                               .child('posts/' + postID + '/postStructure/texts')
                               .set(
                                 _stepsList,
                               );
                           for (int x = 0; x < _currentStepValue; x++) {
-                            //print(_stepsImg[x]);
-
+                            uploadFile(x, _stepsImg[x]);
                           }
-
-                          /*ref
-                                .child(
-                                    'posts/' + postID + '/postStructure/images')
-                                .set(
-                                  _stepsImg,
-                                );*/
-                        } else {
-                          //print("zapisz cały i zresetuj");
-                        }
+                        } else {}
 
                         if (currentIndex < 3) {
                           setState(() {

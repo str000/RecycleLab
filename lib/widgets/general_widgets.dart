@@ -386,6 +386,7 @@ class GeneralWidgets {
     final stepColor,
     final focusController,
     final textController,
+    final imageIconColor,
     required String stepNumber,
   }) {
     return Column(
@@ -458,10 +459,10 @@ class GeneralWidgets {
                       )
                     : Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Icon(
                             Icons.add_photo_alternate_rounded,
-                            color: halfBlackColor,
+                            color: imageIconColor,
                             size: 100,
                           ),
                         ],
@@ -483,8 +484,20 @@ class GeneralWidgets {
           controller: textController,
           focusNode: focusController,
           style: signTextFormField,
-          decoration: CommonStyle.textFieldStyle(
-            labelTextStr: stepNumber,
+          decoration: InputDecoration(
+            alignLabelWithHint: true,
+            contentPadding: const EdgeInsets.all(20),
+            labelText: stepNumber,
+            labelStyle: signTextFormField,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(4),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(4),
+              borderSide: const BorderSide(
+                color: quarterBlackcolor,
+              ),
+            ),
           ),
           onChanged: onChanged,
           maxLines: 5,
