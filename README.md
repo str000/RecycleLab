@@ -1,16 +1,5 @@
 # app
 
-project
+RecycleLab
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+RecycleLab to aplikacja mobilna, w formie social media, łącząca ludzi chcących zainspirować się lub podzielić swoimi pomysłami na recykling odpadów. Pozwala na tworzenie postów przez użytkowników zawierających listę potrzebnych materiałów i przedmiotów (po których można takowe posty wyszukiwać), narzędzia jakie są potrzebne do wykonania oraz dokładną liczbę kroków wraz z zdjęciami. Inni użytkownicy mogą komentować i oceniać post. 
