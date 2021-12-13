@@ -171,8 +171,9 @@ class ResultsPage extends StatelessWidget {
                                         isLiked: false,
                                         onLiked: () {},
                                         onComment: () {
-                                          Navigator.of(context)
-                                              .push(CommentsOverlay());
+                                          Navigator.of(context).push(
+                                              CommentsOverlay(
+                                                  needs[index]['comments']));
                                         },
                                         onShared: () {
                                           print("Share");

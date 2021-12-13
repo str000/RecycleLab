@@ -32,6 +32,7 @@ class CategoriesPage extends StatelessWidget {
                     category('pojemniki');
                   },
                   context: context,
+                  iconColor: const Color.fromRGBO(1, 124, 13, 1),
                 ),
                 GeneralWidgets.category(
                   categoryName: "Materiały Budowlane",
@@ -40,6 +41,7 @@ class CategoriesPage extends StatelessWidget {
                     category('materiały budowlane');
                   },
                   context: context,
+                  iconColor: const Color.fromRGBO(251, 188, 5, 1),
                 ),
               ],
             ),
@@ -54,6 +56,7 @@ class CategoriesPage extends StatelessWidget {
                     category('elektronika');
                   },
                   context: context,
+                  iconColor: const Color.fromRGBO(0, 80, 153, 1),
                 ),
                 GeneralWidgets.category(
                   categoryName: "Guma",
@@ -62,6 +65,7 @@ class CategoriesPage extends StatelessWidget {
                     category('guma');
                   },
                   context: context,
+                  iconColor: const Color.fromRGBO(205, 49, 0, 1),
                 ),
               ],
             ),
@@ -76,6 +80,7 @@ class CategoriesPage extends StatelessWidget {
                     category('środki czystości');
                   },
                   context: context,
+                  iconColor: const Color.fromRGBO(205, 0, 37, 1),
                 ),
                 GeneralWidgets.category(
                   categoryName: "Meble",
@@ -84,6 +89,7 @@ class CategoriesPage extends StatelessWidget {
                     category('meble');
                   },
                   context: context,
+                  iconColor: const Color.fromRGBO(9, 0, 112, 1),
                 ),
               ],
             ),
@@ -98,6 +104,7 @@ class CategoriesPage extends StatelessWidget {
                     category('artykuły biurowe');
                   },
                   context: context,
+                  iconColor: const Color.fromRGBO(125, 45, 0, 1),
                 ),
                 GeneralWidgets.category(
                   categoryName: "Kosmetyki",
@@ -106,6 +113,7 @@ class CategoriesPage extends StatelessWidget {
                     category('kosmetyki');
                   },
                   context: context,
+                  iconColor: const Color.fromRGBO(112, 0, 107, 1),
                 ),
               ],
             ),
@@ -129,14 +137,14 @@ class CategoriesPage extends StatelessWidget {
                             Icon(
                               Icons.more_horiz,
                               size: 35,
-                              color: halfBlackColor,
+                              color: Color.fromRGBO(0, 118, 118, 1),
                             ),
                             Text(
                               'Inne',
                               style: TextStyle(
                                 fontSize: 12.0,
                                 fontWeight: FontWeight.w800,
-                                color: halfBlackColor,
+                                color: Color.fromRGBO(0, 118, 118, 1),
                               ),
                             )
                           ],

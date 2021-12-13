@@ -40,7 +40,7 @@ class _LikedPageState extends State<LikedPage> {
               print('Like');
             },
             onComment: () {
-              Navigator.of(context).push(CommentsOverlay());
+              //Navigator.of(context).push(CommentsOverlay());
             },
             onShared: () {
               print("Share");
@@ -73,7 +73,7 @@ class _LikedPageState extends State<LikedPage> {
               print('Like');
             },
             onComment: () {
-              Navigator.of(context).push(CommentsOverlay());
+              //Navigator.of(context).push(CommentsOverlay());
             },
             onShared: () {
               print("Share");

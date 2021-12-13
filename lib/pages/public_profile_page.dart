@@ -353,8 +353,9 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
                                               print('Like');
                                             },
                                             onComment: () {
-                                              Navigator.of(context)
-                                                  .push(CommentsOverlay());
+                                              Navigator.of(context).push(
+                                                  CommentsOverlay(_needs[index]
+                                                      ['comments']));
                                             },
                                             onShared: () {
                                               print("Share");

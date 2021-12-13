@@ -305,6 +305,7 @@ class GeneralWidgets {
     final icon,
     final onClick,
     final context,
+    final iconColor,
   }) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(5.0),
@@ -323,14 +324,14 @@ class GeneralWidgets {
                 Icon(
                   icon,
                   size: 35,
-                  color: halfBlackColor,
+                  color: iconColor,
                 ),
                 Text(
                   categoryName,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12.0,
                     fontWeight: FontWeight.w800,
-                    color: halfBlackColor,
+                    color: iconColor,
                   ),
                 )
               ],

@@ -113,7 +113,8 @@ class _HomePageState extends State<HomePage> {
                                 isLiked: false,
                                 onLiked: () {},
                                 onComment: () {
-                                  Navigator.of(context).push(CommentsOverlay());
+                                  Navigator.of(context).push(CommentsOverlay(
+                                      _needs[index]['comments']));
                                 },
                                 onShared: () {
                                   print("Share");

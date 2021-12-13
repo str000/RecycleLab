@@ -125,8 +125,8 @@ class _GeneralPageState extends State<GeneralPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Dominika Kowalska',
+                    Text(
+                      _user[0]['name'],
                       style: documentsText,
                     ),
                     Text(
@@ -184,7 +184,7 @@ class _GeneralPageState extends State<GeneralPage> {
                           ),
                           const SizedBox(width: 10),
                           Text(
-                            '205',
+                            '0',
                             style: isLiked
                                 ? const TextStyle(
                                     fontWeight: FontWeight.w700,
@@ -206,7 +206,8 @@ class _GeneralPageState extends State<GeneralPage> {
                         primary: halfBlackColor,
                       ),
                       onPressed: () {
-                        Navigator.of(context).push(CommentsOverlay());
+                        Navigator.of(context)
+                            .push(CommentsOverlay(widget.needs[0]['comments']));
                       },
                       child: Row(
                         children: const [
@@ -217,7 +218,7 @@ class _GeneralPageState extends State<GeneralPage> {
                           ),
                           SizedBox(width: 10),
                           Text(
-                            '25',
+                            '0',
                             style: signTextFormField,
                           )
                         ],

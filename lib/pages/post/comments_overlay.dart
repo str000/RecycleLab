@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class CommentsOverlay extends ModalRoute<void> {
+  List comments;
+  CommentsOverlay(this.comments);
+
   @override
   Duration get transitionDuration => const Duration(milliseconds: 500);
 
@@ -286,7 +289,7 @@ class CommentsOverlay extends ModalRoute<void> {
                                               ),
                                             );*/
                                           },
-                                        )
+                                        ),
                                       ],
                                     ),
                                   ),
