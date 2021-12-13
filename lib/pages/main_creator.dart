@@ -199,9 +199,6 @@ class _MainCreator extends State<MainCreator> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20.0),
