@@ -9,7 +9,7 @@ RecycleLab to aplikacja mobilna, w formie social media, łącząca ludzi chcący
 ```shell
 flutter build apk --release --no-sound-null-safety
 ```
-<i>lub</i>
+  <i>lub</i>
 ```shell
 flutter run --release --no-sound-null-safety
 ```
