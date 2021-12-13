@@ -311,7 +311,19 @@ class _MainCreator extends State<MainCreator> {
                           for (int x = 0; x < _currentStepValue; x++) {
                             uploadFile(x, _stepsImg[x]);
                           }
-                        } else {}
+                        } else {
+                          ref.child('posts/' + postID + '/title').set(
+                            _title,
+                          );
+                          ref.child('posts/' + postID + '/desc').set(
+                            _desc,
+                          );
+                          ref.child('posts/' + postID + '/public').set(
+                            _private,
+                          );
+
+                          initState();
+                        }
 
                         if (currentIndex < 3) {
                           setState(() {
