@@ -11,6 +11,7 @@ class ChooseItems extends StatelessWidget {
   final Function searchValue;
   final Function addItem;
   final Function removeItem;
+  final myControllerItems;
   ChooseItems(
       {Key? key,
       required this.allCategories,
@@ -18,7 +19,8 @@ class ChooseItems extends StatelessWidget {
       required this.addItem,
       required this.removeItem,
       required this.selectedItems,
-      required this.category})
+      required this.category,
+      required this.myControllerItems,})
       : super(key: key);
 
   final _focusSearch = FocusNode();
@@ -46,6 +48,7 @@ class ChooseItems extends StatelessWidget {
               TextFormField(
                 style: signTextFormField,
                 focusNode: _focusSearch,
+                controller: myControllerItems,
                 decoration: CommonStyle.textFieldStyle(
                   labelTextStr: "Wyszukaj przedmiotu",
                 ),
