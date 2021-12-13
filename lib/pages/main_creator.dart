@@ -24,12 +24,15 @@ class _MainCreator extends State<MainCreator> {
   User? _currentUser = FirebaseAuth.instance.currentUser;
   var postID;
   final ref = FirebaseDatabase.instance.reference();
+  final myControllerDesc = TextEditingController();
+  final myControllerTitle = TextEditingController();
+  final myControllerItems = TextEditingController();
   final _allCategories = [];
   final List _needs = [];
   List _category = [];
-  final List<String> _selectedItems = [];
-  final List<String> _toolsNames = [];
-  final List _stepsList = [];
+  List<String> _selectedItems = [];
+  List<String> _toolsNames = [];
+  List _stepsList = [];
   final List<File> _stepsImg = [];
   final List _stepsImgURL = [];
   int _currentStepValue = 0;
@@ -206,6 +209,7 @@ class _MainCreator extends State<MainCreator> {
             children: <Widget>[
               ChooseItems(
                 allCategories: _allCategories,
+                myControllerItems: myControllerItems,
                 searchValue: _onSearchItems,
                 addItem: _addItem,
                 removeItem: _removeItem,
@@ -229,6 +233,8 @@ class _MainCreator extends State<MainCreator> {
               TitlePage(
                 title: _title,
                 desc: _desc,
+                myControllerTitle: myControllerTitle,
+                myControllerDesc: myControllerDesc,
                 private: _private,
                 onTitleChange: _onTitleChange,
                 onDescChange: _onDescChange,
@@ -322,7 +328,23 @@ class _MainCreator extends State<MainCreator> {
                             _private,
                           );
 
-                          initState();
+                          var id = ref.child('posts').push().key;
+                          setState(() {
+                            postID = id;
+                            myControllerDesc.clear();
+                            myControllerTitle.clear();
+                            myControllerItems.clear();
+
+                            FocusScope.of(context).unfocus();
+
+                            _title = ' ';
+                            _desc = ' ';
+                            _selectedItems = [];
+                            _toolsNames = [];
+                            _stepsList = [];
+                            _private = false;
+                            currentIndex = -1;
+                          });
                         }
 
                         if (currentIndex < 3) {
