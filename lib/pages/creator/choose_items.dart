@@ -4,64 +4,24 @@ import 'package:auth/widgets/sign_widgets.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
-class ChooseItems extends StatefulWidget {
-  const ChooseItems({Key? key}) : super(key: key);
+class ChooseItems extends StatelessWidget {
+  List allCategories;
+  List category;
+  List<String> selectedItems;
+  final Function searchValue;
+  final Function addItem;
+  final Function removeItem;
+  ChooseItems(
+      {Key? key,
+      required this.allCategories,
+      required this.searchValue,
+      required this.addItem,
+      required this.removeItem,
+      required this.selectedItems,
+      required this.category})
+      : super(key: key);
 
-  @override
-  _ChooseItems createState() => _ChooseItems();
-}
-
-class _ChooseItems extends State<ChooseItems> {
-  final myController = TextEditingController();
   final _focusSearch = FocusNode();
-  final ref = FirebaseDatabase.instance.reference();
-  final filter = [];
-  final _allCategories = [];
-  final List _needs = [];
-
-  var categoryCurr = '';
-
-  List<String> selectedItems = []; //!!! finalna lista
-  List _category = [];
-
-  String itemName = ' ';
-  String? providedNeedName;
-
-  add(String name) {
-    if (selectedItems.contains(name) == false) {
-      selectedItems.add(name);
-    }
-  }
-
-  del(String index) {
-    selectedItems.removeWhere((item) => item == index);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    ref.child('category').once().then((event) async {
-      var values = event.value;
-      setState(() {
-        _needs.add(values);
-      });
-
-      final allElements = values.values;
-
-      for (final element in allElements) {
-        setState(() {
-          _allCategories.addAll(element.where((item) => item != null));
-        });
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    myController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,27 +46,10 @@ class _ChooseItems extends State<ChooseItems> {
               TextFormField(
                 style: signTextFormField,
                 focusNode: _focusSearch,
-                controller: myController,
                 decoration: CommonStyle.textFieldStyle(
                   labelTextStr: "Wyszukaj przedmiotu",
                 ),
-                onChanged: (String? value) async {
-                  if (value!.length >= 3) {
-                    final filter = [];
-                    for (int x = 0; x < _allCategories.length; x++) {
-                      if (_allCategories[x].contains(value)) {
-                        filter.add(_allCategories[x]);
-                      }
-                    }
-                    setState(() {
-                      _category = filter;
-                    });
-                  } else {
-                    setState(() {
-                      _category = [];
-                    });
-                  }
-                },
+                onChanged: (String v) => searchValue(v),
               ),
               const SizedBox(height: 20),
               Expanded(
@@ -118,7 +61,7 @@ class _ChooseItems extends State<ChooseItems> {
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: _category.length,
+                        itemCount: category.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Container(
                             margin: const EdgeInsets.only(bottom: 20),
@@ -140,7 +83,7 @@ class _ChooseItems extends State<ChooseItems> {
                                       children: [
                                         GestureDetector(
                                           child: Text(
-                                            "${_category[index].toString()[0].toUpperCase()}${_category[index].toString().substring(1)}",
+                                            "${category[index].toString()[0].toUpperCase()}${category[index].toString().substring(1)}",
                                             style: const TextStyle(
                                               fontSize: 20.0,
                                               fontWeight: FontWeight.w800,
@@ -156,11 +99,7 @@ class _ChooseItems extends State<ChooseItems> {
                                       color: Colors.transparent,
                                       child: InkWell(
                                         onTap: () {
-                                          setState(() {
-                                            itemName =
-                                                _category[index].toString();
-                                            add(itemName);
-                                          });
+                                          addItem(category[index].toString());
                                         },
                                       ),
                                     ),
@@ -257,11 +196,8 @@ class _ChooseItems extends State<ChooseItems> {
                                       color: Colors.transparent,
                                       child: InkWell(
                                         onTap: () {
-                                          setState(() {
-                                            itemName =
-                                                _category[index].toString();
-                                            del(itemName);
-                                          });
+                                          removeItem(
+                                              category[index].toString());
                                         },
                                       ),
                                     ),

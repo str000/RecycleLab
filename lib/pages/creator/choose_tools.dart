@@ -3,15 +3,17 @@ import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/sign_widgets.dart';
 import 'package:flutter/material.dart';
 
-class ChooseTools extends StatefulWidget {
-  const ChooseTools({Key? key}) : super(key: key);
+class ChooseTools extends StatelessWidget {
+  List<String> toolsNames;
+  final Function addTool;
+  final Function removeTool;
+  ChooseTools({
+    Key? key,
+    required this.toolsNames,
+    required this.addTool,
+    required this.removeTool,
+  }) : super(key: key);
 
-  @override
-  _ChooseTools createState() => _ChooseTools();
-}
-
-class _ChooseTools extends State<ChooseTools> {
-  List<String> toolsNames = []; //!!! finalna lista
   String? toolName = ' ';
   final _searchTextController = TextEditingController();
   final _focusSearch = FocusNode();
@@ -27,15 +29,6 @@ class _ChooseTools extends State<ChooseTools> {
 
   del(String index) {
     toolsNames.removeWhere((item) => item == index);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      toolsNames;
-      toolName;
-    });
   }
 
   @override
@@ -76,9 +69,7 @@ class _ChooseTools extends State<ChooseTools> {
                           padding: const EdgeInsets.only(right: 10),
                           child: IconButton(
                             onPressed: () {
-                              setState(() {
-                                add(_searchTextController.text);
-                              });
+                              addTool(_searchTextController.text);
                             },
                             icon: const Icon(Icons.add_rounded),
                             color: halfBlackColor,
@@ -173,9 +164,7 @@ class _ChooseTools extends State<ChooseTools> {
                                 color: Colors.transparent,
                                 child: InkWell(
                                   onTap: () {
-                                    setState(() {
-                                      del(toolsNames[index].toString());
-                                    });
+                                    removeTool(toolsNames[index].toString());
                                   },
                                 ),
                               ),
