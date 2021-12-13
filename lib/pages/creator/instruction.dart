@@ -43,15 +43,20 @@ class _Intruction extends State<Intruction> {
 
   addImg(File name, int index) async {
     if (_stepsImg.isEmpty) {
-      _stepsImg.insert(index, name);
+      setState(() {
+        _stepsImg.insert(index, name);
+      });
     } else {
-      _stepsImg[index] = name;
+      setState(() {
+        _stepsImg[index] = name;
+      });
     }
   }
 
   @override
   void initState() {
     super.initState();
+    _stepsImg.length = 30;
     imagePicker = ImagePicker();
     currentStepValue = 0;
   }
@@ -84,8 +89,9 @@ class _Intruction extends State<Intruction> {
                     itemBuilder: (BuildContext context, int index) {
                       return GeneralWidgets.stepEditor(
                         context: context,
-                        image: _stepsImg.isEmpty ? null : currentStepValue == index ? null : _stepsImg[index],
+                        image: _stepsImg[index],
                         photoClick: () async {
+
                           XFile image = await imagePicker.pickImage(
                               source: ImageSource.gallery);
 
@@ -100,7 +106,7 @@ class _Intruction extends State<Intruction> {
                             setState(() {
                               currentStepValue++;
                               _stepsList.length = currentStepValue;
-                              _stepsImg.length = currentStepValue;
+                              //_stepsImg.length = currentStepValue;
                             });
                           }
 
@@ -113,7 +119,7 @@ class _Intruction extends State<Intruction> {
                           if (value == '' && index == currentStepValue - 1) {
                             setState(() {
                               _stepsList.length = currentStepValue;
-                              _stepsImg.length = currentStepValue;
+                              //_stepsImg.length = currentStepValue;
                             });
                           }
 
