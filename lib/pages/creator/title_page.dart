@@ -12,6 +12,8 @@ class TitlePage extends StatelessWidget {
   Function onTitleChange;
   Function onDescChange;
   Function onStatusChange;
+  final myControllerDesc;
+  final myControllerTitle;
   TitlePage({
     Key? key,
     required this.title,
@@ -20,6 +22,8 @@ class TitlePage extends StatelessWidget {
     required this.onTitleChange,
     required this.onDescChange,
     required this.onStatusChange,
+    required this.myControllerDesc,
+    required this.myControllerTitle,
   }) : super(key: key);
 
   @override
@@ -44,6 +48,7 @@ class TitlePage extends StatelessWidget {
               const SizedBox(height: 20),
               TextFormField(
                 style: signTextFormField,
+                controller: myControllerTitle,
                 decoration: CommonStyle.textFieldStyle(
                   labelTextStr: "Tytuł Instrukcji",
                 ),
@@ -52,6 +57,7 @@ class TitlePage extends StatelessWidget {
               const SizedBox(height: 20),
               TextFormField(
                 style: signTextFormField,
+                controller: myControllerDesc,
                 decoration: InputDecoration(
                   alignLabelWithHint: true,
                   contentPadding: const EdgeInsets.all(20),
