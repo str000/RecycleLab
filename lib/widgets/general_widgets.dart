@@ -20,7 +20,7 @@ class GeneralWidgets {
   static SizedBox post({
     String postTitle = "",
     String profilePhotoUrl = "",
-    String postMainPhotoUrl = "",
+    final postMainPhotoUrl = "",
     String postLikes = "",
     String postComents = "",
     bool isLiked = false,
