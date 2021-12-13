@@ -4,18 +4,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class TitlePage extends StatefulWidget {
-  const TitlePage({Key? key}) : super(key: key);
-
-  @override
-  _TitlePage createState() => _TitlePage();
-}
-
-class _TitlePage extends State<TitlePage> {
-  bool _private = false; //!!! finalny status postu
-
-  String _title = ' '; //!!! finalny tytuł
-  String _desc = ' '; //!!! finalny opis
+class TitlePage extends StatelessWidget {
+  String title;
+  String desc;
+  bool private;
+  Function onTitleChange;
+  Function onDescChange;
+  Function onStatusChange;
+  TitlePage({
+    Key? key,
+    required this.title,
+    required this.desc,
+    required this.private,
+    required this.onTitleChange,
+    required this.onDescChange,
+    required this.onStatusChange,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +52,7 @@ class _TitlePage extends State<TitlePage> {
                       decoration: CommonStyle.textFieldStyle(
                         labelTextStr: "np. Karmnik dla ptaków z butelek",
                       ),
-                      onChanged: (String? value) {
-                        setState(() {
-                          _title = value!;
-                        });
-                      },
+                      onChanged: (String v) => onTitleChange(v),
                     ),
                   ],
                 ),
@@ -67,18 +67,13 @@ class _TitlePage extends State<TitlePage> {
                       style: signTextFormField,
                       decoration: CommonStyle.textFieldStyle(
                         labelTextStr: "Opis",
-                        
                       ),
                       maxLines: 15,
                       minLines: 10,
                       inputFormatters: [
                         LengthLimitingTextInputFormatter(500),
                       ],
-                      onChanged: (String? value) {
-                        setState(() {
-                          _desc = value!;
-                        });
-                      },
+                      onChanged: (String v) => onDescChange(v),
                     ),
                   ],
                 ),
@@ -104,12 +99,8 @@ class _TitlePage extends State<TitlePage> {
                     Column(
                       children: [
                         CupertinoSwitch(
-                          value: _private,
-                          onChanged: (value) {
-                            setState(() {
-                              _private = value;
-                            });
-                          },
+                          value: private,
+                          onChanged: (v) => onStatusChange(v),
                         ),
                       ],
                     ),

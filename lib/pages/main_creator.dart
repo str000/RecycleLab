@@ -29,6 +29,9 @@ class _MainCreator extends State<MainCreator> {
   final List<File> _stepsImg = [];
   int _currentStepValue = 0;
   var _imagePicker;
+  String _title = ' ';
+  String _desc = ' ';
+  bool _private = false;
 
   var currentIndex = 0;
 
@@ -153,6 +156,24 @@ class _MainCreator extends State<MainCreator> {
     print(_stepsImg);
   }
 
+  void _onTitleChange(String value) {
+    setState(() {
+      _title = value;
+    });
+  }
+
+  void _onDescChange(String value) {
+    setState(() {
+      _desc = value;
+    });
+  }
+
+  void _onStatusChange(bool value) {
+    setState(() {
+      _private = value;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -208,7 +229,14 @@ class _MainCreator extends State<MainCreator> {
                 addImg: _addImg,
                 onChangedStep: _onChangedStep,
               ),
-              TitlePage(),
+              TitlePage(
+                title: _title,
+                desc: _desc,
+                private: _private,
+                onTitleChange: _onTitleChange,
+                onDescChange: _onDescChange,
+                onStatusChange: _onStatusChange,
+              ),
             ],
             index: currentIndex,
           ),
