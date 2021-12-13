@@ -264,6 +264,7 @@ class _CompleteProfilPageState extends State<CompleteProfilPage> {
                           await uploadFile();
                           ref.child('users/' + _currentUser!.uid).set({
                             'nameID': _nameIDTextController.text,
+                            'name': _nameTextController.text,
                           });
                           _currentUser
                               ?.updateDisplayName(_nameTextController.text);

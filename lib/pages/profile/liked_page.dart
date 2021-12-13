@@ -53,11 +53,11 @@ class _LikedPageState extends State<LikedPage> {
               );*/
             },
             onProfilePhoto: () {
-              Navigator.of(context).push(
+              /*Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const PublicProfilePage(),
                 ),
-              );
+              );*/
             },
           ),
           GeneralWidgets.post(
@@ -86,11 +86,11 @@ class _LikedPageState extends State<LikedPage> {
               );*/
             },
             onProfilePhoto: () {
-              Navigator.of(context).push(
+              /*Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const PublicProfilePage(),
                 ),
-              );
+              );*/
             },
           ),
         ],

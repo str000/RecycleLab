@@ -4,6 +4,8 @@ import 'package:auth/pages/post_page.dart';
 import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/general_widgets.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 //Firebase Package
 //Pages
@@ -14,13 +16,39 @@ import 'package:snapping_sheet/snapping_sheet.dart';
 //Widgets
 
 class PublicProfilePage extends StatefulWidget {
-  const PublicProfilePage({Key? key}) : super(key: key);
+  String userID;
+  PublicProfilePage({Key? key, required this.userID}) : super(key: key);
 
   @override
   _PublicProfilePageState createState() => _PublicProfilePageState();
 }
 
 class _PublicProfilePageState extends State<PublicProfilePage> {
+  final ref = FirebaseDatabase.instance.reference();
+  List _user = [];
+
+  @override
+  void initState() {
+    super.initState();
+    ref.child('users/' + widget.userID).onValue.listen((event) async {
+      Map<dynamic, dynamic> values = event.snapshot.value;
+      List needs = [];
+
+      needs.add(values);
+
+      setState(() {
+        _user = needs;
+      });
+    });
+  }
+
+  Future<String> downloadProfileUserPhoto(String authorID) async {
+    final ref = FirebaseStorage.instance
+        .ref('users/' + authorID + '/profile-photo.png');
+    var url = await ref.getDownloadURL();
+    return url;
+  }
+
   var currentIndex = 0;
   final ScrollController _myScrollController = ScrollController();
   @override
@@ -47,17 +75,27 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
           children: [
             Stack(
               children: [
-                Container(
-                  height: MediaQuery.of(context).size.height - 200,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(
-                        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80',
-                      ),
-                    ),
-                  ),
-                ),
+                FutureBuilder(
+                    future:
+                        Future.wait([downloadProfileUserPhoto(widget.userID)]),
+                    builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return Container(
+                          height: MediaQuery.of(context).size.height - 200,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                snapshot.data![0],
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                      return Container(
+                        color: Colors.white,
+                      );
+                    }),
               ],
             ),
             Padding(
@@ -111,7 +149,7 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               'Dominika Kowalska',
                               style: TextStyle(
@@ -121,8 +159,8 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
                               ),
                             ),
                             Text(
-                              '@dominikakowalska',
-                              style: TextStyle(
+                              '@' + _user[0]['nameID'],
+                              style: const TextStyle(
                                 fontSize: 16.0,
                                 color: halfBlackColor,
                                 fontWeight: FontWeight.w700,
@@ -290,12 +328,12 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
                                 );*/
                               },
                               onProfilePhoto: () {
-                                Navigator.of(context).push(
+                                /*Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        const PublicProfilePage(),
+                                        PublicProfilePage(),
                                   ),
-                                );
+                                );*/
                               },
                             ),
                           ],

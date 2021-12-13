@@ -75,43 +75,52 @@ class _GeneralPageState extends State<GeneralPage> {
             ),
             child: Row(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: profilePhoto == ''
-                            ? BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                              )
-                            : BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(profilePhoto),
+                FutureBuilder(
+                    future: Future.wait([
+                      downloadProfileUserPhoto(widget.needs[0]['authorID'])
+                    ]),
+                    builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Stack(
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(snapshot.data![0]),
+                                  ),
+                                  borderRadius: BorderRadius.circular(50),
                                 ),
-                                borderRadius: BorderRadius.circular(50),
                               ),
-                      ),
-                      Positioned.fill(
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const PublicProfilePage(),
+                              Positioned.fill(
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              PublicProfilePage(
+                                                  userID: widget.needs[0]
+                                                      ['authorID']),
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 ),
-                              );
-                            },
+                              ),
+                            ],
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                        );
+                      }
+                      return Container(
+                        color: Colors.orange,
+                      );
+                    }),
                 const SizedBox(width: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,17 +138,25 @@ class _GeneralPageState extends State<GeneralPage> {
               ],
             ),
           ),
-          Container(
-            height: 250,
-            decoration: mainPhoto == ''
-                ? null
-                : BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(mainPhoto),
+          FutureBuilder(
+              future:
+                  Future.wait([downloadProfilePhoto(widget.needs[0]['id'])]),
+              builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return Container(
+                    height: 250,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(snapshot.data![0]),
+                      ),
                     ),
-                  ),
-          ),
+                  );
+                }
+                return Container(
+                  color: Colors.orange,
+                );
+              }),
           const SizedBox(height: 5),
           Padding(
             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -235,7 +252,7 @@ class _GeneralPageState extends State<GeneralPage> {
             child: GeneralWidgets.line(),
           ),
           Padding(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Text(
               widget.needs[0]['desc'],
               style: const TextStyle(

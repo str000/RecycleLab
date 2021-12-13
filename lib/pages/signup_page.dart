@@ -250,12 +250,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                                           .initializeApp();
 
                                                   Navigator.of(context)
-                                                      .pushAndRemoveUntil(
+                                                      .pushReplacement(
                                                     MaterialPageRoute(
                                                       builder: (context) =>
-                                                          MainPage(user: user),
+                                                          const CompleteProfilPage(),
                                                     ),
-                                                    ModalRoute.withName('/'),
                                                   );
                                                 }
                                               }

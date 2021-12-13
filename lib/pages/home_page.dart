@@ -115,8 +115,8 @@ class _HomePageState extends State<HomePage> {
                                 onProfilePhoto: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          const PublicProfilePage(),
+                                      builder: (context) => PublicProfilePage(
+                                          userID: _needs[index]['authorID']),
                                     ),
                                   );
                                 },
