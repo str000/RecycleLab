@@ -35,7 +35,7 @@ class ChooseTools extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        _focusSearch.unfocus();
+        FocusScope.of(context).unfocus();
       },
       child: Scaffold(
         body: SingleChildScrollView(
