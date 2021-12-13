@@ -91,6 +91,7 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               children: [
                 ListView.builder(
+                    reverse: true,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: _needs.length,
