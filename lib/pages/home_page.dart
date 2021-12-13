@@ -47,12 +47,16 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Future<String> downloadProfilePhoto(String postID, int index) async {
+  Future<String> downloadProfilePhoto(String postID) async {
     final ref = FirebaseStorage.instance.ref('posts/' + postID + '/photo0');
     var url = await ref.getDownloadURL();
-    /*setState(() {
-      _needs[index]['url'] = url;
-    });*/
+    return url.toString();
+  }
+
+  Future<String> downloadProfileUserPhoto(String userID) async {
+    final ref =
+        FirebaseStorage.instance.ref('users/' + userID + '/profile-photo.png');
+    var url = await ref.getDownloadURL();
     return url.toString();
   }
 
@@ -77,23 +81,23 @@ class _HomePageState extends State<HomePage> {
                     itemCount: _needs.length,
                     itemBuilder: (BuildContext context, int index) {
                       return FutureBuilder(
-                          future:
-                              downloadProfilePhoto(_needs[index]['id'], index),
-                          builder: (context, snapshot) {
+                          future: Future.wait([
+                            downloadProfilePhoto(_needs[index]['id']),
+                            downloadProfileUserPhoto(_needs[index]['authorID'])
+                          ]),
+                          builder:
+                              (context, AsyncSnapshot<List<dynamic>> snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.done) {
                               return GeneralWidgets.post(
                                 postTitle: _needs[index]['title'],
-                                profilePhotoUrl:
-                                    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
-                                postMainPhotoUrl: snapshot.data,
+                                profilePhotoUrl: snapshot.data![1],
+                                postMainPhotoUrl: snapshot.data![0],
                                 postLikes: "205",
                                 postComents: "25",
                                 isLiked: true,
                                 onLiked: () {
                                   print('Like');
-                                  downloadProfilePhoto(
-                                      _needs[index]['id'], index);
                                 },
                                 onComment: () {
                                   Navigator.of(context).push(CommentsOverlay());
