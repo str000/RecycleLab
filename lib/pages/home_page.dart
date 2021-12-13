@@ -28,8 +28,10 @@ class _HomePageState extends State<HomePage> {
 
   List _needs = [];
 
-  getList() async {
-    await ref.child('posts').onValue.listen((event) async {
+  @override
+  void initState() {
+    super.initState();
+    ref.child('posts').onValue.listen((event) async {
       Map<dynamic, dynamic> values = event.snapshot.value;
       List needs = [];
       values.forEach((key, values) {
@@ -42,24 +44,16 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _needs = needs;
       });
-      for (int x = 0; x >= _needs.length; x++) {
-        downloadProfilePhoto(_needs[x]['id'], x);
-      }
     });
   }
 
-  @override
-  void initState() {
-    getList();
-    super.initState();
-  }
-
-  Future<void> downloadProfilePhoto(String postID, int index) async {
+  Future<String> downloadProfilePhoto(String postID, int index) async {
     final ref = FirebaseStorage.instance.ref('posts/' + postID + '/photo0');
     var url = await ref.getDownloadURL();
     setState(() {
       _needs[index]['url'] = url;
     });
+    return url.toString();
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -78,45 +72,52 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               children: [
                 ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: _needs.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GeneralWidgets.post(
-                      postTitle: _needs[index]['title'],
-                      profilePhotoUrl:
-                          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
-                      postMainPhotoUrl: _needs[index]['url'] ?? '',
-                      postLikes: "205",
-                      postComents: "25",
-                      isLiked: true,
-                      onLiked: () {
-                        print('Like');
-                        downloadProfilePhoto(_needs[index]['id'], index);
-                      },
-                      onComment: () {
-                        Navigator.of(context).push(CommentsOverlay());
-                      },
-                      onShared: () {
-                        print("Share");
-                      },
-                      onPhoto: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const PostPage(),
-                          ),
-                        );
-                      },
-                      onProfilePhoto: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const PublicProfilePage(),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: _needs.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return FutureBuilder<String>(
+                          future:
+                              downloadProfilePhoto(_needs[index]['id'], index),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            return GeneralWidgets.post(
+                              postTitle: _needs[index]['title'],
+                              profilePhotoUrl:
+                                  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
+                              postMainPhotoUrl: _needs[index]['url'] ?? '',
+                              postLikes: "205",
+                              postComents: "25",
+                              isLiked: true,
+                              onLiked: () {
+                                print('Like');
+                                downloadProfilePhoto(
+                                    _needs[index]['id'], index);
+                              },
+                              onComment: () {
+                                Navigator.of(context).push(CommentsOverlay());
+                              },
+                              onShared: () {
+                                print("Share");
+                              },
+                              onPhoto: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const PostPage(),
+                                  ),
+                                );
+                              },
+                              onProfilePhoto: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const PublicProfilePage(),
+                                  ),
+                                );
+                              },
+                            );
+                          });
+                    })
               ],
             ),
           ),
