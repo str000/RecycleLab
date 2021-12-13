@@ -26,6 +26,7 @@ class PublicProfilePage extends StatefulWidget {
 class _PublicProfilePageState extends State<PublicProfilePage> {
   final ref = FirebaseDatabase.instance.reference();
   List _user = [];
+  List _needs = [];
 
   @override
   void initState() {
@@ -40,6 +41,20 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
         _user = needs;
       });
     });
+    ref.child('posts').onValue.listen((event) async {
+      Map<dynamic, dynamic> values = event.snapshot.value;
+      List needs = [];
+      values.forEach((key, values) {
+        values['id'] = key;
+
+        if (values['public'] == true && values['authorID'] == widget.userID) {
+          needs.add(values);
+        }
+      });
+      setState(() {
+        _needs = needs;
+      });
+    });
   }
 
   Future<String> downloadProfileUserPhoto(String authorID) async {
@@ -47,6 +62,12 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
         .ref('users/' + authorID + '/profile-photo.png');
     var url = await ref.getDownloadURL();
     return url;
+  }
+
+  Future<String> downloadProfilePhoto(String postID) async {
+    final ref = FirebaseStorage.instance.ref('posts/' + postID + '/photo0');
+    var url = await ref.getDownloadURL();
+    return url.toString();
   }
 
   var currentIndex = 0;
@@ -151,8 +172,8 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Dominika Kowalska',
-                              style: TextStyle(
+                              _user[0]['name'],
+                              style: const TextStyle(
                                 fontSize: 25.0,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w700,
@@ -222,9 +243,9 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
                                 onClick: () {},
                               ),
                               const SizedBox(height: 10),
-                              const Text(
-                                '21',
-                                style: TextStyle(
+                              Text(
+                                _needs.length.toString(),
+                                style: const TextStyle(
                                   fontSize: 20.0,
                                   color: primaryColor,
                                   fontWeight: FontWeight.w700,
@@ -245,7 +266,7 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
                               ),
                               const SizedBox(height: 10),
                               const Text(
-                                '20 tys.',
+                                '0',
                                 style: TextStyle(
                                   fontSize: 20.0,
                                   color: likeColor,
@@ -267,7 +288,7 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
                               ),
                               const SizedBox(height: 10),
                               const Text(
-                                '4.5',
+                                '0',
                                 style: TextStyle(
                                   fontSize: 20.0,
                                   color: Color.fromRGBO(251, 188, 5, 1),
@@ -302,40 +323,69 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
                         physics: const BouncingScrollPhysics(),
                         child: Column(
                           children: [
-                            GeneralWidgets.post(
-                              postTitle: "Poduszka z folii",
-                              profilePhotoUrl:
-                                  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
-                              postMainPhotoUrl:
-                                  "https://images.unsplash.com/photo-1520899981500-21af7ff24c2a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1077&q=80",
-                              postLikes: "205",
-                              postComents: "25",
-                              isLiked: true,
-                              onLiked: () {
-                                print('Like');
-                              },
-                              onComment: () {
-                                Navigator.of(context).push(CommentsOverlay());
-                              },
-                              onShared: () {
-                                print("Share");
-                              },
-                              onPhoto: () {
-                                /*Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => PostPage(),
-                                  ),
-                                );*/
-                              },
-                              onProfilePhoto: () {
-                                /*Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        PublicProfilePage(),
-                                  ),
-                                );*/
-                              },
-                            ),
+                            ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: _needs.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return FutureBuilder(
+                                      future: Future.wait([
+                                        downloadProfilePhoto(
+                                            _needs[index]['id']),
+                                        downloadProfileUserPhoto(widget.userID)
+                                      ]),
+                                      builder: (context,
+                                          AsyncSnapshot<List<dynamic>>
+                                              snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.done) {
+                                          return GeneralWidgets.post(
+                                            postTitle: _needs[index]['title'],
+                                            profilePhotoUrl: snapshot.data![1],
+                                            postMainPhotoUrl: snapshot.data![0],
+                                            postLikes:
+                                                _needs[index]['likes'] ?? '0',
+                                            postComents: _needs[index]
+                                                    ['comments'] ??
+                                                '0',
+                                            isLiked: false,
+                                            onLiked: () {
+                                              print('Like');
+                                            },
+                                            onComment: () {
+                                              Navigator.of(context)
+                                                  .push(CommentsOverlay());
+                                            },
+                                            onShared: () {
+                                              print("Share");
+                                            },
+                                            onPhoto: () {
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PostPage(
+                                                          postID: _needs[index]
+                                                              ['id']),
+                                                ),
+                                              );
+                                            },
+                                            onProfilePhoto: () {
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PublicProfilePage(
+                                                          userID: _needs[index]
+                                                              ['authorID']),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        }
+                                        return Container(
+                                          color: Colors.orange,
+                                        );
+                                      });
+                                })
                           ],
                         ),
                       ),

@@ -1,9 +1,11 @@
 //Plugins
 import 'package:auth/pages/post/comments_overlay.dart';
 import 'package:auth/pages/post_page.dart';
+import 'package:auth/pages/public_profile_page.dart';
 import 'package:auth/theme/colors.dart';
 import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/general_widgets.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 //Firebase Package
 //Pages
@@ -15,9 +17,26 @@ import 'package:flutter/material.dart';
 class ResultsPage extends StatelessWidget {
   final ValueChanged result;
   final String categoryName;
-  const ResultsPage(
-      {Key? key, required this.result, required this.categoryName})
+  List needs;
+  ResultsPage(
+      {Key? key,
+      required this.result,
+      required this.categoryName,
+      required this.needs})
       : super(key: key);
+
+  Future<String> downloadProfileUserPhoto(String authorID) async {
+    final ref = FirebaseStorage.instance
+        .ref('users/' + authorID + '/profile-photo.png');
+    var url = await ref.getDownloadURL();
+    return url;
+  }
+
+  Future<String> downloadProfilePhoto(String postID) async {
+    final ref = FirebaseStorage.instance.ref('posts/' + postID + '/photo0');
+    var url = await ref.getDownloadURL();
+    return url.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,12 +79,12 @@ class ResultsPage extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               // ignore: dead_code
-              _isEmpty ? GeneralWidgets.line() : const SizedBox(),
+              needs.isEmpty ? GeneralWidgets.line() : const SizedBox(),
             ],
           ),
         ),
         Expanded(
-          child: _isEmpty
+          child: needs.isEmpty
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -121,42 +140,68 @@ class ResultsPage extends StatelessWidget {
                     ),
                   ],
                 )
-              // ignore: dead_code
               : SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Column(
                       children: [
-                        GeneralWidgets.post(
-                          postTitle: "Poduszka z folii",
-                          profilePhotoUrl:
-                              "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
-                          postMainPhotoUrl:
-                              "https://images.unsplash.com/photo-1520899981500-21af7ff24c2a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1077&q=80",
-                          postLikes: "205",
-                          postComents: "25",
-                          isLiked: true,
-                          onLiked: () {
-                            print('Like');
-                          },
-                          onComment: () {
-                            Navigator.of(context).push(CommentsOverlay());
-                          },
-                          onShared: () {
-                            print("Share");
-                          },
-                          onPhoto: () {
-                            /*Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const PostPage(),
-                              ),
-                            );*/
-                          },
-                          onProfilePhoto: () {
-                            print("Profile");
-                          },
-                        ),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: needs.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return FutureBuilder(
+                                  future: Future.wait([
+                                    downloadProfilePhoto(needs[index]['id']),
+                                    downloadProfileUserPhoto(
+                                        needs[index]['authorID'])
+                                  ]),
+                                  builder: (context,
+                                      AsyncSnapshot<List<dynamic>> snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      return GeneralWidgets.post(
+                                        postTitle: needs[index]['title'],
+                                        profilePhotoUrl: snapshot.data![1],
+                                        postMainPhotoUrl: snapshot.data![0],
+                                        postLikes: needs[index]['likes'] ?? '0',
+                                        postComents:
+                                            needs[index]['comments'] ?? '0',
+                                        isLiked: false,
+                                        onLiked: () {},
+                                        onComment: () {
+                                          Navigator.of(context)
+                                              .push(CommentsOverlay());
+                                        },
+                                        onShared: () {
+                                          print("Share");
+                                        },
+                                        onPhoto: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) => PostPage(
+                                                  postID: needs[index]['id']),
+                                            ),
+                                          );
+                                        },
+                                        onProfilePhoto: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PublicProfilePage(
+                                                      userID: needs[index]
+                                                          ['authorID']),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    }
+                                    return Container(
+                                      color: Colors.orange,
+                                    );
+                                  });
+                            })
                       ],
                     ),
                   ),

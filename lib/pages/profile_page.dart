@@ -38,6 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
   var _image;
   var imagePicker;
   bool imageSending = false;
+  List _needs = [];
 
   Future<void> uploadFile() async {
     await FirebaseStorage.instance
@@ -63,6 +64,21 @@ class _ProfilePageState extends State<ProfilePage> {
       userID = '@' + value.value;
     });
     super.initState();
+    ref.child('posts').onValue.listen((event) async {
+      Map<dynamic, dynamic> values = event.snapshot.value;
+      List needs = [];
+      values.forEach((key, values) {
+        values['id'] = key;
+
+        if (values['public'] == true &&
+            values['authorID'] == _currentUser!.uid) {
+          needs.add(values);
+        }
+      });
+      setState(() {
+        _needs = needs;
+      });
+    });
   }
 
   Future<void> refresh() async {
@@ -341,9 +357,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                       onClick: () {},
                                     ),
                                     const SizedBox(height: 10),
-                                    const Text(
-                                      '21',
-                                      style: TextStyle(
+                                    Text(
+                                      _needs.length.toString(),
+                                      style: const TextStyle(
                                         fontSize: 20.0,
                                         color: primaryColor,
                                         fontWeight: FontWeight.w700,
@@ -364,7 +380,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                     const SizedBox(height: 10),
                                     const Text(
-                                      '20 tys.',
+                                      '0',
                                       style: TextStyle(
                                         fontSize: 20.0,
                                         color: likeColor,
@@ -386,7 +402,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                     const SizedBox(height: 10),
                                     const Text(
-                                      '4.5',
+                                      '0',
                                       style: TextStyle(
                                         fontSize: 20.0,
                                         color: Color.fromRGBO(251, 188, 5, 1),

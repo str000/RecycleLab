@@ -3,6 +3,7 @@ import 'package:auth/pages/post/comments_overlay.dart';
 import 'package:auth/pages/post_page.dart';
 import 'package:auth/pages/public_profile_page.dart';
 import 'package:auth/widgets/general_widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 //Firebase Package
@@ -23,16 +24,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final User? _currentUser = FirebaseAuth.instance.currentUser;
+
   final ref = FirebaseDatabase.instance.reference();
 
   List _needs = [];
+  List _user = [];
+  late List _liked;
 
   @override
   void initState() {
     super.initState();
+    _liked = [];
     ref.child('posts').onValue.listen((event) async {
       Map<dynamic, dynamic> values = event.snapshot.value;
       List needs = [];
+
       values.forEach((key, values) {
         values['id'] = key;
 
@@ -42,6 +49,15 @@ class _HomePageState extends State<HomePage> {
       });
       setState(() {
         _needs = needs;
+      });
+    });
+    ref.child('users/' + _currentUser!.uid).onValue.listen((event) async {
+      Map<dynamic, dynamic> values = event.snapshot.value;
+      List needs = [];
+      needs.add(values);
+      setState(() {
+        _user = needs;
+        _liked = needs[0]['likedPostsID'];
       });
     });
   }
@@ -92,12 +108,10 @@ class _HomePageState extends State<HomePage> {
                                 postTitle: _needs[index]['title'],
                                 profilePhotoUrl: snapshot.data![1],
                                 postMainPhotoUrl: snapshot.data![0],
-                                postLikes: "205",
-                                postComents: "25",
-                                isLiked: true,
-                                onLiked: () {
-                                  print('Like');
-                                },
+                                postLikes: _needs[index]['likes'] ?? '0',
+                                postComents: _needs[index]['comments'] ?? '0',
+                                isLiked: false,
+                                onLiked: () {},
                                 onComment: () {
                                   Navigator.of(context).push(CommentsOverlay());
                                 },

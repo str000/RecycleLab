@@ -7,6 +7,7 @@ import 'package:auth/theme/text.dart';
 import 'package:auth/widgets/general_widgets.dart';
 import 'package:auth/widgets/sign_widgets.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 //Firebase Package
 //Pages
@@ -35,6 +36,7 @@ class _SearchPageState extends State<SearchPage> {
   String _categoryName = '';
   String _subcategoryName = 'S';
   bool _isCategory = false;
+  List _needs = [];
 
   void _updateCategory(String categoryName) {
     FocusScope.of(context).unfocus();
@@ -48,6 +50,21 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   void _updateSubCategory(String subcategoryName) {
+    ref.child('posts').onValue.listen((event) async {
+      Map<dynamic, dynamic> values = event.snapshot.value;
+      List needs = [];
+      values.forEach((key, values) {
+        values['id'] = key;
+        if (values['public'] == true &&
+            values['categories'].contains(subcategoryName)) {
+          needs.add(values);
+        }
+      });
+      setState(() {
+        _needs = needs;
+      });
+    });
+
     setState(() {
       _subcategoryName = subcategoryName;
       _result = 1;
@@ -218,6 +235,7 @@ class _SearchPageState extends State<SearchPage> {
               ResultsPage(
                 result: _updateResult,
                 categoryName: _subcategoryName,
+                needs: _needs,
               ),
             ],
             index: _result,

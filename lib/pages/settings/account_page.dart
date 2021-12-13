@@ -37,7 +37,7 @@ class _AccountPageState extends State<AccountPage> {
   final _focusName = FocusNode();
   final _focusNameID = FocusNode();
   final _focusEmail = FocusNode();
-
+  String name = '';
   var _image;
   var imagePicker;
   var profileImageURL;
@@ -88,6 +88,7 @@ class _AccountPageState extends State<AccountPage> {
     _nameTextController.text = _currentUser!.displayName!;
     ref.child('users/' + _currentUser!.uid + '/nameID').once().then((value) {
       _nameIDTextController.text = '@' + value.value;
+      name = value.value;
     });
 
     _emailTextController.text = _currentUser!.email!;
@@ -482,6 +483,10 @@ class _AccountPageState extends State<AccountPage> {
                               _currentUser?.displayName) {
                             _currentUser
                                 ?.updateDisplayName(_nameTextController.text);
+                            ref.child('users/' + _currentUser!.uid).set({
+                              'nameID': name,
+                              'name': _nameTextController.text,
+                            });
                           } else if (_image != null) {
                             await uploadFile();
                           }
