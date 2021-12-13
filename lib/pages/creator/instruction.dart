@@ -110,6 +110,11 @@ class _Intruction extends State<Intruction> {
                             });
                           }
 
+                          if (value == '' && index == currentStepValue - 1){
+                            _stepsImg.removeWhere((item) => item == _stepsImg[currentStepValue]);
+                            _stepsImg.length = 30;
+                          }
+
                           if (value == '') {
                             setState(() {
                               currentStepValue--;
